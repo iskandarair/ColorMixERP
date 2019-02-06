@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Data.Linq.Mapping;
+using System.Data.Linq;
+
+namespace ColorMixERP.Server.Entities
+{
+    [Table(Name = "DebtCover")]
+    public class DebtCover
+    {
+        [Column(Name = "Id", IsPrimaryKey = true)]
+        public int Id { get; set; }
+        [Column(Name = "CoverDate")]
+        public DateTime CoverDate { get; set; }
+        [Column(Name = "PaymentByCash")]
+        public decimal PaymentByCash { get; set; }
+        [Column(Name = "PaymentByCard")]
+        public decimal PaymentByCard { get; set; }
+        [Column(Name = "PaymentByTransfer")]
+        public decimal PaymentByTransfer { get; set; }
+    }
+}

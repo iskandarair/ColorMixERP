@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Data.Linq.Mapping;
+using System.Data.Linq;
+
+namespace ColorMixERP.Server.Entities
+{
+    [Table(Name = "ReturnedSale")]
+    public class ReturnedSale
+    {
+        [Column(Name = "Id", IsPrimaryKey = true)]
+        public int Id { get; set; }
+
+        private EntityRef<Sale> _Sale;
+        [Association(Storage = "_Sale", ThisKey = "Id")]
+        public Sale Sale
+        {
+            get { return _Sale.Entity; }
+            set { _Sale.Entity = value; }
+        }
+
+        [Column(Name = "PhoneNumber")]
+        public DateTime ReturnDate { get; set; }
+
+        [Column(Name = "Cause")]
+        public string Cause { get; set; }
+
+        [Column(Name = "DefectedQuantity")]
+        public decimal DefectedQuantity { get; set; }
+
+        [Column(Name = "Quantity")]
+        public decimal Quantity { get; set; }
+
+        [Column(Name = "ReturnedPrice")]
+        public decimal ReturnedPrice { get; set; }
+
+    }
+}
