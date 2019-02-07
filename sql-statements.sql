@@ -5,6 +5,7 @@ Code nvarchar(30) NOT NULL,
 Name nvarchar(255) NOT NULL,
 Primary Key (Id)
 );
+
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'WorkPlace')
 CREATE TABLE WorkPlace (
 Id int IDENTITY(1,1),
@@ -12,6 +13,7 @@ Name nvarchar(255) NOT NULL,
 Location nvarchar(255) NOT NULL,
 Primary Key (Id)
 );
+
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'AccountUser')
 CREATE TABLE AccountUser (
 Id int IDENTITY(1,1),
@@ -23,6 +25,7 @@ WorkPlace int NOT NULL,
 PRIMARY KEY (Id),
 CONSTRAINT UserWorkPlace FOREIGN KEY (WorkPlace) REFERENCES WorkPlace(Id)
 );
+
 --Adding Password Column
 ALTER TABLE AccountUser ADD Password nvarchar(255) NOT NULL default '_M?;Z?e??''?????';                                  ----- ONLY THIS NEEDED
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'Supplier')
@@ -32,6 +35,7 @@ Name nvarchar(255) NOT NULL,
 SupplierInfo nvarchar(255) NOT NULL,
 PRIMARY KEY (Id),
 );
+
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'Product')
 CREATE TABLE Product (
 Id int IDENTITY(1,1),
@@ -47,6 +51,7 @@ PRIMARY KEY (Id),
 CONSTRAINT ProductSupplier FOREIGN KEY (Supplier) REFERENCES Supplier(Id),
 CONSTRAINT ProductCategory FOREIGN KEY (Category) REFERENCES Category(Id)
 );
+
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'Client')
 CREATE TABLE Client (
 Id int IDENTITY(1,1),
@@ -61,6 +66,7 @@ INN nvarchar(255) NOT NULL,
 OKONX nvarchar(255) NOT NULL,
 PRIMARY KEY (Id),
 );
+
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'Expense')
 CREATE TABLE Expense (
 Id int IDENTITY(1,1),
@@ -71,6 +77,7 @@ UserId int NOT NULL,
 PRIMARY KEY (Id),
 CONSTRAINT ExpenseUser FOREIGN KEY (UserId) REFERENCES AccountUser(Id)
 ); 
+
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'ProductStock')
 CREATE TABLE ProductStock (
 Id int IDENTITY(1,1),
@@ -80,6 +87,7 @@ PRIMARY KEY (Id),
 CONSTRAINT ProductStockProductId FOREIGN KEY (ProductId) REFERENCES Product(Id),
 CONSTRAINT ProductStockWorkPlaceId FOREIGN KEY (WorkPlaceId) REFERENCES WorkPlace(Id)
 );
+
 ALTER TABLE ProductStock ADD Quantity decimal(19,2) NOT NULL default 0
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'ClientOrder')
 CREATE TABLE ClientOrder (
@@ -98,6 +106,7 @@ PRIMARY KEY (Id),
 CONSTRAINT Saler FOREIGN KEY (Saler) REFERENCES AccountUser(Id),
 CONSTRAINT ClientId FOREIGN KEY (ClientId) REFERENCES Client(Id)
 ); 
+
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'Sale')
 CREATE TABLE Sale (
 Id int IDENTITY(1,1),
@@ -111,6 +120,7 @@ PRIMARY KEY (Id),
 CONSTRAINT SaleProductId FOREIGN KEY (ProductID) REFERENCES Product(Id),
 CONSTRAINT OrderId FOREIGN KEY (OrderId) REFERENCES ClientOrder(Id)
 );
+
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'ReturnedSale')
 CREATE TABLE ReturnedSale (
 Id int IDENTITY(1,1),
@@ -123,6 +133,7 @@ ReturnedPrice decimal(19,2) NOT NULL,
 PRIMARY KEY (Id),
 CONSTRAINT SaleId FOREIGN KEY (SaleId) REFERENCES Sale(Id),
 );
+
 --ALTER TABLE Sale ADD  OrderId int NOT NULL
 --ALTER TABLE Sale ADD  CONSTRAINT  OrderId FOREIGN KEY (OrderId) REFERENCES ClientOrder(Id)
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'InnerMovement')
@@ -138,6 +149,7 @@ CONSTRAINT ProductId FOREIGN KEY (ProductId) REFERENCES Product(Id),
 CONSTRAINT FromWorkPlace FOREIGN KEY (FromWorkPlaceId) REFERENCES WorkPlace(Id),
 CONSTRAINT ToWorkPlace FOREIGN KEY (ToWorkPlaceId) REFERENCES WorkPlace(Id)
 );
+
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'DebtCover')
 CREATE TABLE DebtCover (
 Id int IDENTITY(1,1),

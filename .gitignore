@@ -1,0 +1,12 @@
+packages
+.vs
+
+ColorMixERP/bin
+ColorMixERP/obj
+
+ColorMixERP.Server/obj
+ColorMixERP.Server/bin
+
+ColorMixERP.Server/Config/LinqContext.cs
+obj
+bin
