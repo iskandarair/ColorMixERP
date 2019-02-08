@@ -25,7 +25,7 @@ namespace ColorMixERP.Server.BL
             new ProductStockDalFacade().Add(workPlaceId,stock);
         }
         
-        public void Update(ProductStock stock)
+        public void Update( ProductStock stock)
         {
             new ProductStockDalFacade().Update(stock);
         }

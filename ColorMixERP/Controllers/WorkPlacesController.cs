@@ -76,7 +76,7 @@ namespace ColorMixERP.Controllers
         [Authorize]
         [HttpPost]
         [ActionName("ProductStocks")]
-        public HttpResponseMessage ProductStocks(int id, ProductStock stock)
+        public HttpResponseMessage Add(int id, ProductStock stock)
         {
             try
             {
@@ -88,6 +88,5 @@ namespace ColorMixERP.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
-         
     }
 }

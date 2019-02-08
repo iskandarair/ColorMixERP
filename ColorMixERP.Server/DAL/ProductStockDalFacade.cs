@@ -38,19 +38,14 @@ namespace ColorMixERP.Server.DAL
 
         public void Add(int workPlaceId, ProductStock stock)
         {
-            var workplace = new WorkPlaceDalFacade().GetWorkPlace(workPlaceId);
-            workplace.ProductStock.Add(stock);
-           //var productToAdd = new ProductStock(stock.Product.Id, workPlaceId);
-           //productToAdd.Product = stock.Product;
-           //productToAdd.Quantity = stock.Quantity;
-           //db.ProductStocks.InsertOnSubmit(productToAdd);
-            db.SubmitChanges(); 
+            var productToAdd = new ProductStock(stock.Product.Id, workPlaceId);
+            db.ProductStocks.InsertOnSubmit(productToAdd);
+            db.SubmitChanges();
         }
 
         public void Update(ProductStock stock)
         {
             var stockToUpdate = GetProductStock(stock.Id);
-            stockToUpdate.Product = stock.Product;
             stockToUpdate.Quantity = stock.Quantity;
             db.SubmitChanges();
         }

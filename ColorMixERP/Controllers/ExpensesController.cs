@@ -4,40 +4,40 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using ColorMixERP.Server.Config;
 using ColorMixERP.Server.BL;
 using ColorMixERP.Server.Entities;
 
 namespace ColorMixERP.Controllers
 {
-    public class ProductStocksController : ApiController
+    public class ExpensesController : ApiController
     {
         [Authorize]
         [HttpGet]
-        public HttpResponseMessage GetProductStocks()
+        public HttpResponseMessage GetExpenses()
         {
-            var data = new ProductStockBL().GetProductStocks();
+            var data = new ExpenseBL().GetExpenses();
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
 
         [Authorize]
         [HttpGet]
-        public HttpResponseMessage GetProductStock(int id)
+        public HttpResponseMessage GetExpense(int id)
         {
-            var data = new ProductStockBL().GetProductStock(id);
+            var data = new ExpenseBL().GetExpense(id);
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
 
         [Authorize]
         [HttpPost]
-        public HttpResponseMessage Add(int workplaceId,ProductStock productStock)
+        public HttpResponseMessage Add(int id, Expense expense)
         {
-
             try
-            {
-                new ProductStockBL().Add(workplaceId,productStock);
+            { /// ID =  userId (MUST BE!!!)
+                new ExpenseBL().Add(id,expense);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
@@ -45,14 +45,14 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPut]
-        public HttpResponseMessage Update(ProductStock productStock)
+        public HttpResponseMessage Update(Expense expense)
         {
             try
             {
-                new ProductStockBL().Update(productStock);
+                new ExpenseBL().Update(expense);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
@@ -64,14 +64,13 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                new UserBL().Delete(id);
+                new ExpenseBL().Delete(id);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
-        
     }
 }

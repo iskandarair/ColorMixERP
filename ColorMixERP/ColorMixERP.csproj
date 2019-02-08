@@ -129,6 +129,7 @@
     <Compile Include="Controllers\AccountUsersController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
+    <Compile Include="Controllers\ExpensesController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProductStocksController.cs" />
     <Compile Include="Controllers\SuppliersController.cs" />

@@ -74,5 +74,12 @@ namespace ColorMixERP.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
+
+        [Authorize]
+        [HttpPost]
+        public HttpResponseMessage Add(int id, Expense expense)
+        {
+           return new ExpensesController().Add(id, expense);
+        }
     }
 }
