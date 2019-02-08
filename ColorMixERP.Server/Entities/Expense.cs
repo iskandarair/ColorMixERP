@@ -11,7 +11,7 @@ namespace ColorMixERP.Server.Entities
     [Table(Name = "Expense")]
     public class Expense
     {
-        [Column(Name = "Id", IsPrimaryKey = true)]
+        [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
         [Column(Name = "ExpenseDate")]
         public DateTime ExpenseDate { get; set; }
@@ -19,5 +19,8 @@ namespace ColorMixERP.Server.Entities
         public decimal Cost { get; set; }
         [Column(Name = "ExpenseCause")]
         public string ExpenseCause { get; set; }
+
+        [Column(Name = "UserId")]
+        private int UserId { get; set; }
     }
 }

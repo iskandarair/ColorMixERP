@@ -11,11 +11,13 @@ namespace ColorMixERP.Server.Entities
     [Table(Name= "ClientOrder")]
     public class ClientOrder
     {
-        [Column(Name = "Id", IsPrimaryKey = true)]
+        [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
 
+        [Column(Name="Saler")]
+        private int SalerId { get; set; }
         private EntityRef<AccountUser> _Saler;
-        [Association(Storage = "_Saler", ThisKey = "Saler", OtherKey = "Id")]
+        [Association(Storage = "_Saler", ThisKey = "SalerId", OtherKey = "Id")]
         public AccountUser Saler
         {
             get { return _Saler.Entity; }
@@ -27,8 +29,7 @@ namespace ColorMixERP.Server.Entities
 
         [Column(Name = "TransactinoId")]
         public string TransactinoId { get; set; }
-
-
+        
         private EntitySet<Sale> _Sales;
         [Association(Storage = "_Sales", OtherKey = "Id")]
         public EntitySet<Sale> Sales
@@ -47,6 +48,8 @@ namespace ColorMixERP.Server.Entities
         [Column(Name = "IsDebt")]
         public bool IsDebt { get; set; }
 
+        [Column(Name="ClientId")]
+        private int ClientId { get; set; }
 
         [Column(Name = "Client")] private EntityRef<Client> _Client;
         public Client Client

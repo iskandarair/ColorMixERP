@@ -6,7 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ColorMixERP.Server.Config;
-using ColorMixERP.Server.DAL;
+using ColorMixERP.Server.BL;
 using ColorMixERP.Server.Entities;
 
 namespace ColorMixERP.Controllers
@@ -17,7 +17,7 @@ namespace ColorMixERP.Controllers
         [HttpGet]
         public HttpResponseMessage GetSuppliers()
         {
-            var data = new SupplierDalFacade().GetSuppliers();
+            var data = new SupplierBL().GetSuppliers();
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
 
@@ -25,7 +25,7 @@ namespace ColorMixERP.Controllers
         [HttpGet]
         public HttpResponseMessage GetSupplier(int? id)
         {
-            var data = new SupplierDalFacade().GetSupplier(id);
+            var data = new SupplierBL().GetSupplier(id);
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
 
@@ -35,7 +35,7 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                new SupplierDalFacade().Add(supplier);
+                new SupplierBL().Add(supplier);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
@@ -50,7 +50,7 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                new SupplierDalFacade().Update(supplier);
+                new SupplierBL().Update(supplier);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
@@ -64,7 +64,7 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                new SupplierDalFacade().Delete(id);
+                new SupplierBL().Delete(id);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)

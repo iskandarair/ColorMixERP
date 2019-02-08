@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using ColorMixERP.Server.DAL;
+using ColorMixERP.Server.BL;
 using ColorMixERP.Server.Entities;
 
 namespace ColorMixERP.Controllers
@@ -17,7 +17,7 @@ namespace ColorMixERP.Controllers
         [HttpGet]
         public HttpResponseMessage GetAccountUsers()
         {
-            var data = new UserDalFacade().GetAccountUsers();
+            var data = new UserBL().GetAccountUsers();
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
 
@@ -25,7 +25,7 @@ namespace ColorMixERP.Controllers
         [HttpGet]
         public HttpResponseMessage GetUserById(int id)
         {
-            var data = new UserDalFacade().GetAccountUser(id);
+            var data = new UserBL().GetAccountUser(id);
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
 
@@ -36,7 +36,7 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                new UserDalFacade().Add(user);
+                new UserBL().Add(user);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
@@ -51,7 +51,7 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                new UserDalFacade().Update(user);
+                new UserBL().Update(user);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
@@ -66,7 +66,7 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                new UserDalFacade().Delete(id);
+                new UserBL().Delete(id);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
@@ -74,13 +74,5 @@ namespace ColorMixERP.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
-        /*
-        [HttpPost]
-        [ActionName("SaveAndDeleteAll")]
-        public string SaveAndDeleteAll(int id)
-        {
-            return $"SaveAndDEleteAll {id}";
-        }
-         */
     }
 }

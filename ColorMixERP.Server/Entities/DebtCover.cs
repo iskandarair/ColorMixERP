@@ -11,7 +11,7 @@ namespace ColorMixERP.Server.Entities
     [Table(Name = "DebtCover")]
     public class DebtCover
     {
-        [Column(Name = "Id", IsPrimaryKey = true)]
+        [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
         [Column(Name = "CoverDate")]
         public DateTime CoverDate { get; set; }
@@ -21,5 +21,7 @@ namespace ColorMixERP.Server.Entities
         public decimal PaymentByCard { get; set; }
         [Column(Name = "PaymentByTransfer")]
         public decimal PaymentByTransfer { get; set; }
+        [Column(Name="OrderId")]
+        private int OrderId { get; set; }
     }
 }

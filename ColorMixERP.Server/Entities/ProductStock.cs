@@ -11,11 +11,20 @@ namespace ColorMixERP.Server.Entities
     [Table(Name = "ProductStock")]
     public class ProductStock
     {
-        [Column(Name = "Id", IsPrimaryKey = true)]
+        public ProductStock() {  }
+
+        public ProductStock(int productId, int workPlaceId)
+        {
+            this.ProductId = productId;
+            this.WorkPlaceId = workPlaceId;
+        }
+        [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated =  true)]
         public int Id { get; set; }
 
+        [Column(Name = "ProductId")]
+        private int ProductId { get; set; }
         private EntityRef<Product> _Product;
-        [Association(Storage = "_Product", ThisKey = "Id")]
+        [Association(Storage = "_Product", OtherKey = "Id")]
         public Product Product
         {
             get { return _Product.Entity; }
@@ -25,5 +34,8 @@ namespace ColorMixERP.Server.Entities
         [Column(Name = "Quantity")]
         public decimal Quantity { get; set; }
 
+        // HIDDEN COLUMNS 
+        [Column(Name = "WorkPlaceId")]
+        private int WorkPlaceId { get; set; }
     }
 }

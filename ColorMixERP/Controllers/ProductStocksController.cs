@@ -9,34 +9,35 @@ using ColorMixERP.Server.Entities;
 
 namespace ColorMixERP.Controllers
 {
-    public class WorkPlacesController : ApiController
+    public class ProductStocksController : ApiController
     {
         [Authorize]
         [HttpGet]
-        public HttpResponseMessage GetWorkPlaces()
+        public HttpResponseMessage GetProductStocks()
         {
-            var data = new WorkPlaceBL().GetWorkPlaces();
+            var data = new ProductStockBL().GetProductStocks();
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
 
         [Authorize]
         [HttpGet]
-        public HttpResponseMessage GetWorkPlace(int id)
+        public HttpResponseMessage GetProductStock(int id)
         {
-            var data = new WorkPlaceBL().GetWorkPlace(id);
+            var data = new ProductStockBL().GetProductStock(id);
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
 
         [Authorize]
         [HttpPost]
-        public HttpResponseMessage AddWorkPlace(WorkPlace workPlace)
+        public HttpResponseMessage Add(int workplaceId,ProductStock productStock)
         {
+
             try
             {
-                new WorkPlaceBL().Add(workPlace);
+                new ProductStockBL().Add(workplaceId,productStock);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
@@ -44,14 +45,14 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPut]
-        public HttpResponseMessage UpdateWorkPlace(WorkPlace workPlace)
+        public HttpResponseMessage Update(AccountUser user)
         {
             try
             {
-                new WorkPlaceBL().Update(workPlace);
+                new UserBL().Update(user);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
@@ -59,35 +60,18 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpDelete]
-        public HttpResponseMessage UpdateWorkPlace(int id)
+        public HttpResponseMessage Delete(int id)
         {
             try
             {
-                new WorkPlaceBL().Delete(id);
+                new UserBL().Delete(id);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
-
-
-        [Authorize]
-        [HttpPost]
-        [ActionName("ProductStocks")]
-        public HttpResponseMessage ProductStocks(int id, ProductStock stock)
-        {
-            try
-            {
-                new ProductStockBL().Add(id, stock);
-                return Request.CreateResponse(HttpStatusCode.OK, true);
-            }
-            catch (Exception e)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
-            }
-        }
-         
+        
     }
 }

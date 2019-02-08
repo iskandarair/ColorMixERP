@@ -11,11 +11,13 @@ namespace ColorMixERP.Server.Entities
     [Table(Name = "ReturnedSale")]
     public class ReturnedSale
     {
-        [Column(Name = "Id", IsPrimaryKey = true)]
+        [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
 
+        [Column(Name="SaleId")]
+        private int SaleId { get; set; }
         private EntityRef<Sale> _Sale;
-        [Association(Storage = "_Sale", ThisKey = "Id")]
+        [Association(Storage = "_Sale", ThisKey = "SaleId")]
         public Sale Sale
         {
             get { return _Sale.Entity; }
