@@ -11,7 +11,7 @@ namespace ColorMixERP.Server.Entities
     [Table(Name = "Product")]
     public class Product
     {
-        [Column(Name = "Id", IsPrimaryKey = true)]
+        [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
 
         [Column(Name = "Code")]
@@ -40,9 +40,10 @@ namespace ColorMixERP.Server.Entities
 
         [Column(Name = "BoxedNumber")]
         public decimal BoxedNumber { get; set; }
-
+        [Column(Name="Supplier")]
+        private int SupplierId { get; set; }
         private EntityRef<Supplier> _Supplier;
-        [Association(Storage = "_Supplier", OtherKey = "Id")]
+        [Association(Storage = "_Supplier", ThisKey = "SupplierId")]
         public Supplier Supplier
         {
             get { return _Supplier.Entity; }

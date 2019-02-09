@@ -1,39 +1,40 @@
-﻿using ColorMixERP.Server.BL;
-using ColorMixERP.Server.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using ColorMixERP.Server.BL;
+using ColorMixERP.Server.Entities;
 
 namespace ColorMixERP.Controllers
 {
-    public class ClientsController : ApiController
+    public class ProductStocksController : ApiController
     {
         [Authorize]
         [HttpGet]
-        public HttpResponseMessage GetClients()
+        public HttpResponseMessage GetProductStocks()
         {
-            var data = new ClientBL().GetClients();
+            var data = new ProductStockBL().GetProductStocks();
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
 
         [Authorize]
         [HttpGet]
-        public HttpResponseMessage GetClientById(int id)
+        public HttpResponseMessage GetProductStock(int id)
         {
-            var data = new ClientBL().GetClient(id);
+            var data = new ProductStockBL().GetProductStock(id);
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
 
         [Authorize]
         [HttpPost]
-        public HttpResponseMessage AddUser(Client client)
+        public HttpResponseMessage Add(int workplaceId,ProductStock productStock)
         {
+
             try
             {
-                new ClientBL().Add(client);
+                new ProductStockBL().Add(workplaceId,productStock);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
@@ -44,11 +45,11 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPut]
-        public HttpResponseMessage UpdateClient(Client client)
+        public HttpResponseMessage Update(ProductStock productStock)
         {
             try
             {
-                new ClientBL().Update(client);
+                new ProductStockBL().Update(productStock);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
@@ -56,15 +57,14 @@ namespace ColorMixERP.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
-
 
         [Authorize]
         [HttpDelete]
-        public HttpResponseMessage DeleteClient(int id)
+        public HttpResponseMessage Delete(int id)
         {
             try
             {
-                new ClientBL().Delete(id);
+                new UserBL().Delete(id);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
@@ -72,5 +72,6 @@ namespace ColorMixERP.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
+        
     }
 }

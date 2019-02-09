@@ -11,7 +11,7 @@ namespace ColorMixERP.Server.Entities
     [Table(Name = "Category")]
     public class Category
     {
-        [Column(Name = "Id", IsPrimaryKey = true)]
+        [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated = true)]
         public int? Id { get; set; }
 
         [Column(Name = "Code")]

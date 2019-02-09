@@ -11,7 +11,7 @@ namespace ColorMixERP.Server.Entities
     [Table(Name = "WorkPlace")]
     public class WorkPlace
     {
-        [Column(Name = "Id", IsPrimaryKey = true)]
+        [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated =  true)]
         public int? Id { get; set; }
         [Column(Name = "Name")]
         public string Name { get; set; }
@@ -20,7 +20,7 @@ namespace ColorMixERP.Server.Entities
         ///
         private EntitySet<ProductStock> _ProductStock;
 
-        [Association(Storage = "_ProductStock", OtherKey = "Id")]
+        [Association(Storage = "_ProductStock", OtherKey = "WorkPlaceId", IsForeignKey = true)]
         public EntitySet<ProductStock> ProductStock
         {
             get { return _ProductStock; }

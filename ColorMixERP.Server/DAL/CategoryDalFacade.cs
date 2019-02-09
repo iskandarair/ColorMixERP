@@ -43,7 +43,7 @@ namespace ColorMixERP.Server.DAL
             db.SubmitChanges();
         }
 
-        public void Delete(int id)
+        public void Delete(int? id)
         {
             var categoryToDelete = GetCategory(id);
             db.Categories.DeleteOnSubmit(categoryToDelete);

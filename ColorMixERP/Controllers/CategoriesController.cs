@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ColorMixERP.Server.Config;
-using ColorMixERP.Server.DAL;
+using ColorMixERP.Server.BL;
 using ColorMixERP.Server.Entities;
 
 namespace ColorMixERP.Controllers
@@ -16,7 +16,7 @@ namespace ColorMixERP.Controllers
         [HttpGet]
         public HttpResponseMessage GetCategories()
         {
-            var data = new CategoryDalFacade().GetCategories();
+            var data = new CategoryBL().GetCategories();
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
 
@@ -24,7 +24,7 @@ namespace ColorMixERP.Controllers
         [HttpGet]
         public HttpResponseMessage GetCategory(int id)
         {
-            var data = new CategoryDalFacade().GetCategory(id);
+            var data = new CategoryBL().GetCategory(id);
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
 
@@ -34,7 +34,7 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                new CategoryDalFacade().Add(category);
+                new CategoryBL().Add(category);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception e)
@@ -49,7 +49,7 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                new CategoryDalFacade().Update(category);
+                new CategoryBL().Update(category);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception e)
@@ -64,7 +64,7 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                new CategoryDalFacade().Delete(id);
+                new CategoryBL().Delete(id);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception e)

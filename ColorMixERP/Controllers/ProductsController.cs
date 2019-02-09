@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using ColorMixERP.Server.DAL;
+using ColorMixERP.Server.BL;
 using ColorMixERP.Server.Entities;
 
 namespace ColorMixERP.Controllers
@@ -16,7 +16,7 @@ namespace ColorMixERP.Controllers
         [HttpGet]
         public HttpResponseMessage GetProduct()
         {
-            var data = new ProductDalFacade().GetProducts();
+            var data = new ProductBL().GetProducts();
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
 
@@ -24,7 +24,7 @@ namespace ColorMixERP.Controllers
         [HttpGet]
         public HttpResponseMessage GetProductById(int id)
         {
-            var data = new ProductDalFacade().GetProduct(id);
+            var data = new ProductBL().GetProduct(id);
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
 
@@ -34,7 +34,7 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                new ProductDalFacade().Add(product);
+                new ProductBL().Add(product);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
@@ -50,7 +50,7 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                new ProductDalFacade().Update(product);
+                new ProductBL().Update(product);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
@@ -66,7 +66,7 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                new ProductDalFacade().Delete(id);
+                new ProductBL().Delete(id);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)

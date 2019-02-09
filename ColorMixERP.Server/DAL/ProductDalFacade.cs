@@ -18,23 +18,13 @@ namespace ColorMixERP.Server.DAL
         }
 
         public List<Product> GetProducts()
-        {
-            DataLoadOptions options = new DataLoadOptions();;
-            options.LoadWith<Product>(i => i.Category);
-            options.LoadWith<Product>(i => i.Supplier);
-            db.LoadOptions = options;
-
+        { 
             var query = from p in db.Products select p;
             return query.ToList();
         }
 
         public Product GetProduct(int? id)
-        {
-            DataLoadOptions options = new DataLoadOptions(); ;
-            options.LoadWith<Product>(i => i.Category);
-            options.LoadWith<Product>(i => i.Supplier);
-            db.LoadOptions = options;
-
+        { 
             var query = from p in db.Products where p.Id == id select p;
             return query.FirstOrDefault();
         }

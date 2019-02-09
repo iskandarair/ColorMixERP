@@ -41,12 +41,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BL\CategoryBL.cs" />
+    <Compile Include="BL\ClientBL.cs" />
+    <Compile Include="BL\ExpenseBL.cs" />
+    <Compile Include="BL\ProductBL.cs" />
+    <Compile Include="BL\ProductStockBL.cs" />
+    <Compile Include="BL\SupplierBL.cs" />
     <Compile Include="BL\UserBL.cs" />
+    <Compile Include="BL\WorkPlaceBL.cs" />
     <Compile Include="Config\LinqContext.cs" />
     <Compile Include="Config\LinqDB.cs" />
     <Compile Include="DAL\CategoryDalFacade.cs" />
     <Compile Include="DAL\ClientDalFacade.cs" />
+    <Compile Include="DAL\ExpenseDalFacade.cs" />
     <Compile Include="DAL\ProductDalFacade.cs" />
+    <Compile Include="DAL\ProductStockDalFacade.cs" />
     <Compile Include="DAL\SupplierDalFacade.cs" />
     <Compile Include="DAL\UserDalFacade.cs" />
     <Compile Include="DAL\WorkPlaceDalFacade.cs" />

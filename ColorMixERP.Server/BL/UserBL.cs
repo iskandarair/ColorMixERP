@@ -11,18 +11,35 @@ namespace ColorMixERP.Server.BL
 {
     public class UserBL
     {
+        public List<AccountUser> GetAccountUsers()
+        {
+            return new UserDalFacade().GetAccountUsers();
+        }
+
+        public AccountUser GetAccountUser(int? id)
+        {
+            return new UserDalFacade().GetAccountUser(id);
+        }
+    
         public User GetUserByCredentials(string name, string password)
         {
             var user = new UserDalFacade().GetAccountByName(name, password);
-            //AccountUser user = new AccountUser() { Id = 1, Name = "email@domain.com", Password = "password" };
             return user;
         }
-        /*
-            System.Security.Cryptography.MD5CryptoServiceProvider x = new System.Security.Cryptography.MD5CryptoServiceProvider();
-            byte[] data = System.Text.Encoding.ASCII.GetBytes("password");
-            data = x.ComputeHash(data);
-            var passw = System.Text.Encoding.ASCII.GetString(data);
-            var isBool = passw == "??.R??`???J$T??";
-         */
+
+        public void Add(AccountUser accountUser)
+        {
+            new UserDalFacade().Add(accountUser);
+        }
+
+        public void Update(AccountUser accountUser)
+        {
+            new UserDalFacade().Update(accountUser);
+        }
+
+        public void Delete(int id)
+        {
+            new UserDalFacade().Delete(id);
+        }
     }
 }

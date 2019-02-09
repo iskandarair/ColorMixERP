@@ -11,13 +11,14 @@ namespace ColorMixERP.Server.Entities
     [Table(Name = "InnerMovement")]
     public class InnerMovement
     {
-        [Column(Name = "Id", IsPrimaryKey = true)]
+        [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
         [Column(Name = "MoveDate")]
         public DateTime MoveDate { get; set; }
-
+        [Column(Name="ProductId")]
+        private int ProductId { get; set; }
         private EntityRef<Product> _Product;
-        [Association(Storage = "_Product", OtherKey = "Id")]
+        [Association(Storage = "_Product", ThisKey = "ProductId")]
         public Product Product
         {
             get { return _Product.Entity; }
@@ -26,16 +27,19 @@ namespace ColorMixERP.Server.Entities
         [Column(Name = "Quantity")]
         public decimal Quantity { get; set; }
 
+        [Column(Name = "FromWOrkPlaceId")]
+        private int FromWOrkPlaceId { get; set; }
         private EntityRef<WorkPlace> _FromWorkPlace;
-        [Association(Storage = "_FromWorkPlace", ThisKey = "Id")]
+        [Association(Storage = "_FromWorkPlace", ThisKey = "FromWOrkPlaceId")]
         public WorkPlace FromWorkPlace
         {
             get { return _FromWorkPlace.Entity; }
             set { _FromWorkPlace.Entity = value; }
         }
-
+        [Column(Name="ToWorkPlaceId")]
+        private int ToWorkPlaceId { get; set; }
         private EntityRef<WorkPlace> _ToWorkPlace;
-        [Association(Storage = "_ToWorkPlace", ThisKey = "Id")]
+        [Association(Storage = "_ToWorkPlace", ThisKey = "ToWorkPlaceId")]
         public WorkPlace ToWorkPlace
         {
             get { return _ToWorkPlace.Entity; }

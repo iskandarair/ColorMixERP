@@ -11,7 +11,7 @@ namespace ColorMixERP.Server.Entities
     [Table(Name = "Supplier")]
     public class Supplier
     {
-        [Column(Name = "Id", IsPrimaryKey = true)]
+        [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
 
         [Column(Name = "Name")]
