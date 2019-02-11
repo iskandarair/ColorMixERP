@@ -11,8 +11,23 @@ namespace ColorMixERP.Server.Entities
     [Table(Name = "InnerMovement")]
     public class InnerMovement
     {
+        public InnerMovement()
+        {
+        }
+
+        public InnerMovement(int? id, DateTime moveDate, int productId, decimal quantity, int fromWOrkPlaceId,
+            int toWorkPlaceId)
+        {
+            Id = id;
+            MoveDate = moveDate;
+            ProductId = productId;
+            Quantity = quantity;
+            FromWOrkPlaceId = fromWOrkPlaceId;
+            ToWorkPlaceId = toWorkPlaceId;
+        }
+
         [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated = true)]
-        public int Id { get; set; }
+        public int? Id { get; set; }
         [Column(Name = "MoveDate")]
         public DateTime MoveDate { get; set; }
         [Column(Name="ProductId")]

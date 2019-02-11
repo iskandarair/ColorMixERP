@@ -44,6 +44,7 @@
     <Compile Include="BL\CategoryBL.cs" />
     <Compile Include="BL\ClientBL.cs" />
     <Compile Include="BL\ExpenseBL.cs" />
+    <Compile Include="BL\InnerMovementBL.cs" />
     <Compile Include="BL\ProductBL.cs" />
     <Compile Include="BL\ProductStockBL.cs" />
     <Compile Include="BL\SupplierBL.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="DAL\CategoryDalFacade.cs" />
     <Compile Include="DAL\ClientDalFacade.cs" />
     <Compile Include="DAL\ExpenseDalFacade.cs" />
+    <Compile Include="DAL\InnerMovementDalFacade.cs" />
     <Compile Include="DAL\ProductDalFacade.cs" />
     <Compile Include="DAL\ProductStockDalFacade.cs" />
     <Compile Include="DAL\SupplierDalFacade.cs" />
@@ -64,6 +66,7 @@
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\Currency.cs" />
     <Compile Include="Entities\DebtCover.cs" />
+    <Compile Include="Entities\DTO\InnerMovementDTO.cs" />
     <Compile Include="Entities\Expense.cs" />
     <Compile Include="Entities\InnerMovement.cs" />
     <Compile Include="Entities\ClientOrder.cs" />

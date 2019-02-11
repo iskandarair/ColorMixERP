@@ -19,26 +19,17 @@ namespace ColorMixERP.Server.DAL
         }
 
         public List<WorkPlace> GetWorkPlaces()
-        {
-
-          //DataLoadOptions options = new DataLoadOptions();
-          //options.LoadWith<WorkPlace>(i => i.ProductStock);
-          //options.LoadWith<ProductStock>(i =>i.Product);
-          //options.LoadWith<Product>(ii => ii.Supplier);
-          //options.LoadWith<Product>(ii => ii.Category);
-          //db.LoadOptions = options;
+        { 
             var result = from c in db.WorkPlaces select c;
             return result.ToList();
         }
 
         public WorkPlace GetWorkPlace(int? id)
-        {
-            //DataLoadOptions options = new DataLoadOptions();
-            //options.LoadWith<WorkPlace>(ii => ii.ProductStock);
-            //db.LoadOptions = options;
+        { 
             var result = from c in db.WorkPlaces where c.Id == id select c;
             return result.FirstOrDefault();
         }
+
         public void Add(WorkPlace workPlace)
         {
             workPlace.Id = null;
