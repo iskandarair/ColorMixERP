@@ -18,69 +18,69 @@ namespace ColorMixERP.Server.DAL
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
 
-        public List<AccountUser> GetAccountUsers()
+        public List<AccountUserDTO> GetAccountUsers()
         {
-            DataLoadOptions options = new DataLoadOptions();
-            options.LoadWith<AccountUser>(ii => ii.Expenses);
-            options.LoadWith<AccountUser>(ii => ii.WorkPlace);
-            options.LoadWith<ProductStock>(ii => ii.Product);
-            options.LoadWith<Product>(ii => ii.Supplier);
-            options.LoadWith<Product>(ii => ii.Category);
-            db.LoadOptions = options;
-            var query =  from c in db.AccountUsers select c;
+            var query =  from c in db.AccountUsers  select new AccountUserDTO()
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Surname = c.Surname,
+                PositionRole = c.PositionRole,
+                PhoneNumber = c.PhoneNumber,
+                WorkPlaceId = c.WorkPlace.Id ?? 0,
+                WorkPlaceName = c.WorkPlace.Name,
+                //Password = c.Password
+            };
             var result = query.ToList();
 
             return result;
         }
-        public AccountUser GetAccountUser(int? id)
+        public AccountUserDTO GetAccountUser(int? id)
         {
-            DataLoadOptions options = new DataLoadOptions();
-            options.LoadWith<AccountUser>(ii => ii.Expenses);
-            options.LoadWith<AccountUser>(ii => ii.WorkPlace);
-            options.LoadWith<ProductStock>(ii => ii.Product);
-            options.LoadWith<Product>(ii => ii.Supplier);
-            options.LoadWith<Product>(ii => ii.Category);
-            db.LoadOptions = options;
-            var query = from c in db.AccountUsers where c.Id == id select c;
+            var query = from c in db.AccountUsers where c.Id == id select new AccountUserDTO()
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Surname = c.Surname,
+                PositionRole =  c.PositionRole,
+                PhoneNumber =  c.PhoneNumber,
+                WorkPlaceId =  c.WorkPlace.Id ?? 0,
+                WorkPlaceName = c.WorkPlace.Name,
+                //Password =  c.Password
+            };
             var result = query.FirstOrDefault();
 
             return result;
         }
         public User GetAccountByName(string name, string password)
         {
-            DataLoadOptions options = new DataLoadOptions();
-            options.LoadWith<AccountUser>(ii => ii.Expenses);
-            options.LoadWith<AccountUser>(ii => ii.WorkPlace);
-            options.LoadWith<ProductStock>(ii => ii.Product);
-            options.LoadWith<Product>(ii => ii.Supplier);
-            options.LoadWith<Product>(ii => ii.Category);
-            db.LoadOptions = options;
             var query = from c in db.AccountUsers where c.Name == name && c.Password ==password  select new User(c.Id, c.Name);
             var result = query.FirstOrDefault();
 
             return result;
         }
 
-        public void Add(AccountUser accountUser)
+        public void Add(AccountUserDTO accountUser)
         {
-            accountUser.Id = null;
-            var element = new AccountUser();;
-            element = accountUser;
+            var element = new AccountUser(accountUser.Name, accountUser.Surname,accountUser.PositionRole,accountUser.PhoneNumber,accountUser.WorkPlaceId,accountUser.Password);
+            element.Expenses = new EntitySet<Expense>();
             db.AccountUsers.InsertOnSubmit(element);
             db.SubmitChanges();
         }
-        public void Update(AccountUser accountUser)
+        public void Update(AccountUserDTO user)
         {
-            var accountUserToUpdate = GetAccountUser(accountUser.Id);
-            accountUserToUpdate.Name = accountUser.Name;
-            accountUserToUpdate.Surname = accountUser.Surname;
-            accountUserToUpdate.PhoneNumber = accountUser.PhoneNumber;
-            accountUserToUpdate.PositionRole = accountUser.PositionRole;
+            var accountUserToUpdate = (from c in db.AccountUsers where c.Id == user.Id select c).FirstOrDefault();
+            accountUserToUpdate.Name = user.Name;
+            accountUserToUpdate.Surname = user.Surname;
+            accountUserToUpdate.PhoneNumber = user.PhoneNumber;
+            accountUserToUpdate.PositionRole = user.PositionRole;
+            accountUserToUpdate.WorkPlaceId = user.WorkPlaceId;
+            //accountUserToUpdate.Password = user.Password;
             db.SubmitChanges();
         }
         public void Delete(int id)
         {
-            var element = GetAccountUser(id);
+            var element = (from c in db.AccountUsers where c.Id == id select c).FirstOrDefault();
             db.AccountUsers.DeleteOnSubmit(element);
             db.SubmitChanges();
         }

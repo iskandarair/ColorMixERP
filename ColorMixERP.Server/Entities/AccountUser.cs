@@ -11,6 +11,19 @@ namespace ColorMixERP.Server.Entities
     [Table(Name = "AccountUser")]
     public class AccountUser
     {
+        public AccountUser()
+        {
+        }
+
+        public AccountUser(string name, string surname, int positionRole, string phoneNumber, int workPlaceId, string password)
+        {
+            Name = name;
+            Surname = surname;
+            PositionRole = positionRole;
+            PhoneNumber = phoneNumber;
+            WorkPlaceId = workPlaceId;
+            Password = password;
+        }
         [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated = true)]
         public int? Id { get; set; }
 
@@ -22,7 +35,7 @@ namespace ColorMixERP.Server.Entities
         [Column(Name = "PhoneNumber")]
         public string PhoneNumber { get; set; }
         [Column(Name = "WorkPlace")]
-        private int WorkPlaceId { get; set; }
+        public int WorkPlaceId { get; set; }
         private EntityRef<WorkPlace> _WorkPlace;
 
         [Association(Storage = "_WorkPlace", ThisKey = "WorkPlaceId")]
