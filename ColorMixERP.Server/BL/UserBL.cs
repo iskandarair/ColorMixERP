@@ -11,12 +11,12 @@ namespace ColorMixERP.Server.BL
 {
     public class UserBL
     {
-        public List<AccountUser> GetAccountUsers()
+        public List<AccountUserDTO> GetAccountUsers()
         {
             return new UserDalFacade().GetAccountUsers();
         }
 
-        public AccountUser GetAccountUser(int? id)
+        public AccountUserDTO GetAccountUser(int? id)
         {
             return new UserDalFacade().GetAccountUser(id);
         }
@@ -27,12 +27,12 @@ namespace ColorMixERP.Server.BL
             return user;
         }
 
-        public void Add(AccountUser accountUser)
+        public void Add(AccountUserDTO accountUser)
         {
             new UserDalFacade().Add(accountUser);
         }
 
-        public void Update(AccountUser accountUser)
+        public void Update(AccountUserDTO accountUser)
         {
             new UserDalFacade().Update(accountUser);
         }
