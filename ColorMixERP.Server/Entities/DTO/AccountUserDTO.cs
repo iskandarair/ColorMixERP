@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ColorMixERP.Server.Entities.AuthorizationEntities
+namespace ColorMixERP.Server.Entities.DTO
 {
     public class AccountUserDTO
     {

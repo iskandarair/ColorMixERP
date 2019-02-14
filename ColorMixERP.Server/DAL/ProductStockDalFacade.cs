@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ColorMixERP.Server.Entities;
 using ColorMixERP.Server.Config;
+using ColorMixERP.Server.Entities.DTO;
 
 namespace ColorMixERP.Server.DAL
 {
@@ -17,54 +18,70 @@ namespace ColorMixERP.Server.DAL
         {
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
-        public List<ProductStock> GetProductStocks()
+        public List<ProductStockDTO> GetProductStocks()
         {
-            DataLoadOptions dl = new DataLoadOptions();
-            dl.LoadWith<ProductStock>( p => p.Product);
-            db.LoadOptions = dl;
-            var query = from p in db.ProductStocks select p;
+            var query = from p in db.ProductStocks select new ProductStockDTO()
+            {
+                Id = p.Id,
+                ProductId = p.Product.Id,
+                ProductName = p.Product.Name,
+                Quantity = p.Quantity
+            };
             return query.ToList();
 
         }
         
-        public ProductStock GetProductStock(int? id)
+        public ProductStockDTO GetProductStock(int? id)
         {
-            DataLoadOptions dl = new DataLoadOptions();
-            dl.LoadWith<ProductStock>(p => p.Product);
-            db.LoadOptions = dl;
-            var query = from p in db.ProductStocks where p.Id == id select p;
+            var query = from p in db.ProductStocks where p.Id == id
+                select new ProductStockDTO()
+                {
+                    Id = p.Id,
+                    ProductId = p.Product.Id,
+                    ProductName = p.Product.Name,
+                    Quantity = p.Quantity
+                };
             return query.FirstOrDefault();
         }
 
-        public void Add(int workPlaceId, ProductStock stock)
+        public void Add(int workPlaceId, ProductStockDTO stock)
         {
-            var productToAdd = new ProductStock(stock.Product.Id, workPlaceId);
+            var productToAdd = new ProductStock(stock.ProductId, workPlaceId);
+            productToAdd.Quantity = stock.Quantity;
             db.ProductStocks.InsertOnSubmit(productToAdd);
             db.SubmitChanges();
         }
 
-        public void Update(ProductStock stock)
+        public void Update(ProductStockDTO stock)
         {
-            var stockToUpdate = GetProductStock(stock.Id);
+            var stockToUpdate = (from p in db.ProductStocks where p.Id == stock.Id select p).FirstOrDefault() ;
             stockToUpdate.Quantity = stock.Quantity;
             db.SubmitChanges();
         }
 
         public void Delete(int? id)
         {
-            var stock = GetProductStock(id);
+            var stock = (from p in db.ProductStocks where p.Id == id select p).FirstOrDefault();
             db.ProductStocks.DeleteOnSubmit(stock);
             db.SubmitChanges();
         }
 
-        public List<ProductStock> GetWorkPlaceProductStocks(int wpId)
+        public List<ProductStockDTO> GetWorkPlaceProductStocks(int wpId)
         {
-
-            DataLoadOptions dl = new DataLoadOptions();
-            dl.LoadWith<ProductStock>(p => p.Product);
-            db.LoadOptions = dl;
             var query = from p in db.WorkPlaces where p.Id == wpId select p.ProductStock;
-            return query.FirstOrDefault().ToList();
+            var productStock = query.FirstOrDefault().ToList();
+            var result = new List<ProductStockDTO>();
+            foreach (var stock in productStock)
+            {
+                result.Add(new ProductStockDTO()
+                {
+                    Id = stock.Id,
+                    ProductId = stock.Product.Id,
+                    ProductName = stock.Product.Name,
+                    Quantity =  stock.Quantity
+                });
+            }
+            return result;
         }
     }
 }

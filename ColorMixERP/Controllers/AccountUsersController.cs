@@ -6,12 +6,20 @@ using System.Net.Http;
 using System.Web.Http;
 using ColorMixERP.Server.BL;
 using ColorMixERP.Server.Entities;
-using ColorMixERP.Server.Entities.AuthorizationEntities;
+using ColorMixERP.Server.Entities.DTO;
 
 namespace ColorMixERP.Controllers
 {
     public class AccountUsersController : ApiController
     {
+        [Authorize]
+        [HttpGet]
+        [Route("api/AccountUsers/{id}/Expenses")]
+        public HttpResponseMessage GetUserExpenses(int id)
+        {
+            var data = new ExpenseBL().GetUserExpenses(id);
+            return Request.CreateResponse(HttpStatusCode.OK, data);
+        }
 
 
         [Authorize]
@@ -24,6 +32,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/AccountUsers/{id}")]
         public HttpResponseMessage GetUserById(int id)
         {
             var data = new UserBL().GetAccountUser(id);

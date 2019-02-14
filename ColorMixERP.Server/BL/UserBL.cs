@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ColorMixERP.Server.DAL;
+using ColorMixERP.Server.Entities.DTO;
 using ColorMixERP.Server.Entities.AuthorizationEntities;
 
 namespace ColorMixERP.Server.BL

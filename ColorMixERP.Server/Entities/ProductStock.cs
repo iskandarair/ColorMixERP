@@ -24,7 +24,7 @@ namespace ColorMixERP.Server.Entities
         [Column(Name = "ProductId")]
         private int ProductId { get; set; }
         private EntityRef<Product> _Product;
-        [Association(Storage = "_Product", OtherKey = "Id")]
+        [Association(Storage = "_Product", ThisKey = "ProductId")]
         public Product Product
         {
             get { return _Product.Entity; }
