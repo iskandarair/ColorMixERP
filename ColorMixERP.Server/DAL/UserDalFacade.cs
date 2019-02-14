@@ -30,6 +30,7 @@ namespace ColorMixERP.Server.DAL
                 PhoneNumber = c.PhoneNumber,
                 WorkPlaceId = c.WorkPlace.Id ?? 0,
                 WorkPlaceName = c.WorkPlace.Name,
+                isSunnat = c.isSunnat
                 //Password = c.Password
             };
             var result = query.ToList();
@@ -47,6 +48,7 @@ namespace ColorMixERP.Server.DAL
                 PhoneNumber =  c.PhoneNumber,
                 WorkPlaceId =  c.WorkPlace.Id ?? 0,
                 WorkPlaceName = c.WorkPlace.Name,
+                isSunnat = c.isSunnat
                 //Password =  c.Password
             };
             var result = query.FirstOrDefault();

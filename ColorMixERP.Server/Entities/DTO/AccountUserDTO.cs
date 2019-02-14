@@ -19,6 +19,6 @@ namespace ColorMixERP.Server.Entities.DTO
         public string WorkPlaceName { get; set; }
         public string Password { get; set; }
 
-
+        public bool isSunnat { get; set; }
     }
 }
