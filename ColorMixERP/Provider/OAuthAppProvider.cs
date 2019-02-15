@@ -16,7 +16,7 @@ namespace ColorMixERP.Provider
     public class OAuthAppProvider : OAuthAuthorizationServerProvider
     {
         public static readonly string USER_ID = "userId";
-        public static readonly string WORKPLACE_ID = "workPlace";
+        public static readonly string WORKPLACE_ID = "workPlaceId";
         public static readonly string FULL_NAME = "fullName";
         public override Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
