@@ -131,8 +131,10 @@
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\ExpensesController.cs" />
     <Compile Include="Controllers\InnerMovementsController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProductStocksController.cs" />
+    <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Controllers\SuppliersController.cs" />
     <Compile Include="Controllers\WorkPlacesController.cs" />
     <Compile Include="Extensions\OwinContextExtensions.cs" />

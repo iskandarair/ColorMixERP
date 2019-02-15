@@ -1,14 +1,9 @@
 ﻿using Microsoft.Owin.Security.OAuth;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using ColorMixERP.Server.BL;
-using ColorMixERP.Server.Entities;
 using System.Security.Claims;
 using Microsoft.Owin.Security;
-using System.Web;
 using ColorMixERP.Server.Entities.AuthorizationEntities;
 
 namespace ColorMixERP.Provider
@@ -18,6 +13,7 @@ namespace ColorMixERP.Provider
         public static readonly string USER_ID = "userId";
         public static readonly string WORKPLACE_ID = "workPlaceId";
         public static readonly string FULL_NAME = "fullName";
+
         public override Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
             return Task.Factory.StartNew(() =>
@@ -49,6 +45,7 @@ namespace ColorMixERP.Provider
                 }
             });
         }
+
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)
         {
             foreach (KeyValuePair<string, string> property in context.Properties.Dictionary)
@@ -58,6 +55,7 @@ namespace ColorMixERP.Provider
 
             return Task.FromResult<object>(null);
         }
+
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
             if (context.ClientId == null)

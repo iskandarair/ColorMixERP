@@ -11,6 +11,15 @@ namespace ColorMixERP.Server.Entities
     [Table(Name = "Sale")]
     public class Sale
     {
+        public Sale()
+        {
+
+        }
+        public Sale(int productId)
+        {
+            ProductId = productId;
+        }
+
         [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
         [Column(Name="ProductId")]

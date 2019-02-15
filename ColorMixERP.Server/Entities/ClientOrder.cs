@@ -11,13 +11,17 @@ namespace ColorMixERP.Server.Entities
     [Table(Name= "ClientOrder")]
     public class ClientOrder
     {
+        public ClientOrder() { }
+
+        public ClientOrder(int salerId, int clientId)
+        {
+            SalerId = salerId;
+            ClientId = clientId;
+        }
         [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
-
-        [Column(Name="Saler")]
-        private int SalerId { get; set; }
         private EntityRef<AccountUser> _Saler;
-        [Association(Storage = "_Saler", ThisKey = "SalerId", OtherKey = "Id")]
+        [Association(Storage = "_Saler", ThisKey = "SalerId")]
         public AccountUser Saler
         {
             get { return _Saler.Entity; }
@@ -29,9 +33,11 @@ namespace ColorMixERP.Server.Entities
 
         [Column(Name = "TransactinoId")]
         public string TransactinoId { get; set; }
-        
+
+        [Column(Name = "Saler")]
+        private int SalerId { get; set; }
         private EntitySet<Sale> _Sales;
-        [Association(Storage = "_Sales", OtherKey = "Id")]
+        [Association(Storage = "_Sales", OtherKey = "OrderId")]
         public EntitySet<Sale> Sales
         {
             get { return _Sales;}
@@ -50,14 +56,14 @@ namespace ColorMixERP.Server.Entities
 
         [Column(Name="ClientId")]
         private int ClientId { get; set; }
+        private EntityRef<Client> _Client;
 
-        [Column(Name = "Client")] private EntityRef<Client> _Client;
+        [Association(Storage = "_Client", ThisKey = "ClientId")]
         public Client Client
         {
             get { return _Client.Entity;}
             set { _Client.Entity = value; }
         }
-        [Column(Name = "ClientRepresentitive")]
         public string ClientRepresentitive { get; set; }
 
         [Column(Name = "OverallPrice")]
