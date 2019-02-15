@@ -15,6 +15,9 @@ namespace ColorMixERP.Provider
 {
     public class OAuthAppProvider : OAuthAuthorizationServerProvider
     {
+        public static readonly string USER_ID = "userId";
+        public static readonly string WORKPLACE_ID = "workPlace";
+        public static readonly string FULL_NAME = "fullName";
         public override Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
             return Task.Factory.StartNew(() =>
@@ -32,7 +35,13 @@ namespace ColorMixERP.Provider
                     };
 
                     ClaimsIdentity oAutIdentity = new ClaimsIdentity(claims, Startup.OAuthOptions.AuthenticationType);
-                    context.Validated(new AuthenticationTicket(oAutIdentity, new AuthenticationProperties() { }));
+                    var authProps = new AuthenticationProperties(new Dictionary<string, string>()
+                    {
+                        {USER_ID, user.Id.ToString()},
+                        {FULL_NAME, user.FullName},
+                        {WORKPLACE_ID, user.WorkplaceId}
+                    });
+                    context.Validated(new AuthenticationTicket(oAutIdentity, authProps));
                 }
                 else
                 {
@@ -40,7 +49,15 @@ namespace ColorMixERP.Provider
                 }
             });
         }
+        public override Task TokenEndpoint(OAuthTokenEndpointContext context)
+        {
+            foreach (KeyValuePair<string, string> property in context.Properties.Dictionary)
+            {
+                context.AdditionalResponseParameters.Add(property.Key, property.Value);
+            }
 
+            return Task.FromResult<object>(null);
+        }
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
             if (context.ClientId == null)
