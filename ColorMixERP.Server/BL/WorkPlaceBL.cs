@@ -1,5 +1,5 @@
 ﻿
-using ColorMixERP.Server.Entities;
+using ColorMixERP.Server.Entities.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,21 +11,21 @@ namespace ColorMixERP.Server.BL
 {
     public class WorkPlaceBL
     {
-        public List<WorkPlace> GetWorkPlaces()
+        public List<WorkPlaceDTO> GetWorkPlaces()
         {
             return new WorkPlaceDalFacade().GetWorkPlaces();
         }
 
-        public WorkPlace GetWorkPlace(int? id)
+        public WorkPlaceDTO GetWorkPlace(int? id)
         {
             return new WorkPlaceDalFacade().GetWorkPlace(id);
         }
 
-        public void Add(WorkPlace workPlace)
+        public void Add(WorkPlaceDTO workPlace)
         {
             new WorkPlaceDalFacade().Add(workPlace);
         }
-        public void Update(WorkPlace workPlace)
+        public void Update(WorkPlaceDTO workPlace)
         {
             new WorkPlaceDalFacade().Update(workPlace);
         }

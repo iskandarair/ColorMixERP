@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ColorMixERP.Server.BL;
-using ColorMixERP.Server.Entities;
+using ColorMixERP.Server.Entities.DTO;
 
 namespace ColorMixERP.Controllers
 {
@@ -29,7 +29,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
-        public HttpResponseMessage Add(int workplaceId,ProductStock productStock)
+        public HttpResponseMessage Add(int workplaceId, ProductStockDTO productStock)
         {
 
             try
@@ -45,7 +45,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPut]
-        public HttpResponseMessage Update(ProductStock productStock)
+        public HttpResponseMessage Update(ProductStockDTO productStock)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                new UserBL().Delete(id);
+                new ProductStockBL().Delete(id);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)

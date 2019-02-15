@@ -61,13 +61,15 @@
     <Compile Include="DAL\SupplierDalFacade.cs" />
     <Compile Include="DAL\UserDalFacade.cs" />
     <Compile Include="DAL\WorkPlaceDalFacade.cs" />
-    <Compile Include="Entities\AuthorizationEntities\AccountUserDTO.cs" />
+    <Compile Include="Entities\DTO\AccountUserDTO.cs" />
     <Compile Include="Entities\AuthorizationEntities\User.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\Currency.cs" />
     <Compile Include="Entities\DebtCover.cs" />
     <Compile Include="Entities\DTO\InnerMovementDTO.cs" />
+    <Compile Include="Entities\DTO\ProductStockDTO.cs" />
+    <Compile Include="Entities\DTO\WorkPlaceDTO.cs" />
     <Compile Include="Entities\Expense.cs" />
     <Compile Include="Entities\InnerMovement.cs" />
     <Compile Include="Entities\ClientOrder.cs" />

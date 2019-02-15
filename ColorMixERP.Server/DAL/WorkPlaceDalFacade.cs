@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ColorMixERP.Server.Entities;
 using System.Data.Linq;
 using System.Security.Principal;
+using ColorMixERP.Server.Entities.DTO;
 
 namespace ColorMixERP.Server.DAL
 {
@@ -18,28 +19,44 @@ namespace ColorMixERP.Server.DAL
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
 
-        public List<WorkPlace> GetWorkPlaces()
+        public List<WorkPlaceDTO> GetWorkPlaces()
         { 
-            var result = from c in db.WorkPlaces select c;
-            return result.ToList();
+            var query = from c in db.WorkPlaces select new WorkPlaceDTO()
+            {
+                Id =  c.Id,
+                Name = c.Name,
+                Location = c.Location,
+                ProductStocks = new ProductStockDalFacade().GetWorkPlaceProductStocks(c.Id ?? 0)
+            };
+            return query.ToList();
         }
 
-        public WorkPlace GetWorkPlace(int? id)
+        public WorkPlaceDTO GetWorkPlace(int? id)
         { 
-            var result = from c in db.WorkPlaces where c.Id == id select c;
+            var result = from c in db.WorkPlaces where c.Id == id select new WorkPlaceDTO()
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Location = c.Location,
+                ProductStocks = new ProductStockDalFacade().GetWorkPlaceProductStocks(c.Id ?? 0)
+            };
             return result.FirstOrDefault();
         }
 
-        public void Add(WorkPlace workPlace)
+        public void Add(WorkPlaceDTO workPlace)
         {
             workPlace.Id = null;
-            var element = new WorkPlace(); ;
-            element = workPlace;
+            var element = new WorkPlace()
+            {
+                Name = workPlace.Name,
+                Location = workPlace.Location
+            };
+        
             db.WorkPlaces.InsertOnSubmit(element);
             db.SubmitChanges();
         }
 
-        public void Update(WorkPlace workPlace)
+        public void Update(WorkPlaceDTO workPlace)
         {
             var workplaceToUpdate = GetWorkPlace(workPlace.Id);
             workplaceToUpdate.Location = workPlace.Location;
@@ -49,7 +66,7 @@ namespace ColorMixERP.Server.DAL
 
         public void Delete(int id)
         {
-            var element = GetWorkPlace(id);
+            var element = (from c in db.WorkPlaces where c.Id == id select c).FirstOrDefault();
             db.WorkPlaces.DeleteOnSubmit(element);
             db.SubmitChanges();
         }

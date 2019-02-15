@@ -27,7 +27,8 @@ CONSTRAINT UserWorkPlace FOREIGN KEY (WorkPlace) REFERENCES WorkPlace(Id)
 );
 
 --Adding Password Column
-ALTER TABLE AccountUser ADD Password nvarchar(255) NOT NULL default '_M?;Z?e??''?????';                                  ----- ONLY THIS NEEDED
+ALTER TABLE AccountUser ADD Password nvarchar(255) NOT NULL default '_M?;Z?e??''?????';
+ALTER TABLE AccountUser ADD isSunnat bit NOT NULL default 0;                                   ----- ONLY THIS NEEDED
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'Supplier')
 CREATE TABLE Supplier (
 Id int IDENTITY(1,1),

@@ -55,6 +55,8 @@ namespace ColorMixERP.Server.Entities
             set { _Expenses = value; }
         }
 
+        [Column(Name = "isSunnat")]
+        public bool isSunnat { get; set; }
 
         //For Auth only
         [Column(Name = "Password")]

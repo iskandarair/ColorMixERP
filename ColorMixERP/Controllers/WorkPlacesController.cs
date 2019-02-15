@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using ColorMixERP.Server.BL;
 using ColorMixERP.Server.Entities;
+using ColorMixERP.Server.Entities.DTO;
 
 namespace ColorMixERP.Controllers
 {
@@ -29,7 +30,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
-        public HttpResponseMessage AddWorkPlace(WorkPlace workPlace)
+        public HttpResponseMessage AddWorkPlace(WorkPlaceDTO workPlace)
         {
             try
             {
@@ -44,7 +45,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPut]
-        public HttpResponseMessage UpdateWorkPlace(WorkPlace workPlace)
+        public HttpResponseMessage UpdateWorkPlace(WorkPlaceDTO workPlace)
         {
             try
             {
@@ -76,7 +77,7 @@ namespace ColorMixERP.Controllers
         [Authorize]
         [HttpPost]
         [ActionName("ProductStocks")]
-        public HttpResponseMessage Add(int id, ProductStock stock)
+        public HttpResponseMessage Add(int id, ProductStockDTO stock)
         {
             try
             {

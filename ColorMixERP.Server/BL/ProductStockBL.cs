@@ -5,27 +5,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ColorMixERP.Server.DAL;
+using ColorMixERP.Server.Entities.DTO;
 
 namespace ColorMixERP.Server.BL
 {
     public class ProductStockBL
     {
-        public List<ProductStock> GetProductStocks()
+        public List<ProductStockDTO> GetProductStocks()
         {
             return new ProductStockDalFacade().GetProductStocks();
         }
 
-        public ProductStock GetProductStock(int? id)
+        public ProductStockDTO GetProductStock(int? id)
         {
             return new ProductStockDalFacade().GetProductStock(id);
         }
 
-        public void Add(int workPlaceId, ProductStock stock)
+        public void Add(int workPlaceId, ProductStockDTO stock)
         {
             new ProductStockDalFacade().Add(workPlaceId,stock);
         }
         
-        public void Update( ProductStock stock)
+        public void Update(ProductStockDTO stock)
         {
             new ProductStockDalFacade().Update(stock);
         }
@@ -35,7 +36,7 @@ namespace ColorMixERP.Server.BL
             new ProductStockDalFacade().Delete(id);
         }
 
-        public List<ProductStock> GetWorkPlaceProductStocks(int wpId)
+        public List<ProductStockDTO> GetWorkPlaceProductStocks(int wpId)
         {
            return new ProductStockDalFacade().GetWorkPlaceProductStocks(wpId);
         }

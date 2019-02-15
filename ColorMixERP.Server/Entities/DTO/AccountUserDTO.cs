@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ColorMixERP.Server.Entities.AuthorizationEntities
+namespace ColorMixERP.Server.Entities.DTO
 {
     public class AccountUserDTO
     {
@@ -19,6 +19,6 @@ namespace ColorMixERP.Server.Entities.AuthorizationEntities
         public string WorkPlaceName { get; set; }
         public string Password { get; set; }
 
-
+        public bool isSunnat { get; set; }
     }
 }

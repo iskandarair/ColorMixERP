@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ColorMixERP.Server.Entities;
 using System.Data.Linq;
+using ColorMixERP.Server.Entities.DTO;
 using ColorMixERP.Server.Entities.AuthorizationEntities;
 
 namespace ColorMixERP.Server.DAL
@@ -29,6 +30,7 @@ namespace ColorMixERP.Server.DAL
                 PhoneNumber = c.PhoneNumber,
                 WorkPlaceId = c.WorkPlace.Id ?? 0,
                 WorkPlaceName = c.WorkPlace.Name,
+                isSunnat = c.isSunnat
                 //Password = c.Password
             };
             var result = query.ToList();
@@ -46,6 +48,7 @@ namespace ColorMixERP.Server.DAL
                 PhoneNumber =  c.PhoneNumber,
                 WorkPlaceId =  c.WorkPlace.Id ?? 0,
                 WorkPlaceName = c.WorkPlace.Name,
+                isSunnat = c.isSunnat
                 //Password =  c.Password
             };
             var result = query.FirstOrDefault();
