@@ -10,3 +10,4 @@ ColorMixERP.Server/bin
 ColorMixERP.Server/Config/LinqContext.cs
 obj
 bin
+/ColorMixERP.Server/Config/LinqContext.cs
