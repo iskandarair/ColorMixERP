@@ -12,7 +12,9 @@ namespace ColorMixERP.Provider
     {
         public static readonly string USER_ID = "userId";
         public static readonly string WORKPLACE_ID = "workPlaceId";
-        public static readonly string FULL_NAME = "fullName";
+        public static readonly string NAME = "name";
+        public static readonly string SUR_NAME = "surName";
+        public static readonly string PHONE_NUMBER = "phoneNumber";
         public static readonly string POSITION_ROLE = "positionRoleId";
         public static readonly string IS_SUNNAT = "isSunnat";
 
@@ -36,7 +38,9 @@ namespace ColorMixERP.Provider
                     var authProps = new AuthenticationProperties(new Dictionary<string, string>()
                     {
                         {USER_ID, user.Id.ToString()},
-                        {FULL_NAME, user.FullName},
+                        {NAME, user.Name },
+                        {SUR_NAME, user.SurName},
+                        {PHONE_NUMBER, user.PhoneNumber },
                         {WORKPLACE_ID, user.WorkplaceId},
                         {POSITION_ROLE,user.PosotionRoleId},
                         { IS_SUNNAT, user.isSunnat }

@@ -59,7 +59,9 @@ namespace ColorMixERP.Server.DAL
         {
             var query = from c in db.AccountUsers where c.Name == name && c.Password ==password  select new User(c.Id, c.Name)
             {
-                FullName = c.Name + " " + c.Surname,
+                Name = c.Name,
+                SurName = c.Surname,
+                PhoneNumber = c.PhoneNumber,
                 WorkplaceId = c.WorkPlaceId.ToString(),
                 PosotionRoleId = c.PositionRole.ToString(),
                 isSunnat =  c.isSunnat.ToString()
