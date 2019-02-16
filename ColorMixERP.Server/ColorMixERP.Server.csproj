@@ -45,8 +45,10 @@
     <Compile Include="BL\ClientBL.cs" />
     <Compile Include="BL\ExpenseBL.cs" />
     <Compile Include="BL\InnerMovementBL.cs" />
+    <Compile Include="BL\OrderBL.cs" />
     <Compile Include="BL\ProductBL.cs" />
     <Compile Include="BL\ProductStockBL.cs" />
+    <Compile Include="BL\SaleBL.cs" />
     <Compile Include="BL\SupplierBL.cs" />
     <Compile Include="BL\UserBL.cs" />
     <Compile Include="BL\WorkPlaceBL.cs" />
@@ -56,8 +58,10 @@
     <Compile Include="DAL\ClientDalFacade.cs" />
     <Compile Include="DAL\ExpenseDalFacade.cs" />
     <Compile Include="DAL\InnerMovementDalFacade.cs" />
+    <Compile Include="DAL\OrderDalFacade.cs" />
     <Compile Include="DAL\ProductDalFacade.cs" />
     <Compile Include="DAL\ProductStockDalFacade.cs" />
+    <Compile Include="DAL\SaleDalFacade.cs" />
     <Compile Include="DAL\SupplierDalFacade.cs" />
     <Compile Include="DAL\UserDalFacade.cs" />
     <Compile Include="DAL\WorkPlaceDalFacade.cs" />
@@ -68,7 +72,9 @@
     <Compile Include="Entities\Currency.cs" />
     <Compile Include="Entities\DebtCover.cs" />
     <Compile Include="Entities\DTO\InnerMovementDTO.cs" />
+    <Compile Include="Entities\DTO\OrderDTO.cs" />
     <Compile Include="Entities\DTO\ProductStockDTO.cs" />
+    <Compile Include="Entities\DTO\SaleDTO.cs" />
     <Compile Include="Entities\DTO\WorkPlaceDTO.cs" />
     <Compile Include="Entities\Expense.cs" />
     <Compile Include="Entities\InnerMovement.cs" />

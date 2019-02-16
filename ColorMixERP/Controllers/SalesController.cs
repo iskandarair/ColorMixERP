@@ -5,47 +5,35 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ColorMixERP.Server.BL;
-using ColorMixERP.Server.Entities;
 using ColorMixERP.Server.Entities.DTO;
 
 namespace ColorMixERP.Controllers
 {
-    public class AccountUsersController : ApiController
+    public class SalesController : ApiController
     {
         [Authorize]
         [HttpGet]
-        [Route("api/AccountUsers/{id}/Expenses")]
-        public HttpResponseMessage GetUserExpenses(int id)
+        public HttpResponseMessage GetSales()
         {
-            var data = new ExpenseBL().GetUserExpenses(id);
-            return Request.CreateResponse(HttpStatusCode.OK, data);
-        }
-
-
-        [Authorize]
-        [HttpGet]
-        public HttpResponseMessage GetAccountUsers()
-        {
-            var data = new UserBL().GetAccountUsers();
+            var data = new SaleBL().GetSales();
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
 
         [Authorize]
         [HttpGet]
-        [Route("api/AccountUsers/{id}")]
-        public HttpResponseMessage GetUserById(int id)
+        public HttpResponseMessage GetSale(int id)
         {
-            var data = new UserBL().GetAccountUser(id);
+            var data = new SaleBL().GetSale(id);
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
 
         [Authorize]
         [HttpPost]
-        public HttpResponseMessage AddUser(AccountUserDTO user)
+        public HttpResponseMessage Add(SaleDTO dto)
         {
             try
             {
-                new UserBL().Add(user);
+                new SaleBL().Add(dto);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
@@ -56,11 +44,11 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPut]
-        public HttpResponseMessage UpdateUser(AccountUserDTO user)
+        public HttpResponseMessage Update(SaleDTO sale)
         {
             try
             {
-                new UserBL().Update(user);
+                new SaleBL().Update(sale);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
@@ -71,24 +59,17 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpDelete]
-        public HttpResponseMessage DeleteUser(int id)
+        public HttpResponseMessage Delete(int id)
         {
             try
             {
-                new UserBL().Delete(id);
+                new SaleBL().Delete(id);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
-        }
-
-        [Authorize]
-        [HttpPost]
-        public HttpResponseMessage Add(int id, Expense expense)
-        {
-           return new ExpensesController().Add(id, expense);
         }
     }
 }

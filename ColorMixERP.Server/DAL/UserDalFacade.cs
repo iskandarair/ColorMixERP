@@ -57,7 +57,11 @@ namespace ColorMixERP.Server.DAL
         }
         public User GetAccountByName(string name, string password)
         {
-            var query = from c in db.AccountUsers where c.Name == name && c.Password ==password  select new User(c.Id, c.Name);
+            var query = from c in db.AccountUsers where c.Name == name && c.Password ==password  select new User(c.Id, c.Name)
+            {
+                FullName = c.Name + " " + c.Surname,
+                WorkplaceId = c.WorkPlaceId.ToString()
+            };
             var result = query.FirstOrDefault();
 
             return result;

@@ -10,6 +10,8 @@ namespace ColorMixERP.Server.Entities.AuthorizationEntities
     {
         public int? Id { get; set; }
         public string Name { get; set; }
+        public string FullName { get; set; }
+        public string WorkplaceId { get; set; }
 
         public User(int? id,string name)
         {
