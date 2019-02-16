@@ -13,7 +13,8 @@ namespace ColorMixERP.Provider
         public static readonly string USER_ID = "userId";
         public static readonly string WORKPLACE_ID = "workPlaceId";
         public static readonly string FULL_NAME = "fullName";
-        public static readonly string POSITION_ROLE = "positiionRoleId";
+        public static readonly string POSITION_ROLE = "positionRoleId";
+        public static readonly string IS_SUNNAT = "isSunnat";
 
         public override Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
@@ -37,7 +38,8 @@ namespace ColorMixERP.Provider
                         {USER_ID, user.Id.ToString()},
                         {FULL_NAME, user.FullName},
                         {WORKPLACE_ID, user.WorkplaceId},
-                        {POSITION_ROLE,user.PosotionRoleId}
+                        {POSITION_ROLE,user.PosotionRoleId},
+                        { IS_SUNNAT, user.isSunnat }
                     });
                     context.Validated(new AuthenticationTicket(oAutIdentity, authProps));
                 }

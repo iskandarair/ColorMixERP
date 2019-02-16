@@ -61,7 +61,8 @@ namespace ColorMixERP.Server.DAL
             {
                 FullName = c.Name + " " + c.Surname,
                 WorkplaceId = c.WorkPlaceId.ToString(),
-                PosotionRoleId = c.PositionRole.ToString()
+                PosotionRoleId = c.PositionRole.ToString(),
+                isSunnat =  c.isSunnat.ToString()
             };
             var result = query.FirstOrDefault();
 
