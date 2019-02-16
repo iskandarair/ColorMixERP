@@ -13,7 +13,7 @@ namespace ColorMixERP.Provider
         public static readonly string USER_ID = "userId";
         public static readonly string WORKPLACE_ID = "workPlaceId";
         public static readonly string FULL_NAME = "fullName";
-        public static readonly string POSITION_ROLE = "positiionRoleId";
+        public static readonly string POSITION_ROLE = "positionRoleId";
 
         public override Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
