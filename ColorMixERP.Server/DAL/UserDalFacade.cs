@@ -60,7 +60,8 @@ namespace ColorMixERP.Server.DAL
             var query = from c in db.AccountUsers where c.Name == name && c.Password ==password  select new User(c.Id, c.Name)
             {
                 FullName = c.Name + " " + c.Surname,
-                WorkplaceId = c.WorkPlaceId.ToString()
+                WorkplaceId = c.WorkPlaceId.ToString(),
+                PosotionRoleId = c.PositionRole.ToString()
             };
             var result = query.FirstOrDefault();
 
