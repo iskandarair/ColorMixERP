@@ -31,9 +31,16 @@ namespace ColorMixERP.Server.DAL
 
         public void Add(Product product)
         {
-            var ProductToAdd = new Product();;
-            ProductToAdd = product;
-            db.Products.InsertOnSubmit(ProductToAdd);
+            var productToAdd = new Product(product.Category.Id ?? 0, product.Supplier.Id)
+            {
+                Code = product.Code,
+                Name = product.Name,
+                Price = product.Price,
+                Currency = product.Currency,
+                MeasurementUnit = product.MeasurementUnit,
+                BoxedNumber = product.BoxedNumber
+            };
+            db.Products.InsertOnSubmit(productToAdd);
             db.SubmitChanges();
         }
 

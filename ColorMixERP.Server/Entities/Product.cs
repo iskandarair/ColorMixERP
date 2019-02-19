@@ -11,6 +11,15 @@ namespace ColorMixERP.Server.Entities
     [Table(Name = "Product")]
     public class Product
     {
+        public Product()
+        {
+        }
+
+        public Product(int categoryId, int supplierId)
+        {
+            CategoryId = categoryId;
+            SupplierId = supplierId;
+        }
         [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
 
@@ -20,8 +29,10 @@ namespace ColorMixERP.Server.Entities
         [Column(Name = "Name")]
         public string Name { get; set; }
         
+        [Column(Name="Category")]
+        private int CategoryId { get; set; }
         private EntityRef<Category> _Category;
-        [Association(Storage = "_Category", OtherKey = "Id")]
+        [Association(Storage = "_Category", ThisKey = "CategoryId")]
         public Category Category
         {
             get { return _Category.Entity; }
