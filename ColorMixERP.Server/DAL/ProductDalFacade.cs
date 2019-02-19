@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ColorMixERP.Server.Entities;
 using ColorMixERP.Server.Config;
+using ColorMixERP.Server.Entities.DTO;
 
 namespace ColorMixERP.Server.DAL
 {
@@ -17,19 +18,41 @@ namespace ColorMixERP.Server.DAL
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
 
-        public List<Product> GetProducts()
+        public List<ProductDTO> GetProducts()
         { 
-            var query = from p in db.Products select p;
+            var query = from p in db.Products select new ProductDTO()
+            {
+                Id = p.Id,
+                Code = p.Code,
+                Name = p.Name,
+                Category = p.Category,
+                Price = p.Price,
+                Currency = p.Currency,
+                MeasurementUnit = p.MeasurementUnit,
+                BoxedNumber = p.BoxedNumber,
+                Supplier = p.Supplier
+            };
             return query.ToList();
         }
 
-        public Product GetProduct(int? id)
+        public ProductDTO GetProduct(int? id)
         { 
-            var query = from p in db.Products where p.Id == id select p;
+            var query = from p in db.Products where p.Id == id select new ProductDTO()
+            { 
+                Id = p.Id,
+                Code = p.Code,
+                Name = p.Name,
+                Category = p.Category,
+                Price = p.Price,
+                Currency = p.Currency,
+                MeasurementUnit = p.MeasurementUnit,
+                BoxedNumber = p.BoxedNumber,
+                Supplier = p.Supplier
+            }; ;
             return query.FirstOrDefault();
         }
 
-        public void Add(Product product)
+        public void Add(ProductDTO product)
         {
             var productToAdd = new Product(product.Category.Id ?? 0, product.Supplier.Id)
             {
@@ -44,23 +67,23 @@ namespace ColorMixERP.Server.DAL
             db.SubmitChanges();
         }
 
-        public void Update(Product product)
+        public void Update(ProductDTO product)
         {
-            var productToUpdate = GetProduct(product.Id);
+            var productToUpdate = (from p in db.Products where p.Id == product.Id select p).FirstOrDefault();
             productToUpdate.Code = product.Code;
             productToUpdate.BoxedNumber = product.BoxedNumber;
             productToUpdate.Currency = product.Currency;
             productToUpdate.MeasurementUnit = product.MeasurementUnit;
             productToUpdate.Name = product.Name;
             productToUpdate.Price = product.Price;
-            productToUpdate.Category = product.Category;
-            productToUpdate.Supplier = product.Supplier;
+            productToUpdate.CategoryId = product.Category.Id ?? 0;
+            productToUpdate.SupplierId = product.Supplier.Id;
             db.SubmitChanges();
         }
 
         public void Delete(int id)
         {
-            var product = GetProduct(id);
+            var product = (from p in db.Products where p.Id == id select p).FirstOrDefault();
             db.Products.DeleteOnSubmit(product);
             db.SubmitChanges();
         }

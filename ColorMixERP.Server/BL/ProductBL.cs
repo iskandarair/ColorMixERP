@@ -5,27 +5,28 @@ using System.Text;
 using System.Threading.Tasks;
 using ColorMixERP.Server.DAL;
 using ColorMixERP.Server.Entities;
+using ColorMixERP.Server.Entities.DTO;
 
 namespace ColorMixERP.Server.BL
 {
     public class ProductBL
     {
-        public List<Product> GetProducts()
+        public List<ProductDTO> GetProducts()
         {
             return new ProductDalFacade().GetProducts();
         }
 
-        public Product GetProduct(int? id)
+        public ProductDTO GetProduct(int? id)
         {
             return new ProductDalFacade().GetProduct(id);
         }
 
-        public void Add(Product product)
+        public void Add(ProductDTO product)
         {
             new ProductDalFacade().Add(product);
         }
 
-        public void Update(Product product)
+        public void Update(ProductDTO product)
         {
             new ProductDalFacade().Update(product);
         }

@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using ColorMixERP.Server.BL;
 using ColorMixERP.Server.Entities;
+using ColorMixERP.Server.Entities.DTO;
 
 namespace ColorMixERP.Controllers
 {
@@ -30,7 +31,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
-        public HttpResponseMessage AddProduct(Product product)
+        public HttpResponseMessage AddProduct(ProductDTO product)
         {
             try
             {
@@ -46,7 +47,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPut]
-        public HttpResponseMessage UpdateProduct(Product product)
+        public HttpResponseMessage UpdateProduct(ProductDTO product)
         {
             try
             {

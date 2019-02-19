@@ -30,7 +30,7 @@ namespace ColorMixERP.Server.Entities
         public string Name { get; set; }
         
         [Column(Name="Category")]
-        private int CategoryId { get; set; }
+        public int CategoryId { get; set; }
         private EntityRef<Category> _Category;
         [Association(Storage = "_Category", ThisKey = "CategoryId")]
         public Category Category
@@ -52,7 +52,7 @@ namespace ColorMixERP.Server.Entities
         [Column(Name = "BoxedNumber")]
         public decimal BoxedNumber { get; set; }
         [Column(Name="Supplier")]
-        private int SupplierId { get; set; }
+        public int SupplierId { get; set; }
         private EntityRef<Supplier> _Supplier;
         [Association(Storage = "_Supplier", ThisKey = "SupplierId")]
         public Supplier Supplier

@@ -73,6 +73,7 @@
     <Compile Include="Entities\DebtCover.cs" />
     <Compile Include="Entities\DTO\InnerMovementDTO.cs" />
     <Compile Include="Entities\DTO\OrderDTO.cs" />
+    <Compile Include="Entities\DTO\ProductDTO.cs" />
     <Compile Include="Entities\DTO\ProductStockDTO.cs" />
     <Compile Include="Entities\DTO\SaleDTO.cs" />
     <Compile Include="Entities\DTO\WorkPlaceDTO.cs" />
