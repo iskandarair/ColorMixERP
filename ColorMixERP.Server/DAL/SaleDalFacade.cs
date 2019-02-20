@@ -20,7 +20,8 @@ namespace ColorMixERP.Server.DAL
         }
         public List<SaleDTO> GetSales()
         {
-            var query = from c in db.Sales select new SaleDTO()
+            var query = from c in db.Sales where c.IsDeleted == false
+                select new SaleDTO()
                 {
                     Id = c.Id,
                     ProductId = c.Product.Id,
@@ -104,7 +105,7 @@ namespace ColorMixERP.Server.DAL
         public void Delete(int id)
         {
             var element = (from c in db.Sales where c.Id == id select c).FirstOrDefault();
-            db.Sales.DeleteOnSubmit(element);
+            element.IsDeleted = true;
             db.SubmitChanges();
         }
     }

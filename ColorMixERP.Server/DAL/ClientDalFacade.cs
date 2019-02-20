@@ -18,7 +18,7 @@ namespace ColorMixERP.Server.DAL
 
         public List<Client> GetClients()
         {
-            var query = from c in db.Clients select c;
+            var query = from c in db.Clients where c.IsDeleted == false select c;
             return query.ToList();
         }
 
@@ -51,8 +51,8 @@ namespace ColorMixERP.Server.DAL
 
         public void Delete(int id)
         {
-            var client = GetClient(id);
-            db.Clients.DeleteOnSubmit(client);
+            var element = (from c in db.ClientOrders where c.Id == id select c).FirstOrDefault();
+            element.IsDeleted = true;
             db.SubmitChanges();
         }
     }

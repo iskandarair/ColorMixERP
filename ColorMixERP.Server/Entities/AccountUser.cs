@@ -9,7 +9,7 @@ using System.Data.Linq;
 namespace ColorMixERP.Server.Entities
 {
     [Table(Name = "AccountUser")]
-    public class AccountUser
+    public class AccountUser 
     {
         public AccountUser()
         {
@@ -61,5 +61,16 @@ namespace ColorMixERP.Server.Entities
         //For Auth only
         [Column(Name = "Password")]
         public string Password { get; set; }
+
+        // =================================================
+
+        [Column(Name = "IsDeleted")]
+        public bool IsDeleted { get; set; }
+
+        [Column(Name = "DeletedDate")]
+        public DateTime DeletedDate { get; set; }
+
+        [Column(Name = "UpdatedDate")]
+        public DateTime UpdatedDate { get; set; }
     }
 }

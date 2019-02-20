@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ColorMixERP.Server.Config;
 using ColorMixERP.Server.Entities;
+using ColorMixERP.Server.Entities.DTO;
 
 namespace ColorMixERP.Server.DAL
 {
@@ -15,29 +16,37 @@ namespace ColorMixERP.Server.DAL
         {
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
-        public List<Category> GetCategories()
+        public List<CategoryDTO> GetCategories()
         {
-            var query = from c in db.Categories select c;
+            var query = from c in db.Categories where c.IsDeleted == false select new CategoryDTO()
+            {
+                Id = c.Id ?? 0,
+                Code = c.Code,
+                Name = c.Name
+            };
             return query.ToList();
         }
 
-        public Category GetCategory(int? id)
+        public CategoryDTO GetCategory(int? id)
         {
             var categories = GetCategories();
             return categories.Where(c => c.Id == id).FirstOrDefault();
         }
 
-        public void Add(Category category)
+        public void Add(CategoryDTO category)
         {
-            Category categoryToinsert = new Category();
-            categoryToinsert = category;
+            Category categoryToinsert = new Category()
+            {
+                Code =  category.Code,
+                Name = category.Name
+            };
             db.Categories.InsertOnSubmit(categoryToinsert);
             db.SubmitChanges();
         }
 
-        public void Update(Category category)
+        public void Update(CategoryDTO category)
         {
-            var categoryToUpdate = GetCategory(category.Id);
+            var categoryToUpdate = (from c in db.Categories where c.Id == category.Id select c).FirstOrDefault();
             categoryToUpdate.Code = category.Code;
             categoryToUpdate.Name = category.Name;
             db.SubmitChanges();
@@ -45,8 +54,8 @@ namespace ColorMixERP.Server.DAL
 
         public void Delete(int? id)
         {
-            var categoryToDelete = GetCategory(id);
-            db.Categories.DeleteOnSubmit(categoryToDelete);
+            var element = (from c in db.Categories where c.Id == id select c).FirstOrDefault();
+            element.IsDeleted = true;
             db.SubmitChanges();
         }
     }

@@ -20,17 +20,27 @@ namespace ColorMixERP.Server.DAL
 
         public List<ProductDTO> GetProducts()
         { 
-            var query = from p in db.Products select new ProductDTO()
+            var query = from p in db.Products where p.IsDeleted == false select new ProductDTO()
             {
                 Id = p.Id,
                 Code = p.Code,
                 Name = p.Name,
-                Category = p.Category,
+                Category = new CategoryDTO()
+                {
+                    Id = p.CategoryId,
+                    Code = p.Category.Code,
+                    Name = p.Category.Name
+                },
                 Price = p.Price,
                 Currency = p.Currency,
                 MeasurementUnit = p.MeasurementUnit,
                 BoxedNumber = p.BoxedNumber,
-                Supplier = p.Supplier
+                Supplier = new SupplierDTO()
+                {
+                    Id = p.SupplierId,
+                    Name = p.Supplier.Name,
+                    SupplierInfo = p.Supplier.SupplierInfo
+                }
             };
             return query.ToList();
         }
@@ -42,19 +52,29 @@ namespace ColorMixERP.Server.DAL
                 Id = p.Id,
                 Code = p.Code,
                 Name = p.Name,
-                Category = p.Category,
+                Category = new CategoryDTO()
+                {
+                    Id = p.CategoryId,
+                    Code = p.Category.Code,
+                    Name = p.Category.Name
+                },
                 Price = p.Price,
                 Currency = p.Currency,
                 MeasurementUnit = p.MeasurementUnit,
                 BoxedNumber = p.BoxedNumber,
-                Supplier = p.Supplier
+                Supplier = new SupplierDTO()
+                {
+                    Id = p.SupplierId,
+                    Name = p.Supplier.Name,
+                    SupplierInfo = p.Supplier.SupplierInfo
+                }
             }; ;
             return query.FirstOrDefault();
         }
 
         public void Add(ProductDTO product)
         {
-            var productToAdd = new Product(product.Category.Id ?? 0, product.Supplier.Id)
+            var productToAdd = new Product(product.Category.Id, product.Supplier.Id)
             {
                 Code = product.Code,
                 Name = product.Name,
@@ -76,15 +96,15 @@ namespace ColorMixERP.Server.DAL
             productToUpdate.MeasurementUnit = product.MeasurementUnit;
             productToUpdate.Name = product.Name;
             productToUpdate.Price = product.Price;
-            productToUpdate.CategoryId = product.Category.Id ?? 0;
+            productToUpdate.CategoryId = product.Category.Id;
             productToUpdate.SupplierId = product.Supplier.Id;
             db.SubmitChanges();
         }
 
         public void Delete(int id)
         {
-            var product = (from p in db.Products where p.Id == id select p).FirstOrDefault();
-            db.Products.DeleteOnSubmit(product);
+            var element = (from c in db.Products where c.Id == id select c).FirstOrDefault();
+            element.IsDeleted = true;
             db.SubmitChanges();
         }
     }

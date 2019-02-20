@@ -21,7 +21,8 @@ namespace ColorMixERP.Server.DAL
 
         public List<AccountUserDTO> GetAccountUsers()
         {
-            var query =  from c in db.AccountUsers  select new AccountUserDTO()
+            var query =  from c in db.AccountUsers where c.IsDeleted == false
+                         select new AccountUserDTO()
             {
                 Id = c.Id,
                 Name = c.Name,
@@ -92,7 +93,7 @@ namespace ColorMixERP.Server.DAL
         public void Delete(int id)
         {
             var element = (from c in db.AccountUsers where c.Id == id select c).FirstOrDefault();
-            db.AccountUsers.DeleteOnSubmit(element);
+            element.IsDeleted = true;
             db.SubmitChanges();
         }
     }

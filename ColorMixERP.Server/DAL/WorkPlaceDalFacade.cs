@@ -21,7 +21,8 @@ namespace ColorMixERP.Server.DAL
 
         public List<WorkPlaceDTO> GetWorkPlaces()
         { 
-            var query = from c in db.WorkPlaces select new WorkPlaceDTO()
+            var query = from c in db.WorkPlaces where c.IsDeleted == false
+                select new WorkPlaceDTO()
             {
                 Id =  c.Id,
                 Name = c.Name,
@@ -67,7 +68,7 @@ namespace ColorMixERP.Server.DAL
         public void Delete(int id)
         {
             var element = (from c in db.WorkPlaces where c.Id == id select c).FirstOrDefault();
-            db.WorkPlaces.DeleteOnSubmit(element);
+            element.IsDeleted = true;
             db.SubmitChanges();
         }
     }

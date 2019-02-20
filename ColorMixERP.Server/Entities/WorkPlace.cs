@@ -26,5 +26,17 @@ namespace ColorMixERP.Server.Entities
             get { return _ProductStock; }
             set { _ProductStock = value; }
         }
+
+
+        // =================================================
+
+        [Column(Name = "IsDeleted")]
+        public bool IsDeleted { get; set; }
+
+        [Column(Name = "DeletedDate")]
+        public DateTime DeletedDate { get; set; }
+
+        [Column(Name = "UpdatedDate")]
+        public DateTime UpdatedDate { get; set; }
     }
 }

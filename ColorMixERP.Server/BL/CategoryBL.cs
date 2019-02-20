@@ -5,27 +5,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ColorMixERP.Server.DAL;
+using ColorMixERP.Server.Entities.DTO;
 
 namespace ColorMixERP.Server.BL
 {
     public class CategoryBL
     {
-        public List<Category> GetCategories()
+        public List<CategoryDTO> GetCategories()
         {
             return new CategoryDalFacade().GetCategories();
         }
 
-        public Category GetCategory(int? id)
+        public CategoryDTO GetCategory(int? id)
         {
             return new CategoryDalFacade().GetCategory(id);
         }
 
-        public void Add(Category category)
+        public void Add(CategoryDTO category)
         {
             new CategoryDalFacade().Add(category);
         }
 
-        public void Update(Category category)
+        public void Update(CategoryDTO category)
         {
             new CategoryDalFacade().Update(category);
         }

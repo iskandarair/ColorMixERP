@@ -5,27 +5,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ColorMixERP.Server.DAL;
+using ColorMixERP.Server.Entities.DTO;
 
 namespace ColorMixERP.Server.BL
 {
     public class SupplierBL
     {
-        public List<Supplier> GetSuppliers()
+        public List<SupplierDTO> GetSuppliers()
         {
             return new SupplierDalFacade().GetSuppliers();
         }
 
-        public Supplier GetSupplier(int? id)
+        public SupplierDTO GetSupplier(int? id)
         {
             return new SupplierDalFacade().GetSupplier(id);
         }
 
-        public void Add(Supplier supplier)
+        public void Add(SupplierDTO supplier)
         {
             new SupplierDalFacade().Add(supplier);
         }
 
-        public void Update(Supplier supplier)
+        public void Update(SupplierDTO supplier)
         {
             new SupplierDalFacade().Update(supplier);
         }

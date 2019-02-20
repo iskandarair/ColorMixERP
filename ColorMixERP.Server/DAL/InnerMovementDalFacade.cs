@@ -20,7 +20,7 @@ namespace ColorMixERP.Server.DAL
 
         public List<InnerMovement> GetInnerMovements()
         {
-            var q = from c in db.InnerMovements select c;
+            var q = from c in db.InnerMovements where c.IsDeleted == false select c;
             return q.ToList();
         }
 
@@ -82,8 +82,8 @@ namespace ColorMixERP.Server.DAL
         }
         public void Delete(int id)
         {
-            var elementToDelete = GetInnerMovement(id);
-            db.InnerMovements.DeleteOnSubmit(elementToDelete);
+            var element = (from c in db.InnerMovements where c.Id == id select c).FirstOrDefault();
+            element.IsDeleted = true;
             db.SubmitChanges();
         }
 

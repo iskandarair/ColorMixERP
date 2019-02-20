@@ -11,11 +11,11 @@ namespace ColorMixERP.Server.Entities.DTO
         public int Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
-        public Category Category { get; set; }
+        public CategoryDTO Category { get; set; }
         public decimal Price { get; set; }
         public int Currency { get; set; }
         public string MeasurementUnit { get; set; }
         public decimal BoxedNumber { get; set; }
-        public Supplier Supplier { get; set; }
+        public SupplierDTO Supplier { get; set; }
     }
 }

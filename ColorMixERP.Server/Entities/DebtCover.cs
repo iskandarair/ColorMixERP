@@ -9,7 +9,7 @@ using System.Data.Linq;
 namespace ColorMixERP.Server.Entities
 {
     [Table(Name = "DebtCover")]
-    public class DebtCover
+    public class DebtCover 
     {
         [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
@@ -23,5 +23,16 @@ namespace ColorMixERP.Server.Entities
         public decimal PaymentByTransfer { get; set; }
         [Column(Name="OrderId")]
         private int OrderId { get; set; }
+
+        // =================================================
+
+        [Column(Name = "IsDeleted")]
+        public bool IsDeleted { get; set; }
+
+        [Column(Name = "DeletedDate")]
+        public DateTime DeletedDate { get; set; }
+
+        [Column(Name = "UpdatedDate")]
+        public DateTime UpdatedDate { get; set; }
     }
 }

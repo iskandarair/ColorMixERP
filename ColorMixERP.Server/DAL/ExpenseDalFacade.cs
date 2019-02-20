@@ -18,7 +18,7 @@ namespace ColorMixERP.Server.DAL
 
         public List<Expense> GetExpenses()
         {
-            var query = from c in db.Expenses select c;
+            var query = from c in db.Expenses where c.IsDeleted == false select c;
             return query.ToList();
         }
 
@@ -53,8 +53,8 @@ namespace ColorMixERP.Server.DAL
 
         public void Delete(int expenseId)
         {
-            var exepnse = GetExpense(expenseId);
-            db.Expenses.DeleteOnSubmit(exepnse);
+            var element = (from c in db.Expenses where c.Id == expenseId select c).FirstOrDefault();
+            element.IsDeleted = true;
             db.SubmitChanges();
         }
     }

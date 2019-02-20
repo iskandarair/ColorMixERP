@@ -7,6 +7,7 @@ using System.Web.Http;
 using ColorMixERP.Server.Config;
 using ColorMixERP.Server.BL;
 using ColorMixERP.Server.Entities;
+using ColorMixERP.Server.Entities.DTO;
 
 namespace ColorMixERP.Controllers
 {
@@ -30,7 +31,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
-        public HttpResponseMessage AddCategory(Category category)
+        public HttpResponseMessage AddCategory(CategoryDTO category)
         {
             try
             {
@@ -45,7 +46,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPut]
-        public HttpResponseMessage UpdateCategory(Category category)
+        public HttpResponseMessage UpdateCategory(CategoryDTO category)
         {
             try
             {

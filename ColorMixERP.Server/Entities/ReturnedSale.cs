@@ -39,5 +39,16 @@ namespace ColorMixERP.Server.Entities
         [Column(Name = "ReturnedPrice")]
         public decimal ReturnedPrice { get; set; }
 
+        // =================================================
+
+        [Column(Name = "IsDeleted")]
+        public bool IsDeleted { get; set; }
+
+        [Column(Name = "DeletedDate")]
+        public DateTime DeletedDate { get; set; }
+
+        [Column(Name = "UpdatedDate")]
+        public DateTime UpdatedDate { get; set; }
+
     }
 }

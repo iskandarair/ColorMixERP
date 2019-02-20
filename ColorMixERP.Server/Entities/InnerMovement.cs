@@ -9,7 +9,7 @@ using System.Data.Linq;
 namespace ColorMixERP.Server.Entities
 {
     [Table(Name = "InnerMovement")]
-    public class InnerMovement
+    public class InnerMovement 
     {
         public InnerMovement()
         {
@@ -60,5 +60,16 @@ namespace ColorMixERP.Server.Entities
             get { return _ToWorkPlace.Entity; }
             set { _ToWorkPlace.Entity = value; }
         }
+
+        // =================================================
+
+        [Column(Name = "IsDeleted")]
+        public bool IsDeleted { get; set; }
+
+        [Column(Name = "DeletedDate")]
+        public DateTime DeletedDate { get; set; }
+
+        [Column(Name = "UpdatedDate")]
+        public DateTime UpdatedDate { get; set; }
     }
 }

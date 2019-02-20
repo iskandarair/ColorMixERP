@@ -71,11 +71,13 @@
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\Currency.cs" />
     <Compile Include="Entities\DebtCover.cs" />
+    <Compile Include="Entities\DTO\CategoryDTO.cs" />
     <Compile Include="Entities\DTO\InnerMovementDTO.cs" />
     <Compile Include="Entities\DTO\OrderDTO.cs" />
     <Compile Include="Entities\DTO\ProductDTO.cs" />
     <Compile Include="Entities\DTO\ProductStockDTO.cs" />
     <Compile Include="Entities\DTO\SaleDTO.cs" />
+    <Compile Include="Entities\DTO\SupplierDTO.cs" />
     <Compile Include="Entities\DTO\WorkPlaceDTO.cs" />
     <Compile Include="Entities\Expense.cs" />
     <Compile Include="Entities\InnerMovement.cs" />

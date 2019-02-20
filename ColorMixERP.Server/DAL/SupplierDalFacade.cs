@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ColorMixERP.Server.Config;
 using ColorMixERP.Server.Entities;
+using ColorMixERP.Server.Entities.DTO;
 
 namespace ColorMixERP.Server.DAL
 {
@@ -16,29 +17,44 @@ namespace ColorMixERP.Server.DAL
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
 
-        public List<Supplier> GetSuppliers()
+        public List<SupplierDTO> GetSuppliers()
         {
-            var query = from c in db.Suppliers select c;
+            var query = from c in db.Suppliers where c.IsDeleted == false
+                select new SupplierDTO()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    SupplierInfo = c.SupplierInfo,
+                };
             return query.ToList();
         }
 
-        public Supplier GetSupplier(int? id)
+        public SupplierDTO GetSupplier(int? id)
         {
-            var query = from c in db.Suppliers where c.Id == id select c;
+            var query = from c in db.Suppliers where c.Id == id select new SupplierDTO()
+            {
+                Id = c.Id,
+                Name = c.Name,
+                SupplierInfo = c.SupplierInfo,
+            };
             return query.FirstOrDefault();
         }
 
-        public void Add(Supplier supplier)
+        public void Add(SupplierDTO supplier)
         {
-            var supplierToAdd = new Supplier();
-            supplierToAdd = supplier;
+            var supplierToAdd = new Supplier()
+            {
+                Id = supplier.Id,
+                Name = supplier.Name,
+                SupplierInfo = supplier.SupplierInfo,
+            };
             db.Suppliers.InsertOnSubmit(supplierToAdd);
             db.SubmitChanges();
         }
 
-        public void Update(Supplier supplier)
+        public void Update(SupplierDTO supplier)
         {
-            var supplierToUpdate = GetSupplier(supplier.Id);
+            var supplierToUpdate = (from c in db.Suppliers where c.Id == supplier.Id select c).FirstOrDefault();
             supplierToUpdate.Name = supplier.Name;
             supplierToUpdate.SupplierInfo = supplier.SupplierInfo;
             db.SubmitChanges();
@@ -46,8 +62,8 @@ namespace ColorMixERP.Server.DAL
 
         public void Delete(int id)
         {
-            var supplier = GetSupplier(id);
-            db.Suppliers.DeleteOnSubmit(supplier);
+            var element = (from c in db.Suppliers where c.Id == id select c).FirstOrDefault();
+            element.IsDeleted = true;
             db.SubmitChanges();
         }
     }

@@ -18,5 +18,16 @@ namespace ColorMixERP.Server.Entities
         public string Code { get; set; }
         [Column(Name = "Name")]
         public  string Name { get; set; }
+
+        // =================================================
+
+        [Column(Name = "IsDeleted")]
+        public bool IsDeleted { get; set; }
+
+        [Column(Name = "DeletedDate")]
+        public DateTime DeletedDate { get; set; }
+
+        [Column(Name = "UpdatedDate")]
+        public DateTime UpdatedDate { get; set; }
     }
 }

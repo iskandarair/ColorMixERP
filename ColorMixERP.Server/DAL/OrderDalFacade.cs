@@ -19,7 +19,8 @@ namespace ColorMixERP.Server.DAL
         }
         public List<OrderDTO> GetClientOrders()
         {
-            var query = from c in db.ClientOrders select new OrderDTO()
+            var query = from c in db.ClientOrders where c.IsDeleted == false
+                select new OrderDTO()
             {
                 Id =  c.Id,
                 TransactionId = c.TransactinoId,
@@ -92,7 +93,7 @@ namespace ColorMixERP.Server.DAL
         public void Delete(int id)
         {
             var element = (from c in db.ClientOrders where c.Id == id select c).FirstOrDefault();
-            db.ClientOrders.DeleteOnSubmit(element);
+            element.IsDeleted = true;
             db.SubmitChanges();
         }
     }

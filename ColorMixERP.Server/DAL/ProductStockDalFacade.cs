@@ -20,7 +20,8 @@ namespace ColorMixERP.Server.DAL
         }
         public List<ProductStockDTO> GetProductStocks()
         {
-            var query = from p in db.ProductStocks select new ProductStockDTO()
+            var query = from p in db.ProductStocks where p.IsDeleted == false
+                select new ProductStockDTO()
             {
                 Id = p.Id,
                 ProductId = p.Product.Id,
@@ -61,8 +62,8 @@ namespace ColorMixERP.Server.DAL
 
         public void Delete(int? id)
         {
-            var stock = (from p in db.ProductStocks where p.Id == id select p).FirstOrDefault();
-            db.ProductStocks.DeleteOnSubmit(stock);
+            var element = (from c in db.ProductStocks where c.Id == id select c).FirstOrDefault();
+            element.IsDeleted = true;
             db.SubmitChanges();
         }
 

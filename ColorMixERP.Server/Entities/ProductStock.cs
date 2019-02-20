@@ -37,5 +37,16 @@ namespace ColorMixERP.Server.Entities
         // HIDDEN COLUMNS 
         [Column(Name = "WorkPlaceId")]
         private int WorkPlaceId { get; set; }
+
+        // =================================================
+
+        [Column(Name = "IsDeleted")]
+        public bool IsDeleted { get; set; }
+
+        [Column(Name = "DeletedDate")]
+        public DateTime DeletedDate { get; set; }
+
+        [Column(Name = "UpdatedDate")]
+        public DateTime UpdatedDate { get; set; }
     }
 }
