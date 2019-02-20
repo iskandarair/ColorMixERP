@@ -87,6 +87,7 @@ namespace ColorMixERP.Server.DAL
             element.PaymentByCard = order.PaymentByCard;
             element.PaymentByTransfer = order.PaymentByTransfer;
             element.PaymentByCash = order.PaymentByCash;
+            element.UpdatedDate = DateTime.Now;
             db.SubmitChanges();
         }
 
@@ -94,6 +95,7 @@ namespace ColorMixERP.Server.DAL
         {
             var element = (from c in db.ClientOrders where c.Id == id select c).FirstOrDefault();
             element.IsDeleted = true;
+            element.DeletedDate = DateTime.Now;
             db.SubmitChanges();
         }
     }

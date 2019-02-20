@@ -57,6 +57,7 @@ namespace ColorMixERP.Server.DAL
             var supplierToUpdate = (from c in db.Suppliers where c.Id == supplier.Id select c).FirstOrDefault();
             supplierToUpdate.Name = supplier.Name;
             supplierToUpdate.SupplierInfo = supplier.SupplierInfo;
+            supplierToUpdate.UpdatedDate = DateTime.Now;
             db.SubmitChanges();
         }
 
@@ -64,6 +65,7 @@ namespace ColorMixERP.Server.DAL
         {
             var element = (from c in db.Suppliers where c.Id == id select c).FirstOrDefault();
             element.IsDeleted = true;
+            element.DeletedDate = DateTime.Now;
             db.SubmitChanges();
         }
     }

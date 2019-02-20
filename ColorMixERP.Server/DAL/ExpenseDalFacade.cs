@@ -47,6 +47,7 @@ namespace ColorMixERP.Server.DAL
             expenseToUpdate.Cost = expense.Cost;
             expenseToUpdate.ExpenseCause = expense.ExpenseCause;
             expenseToUpdate.ExpenseDate = expense.ExpenseDate;
+            expenseToUpdate.UpdatedDate = DateTime.Now;
 
             db.SubmitChanges();
         }
@@ -55,6 +56,7 @@ namespace ColorMixERP.Server.DAL
         {
             var element = (from c in db.Expenses where c.Id == expenseId select c).FirstOrDefault();
             element.IsDeleted = true;
+            element.DeletedDate = DateTime.Now;
             db.SubmitChanges();
         }
     }

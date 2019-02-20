@@ -87,13 +87,14 @@ namespace ColorMixERP.Server.DAL
             accountUserToUpdate.PhoneNumber = user.PhoneNumber;
             accountUserToUpdate.PositionRole = user.PositionRole;
             accountUserToUpdate.WorkPlaceId = user.WorkPlaceId;
-            //accountUserToUpdate.Password = user.Password;
+            accountUserToUpdate.UpdatedDate = DateTime.Now;
             db.SubmitChanges();
         }
         public void Delete(int id)
         {
             var element = (from c in db.AccountUsers where c.Id == id select c).FirstOrDefault();
             element.IsDeleted = true;
+            element.DeletedDate = DateTime.Now;
             db.SubmitChanges();
         }
     }

@@ -78,12 +78,14 @@ namespace ColorMixERP.Server.DAL
            // elementToUpdate.Product = new ProductDalFacade().GetProduct(dto.ProductId);
             elementToUpdate.Quantity = dto.Quantity;
             elementToUpdate.MoveDate = dto.MoveDate;
+            elementToUpdate.UpdatedDate = DateTime.Now;
             db.SubmitChanges();
         }
         public void Delete(int id)
         {
             var element = (from c in db.InnerMovements where c.Id == id select c).FirstOrDefault();
             element.IsDeleted = true;
+            element.DeletedDate = DateTime.Now;
             db.SubmitChanges();
         }
 

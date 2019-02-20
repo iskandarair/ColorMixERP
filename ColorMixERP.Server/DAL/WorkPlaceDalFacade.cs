@@ -59,9 +59,10 @@ namespace ColorMixERP.Server.DAL
 
         public void Update(WorkPlaceDTO workPlace)
         {
-            var workplaceToUpdate = GetWorkPlace(workPlace.Id);
+            var workplaceToUpdate = (from c in db.WorkPlaces where c.Id == workPlace.Id select c).FirstOrDefault();
             workplaceToUpdate.Location = workPlace.Location;
             workplaceToUpdate.Name = workplaceToUpdate.Name;
+            workplaceToUpdate.UpdatedDate = DateTime.Now;
             db.SubmitChanges();
         }
 
@@ -69,6 +70,7 @@ namespace ColorMixERP.Server.DAL
         {
             var element = (from c in db.WorkPlaces where c.Id == id select c).FirstOrDefault();
             element.IsDeleted = true;
+            element.DeletedDate = DateTime.Now;
             db.SubmitChanges();
         }
     }

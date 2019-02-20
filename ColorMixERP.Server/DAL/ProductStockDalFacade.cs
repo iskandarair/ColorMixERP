@@ -57,6 +57,7 @@ namespace ColorMixERP.Server.DAL
         {
             var stockToUpdate = (from p in db.ProductStocks where p.Id == stock.Id select p).FirstOrDefault() ;
             stockToUpdate.Quantity = stock.Quantity;
+            stockToUpdate.UpdatedDate = DateTime.Now;
             db.SubmitChanges();
         }
 
@@ -64,6 +65,7 @@ namespace ColorMixERP.Server.DAL
         {
             var element = (from c in db.ProductStocks where c.Id == id select c).FirstOrDefault();
             element.IsDeleted = true;
+            element.DeletedDate = DateTime.Now;
             db.SubmitChanges();
         }
 

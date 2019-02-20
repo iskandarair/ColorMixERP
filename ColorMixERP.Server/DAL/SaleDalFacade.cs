@@ -99,6 +99,7 @@ namespace ColorMixERP.Server.DAL
             element.Quantity = sale.Quantity;
             element.ProductPrice = sale.ProductPrice;
             element.SalesPrice = sale.SalesPrice;
+            element.UpdatedDate = DateTime.Now;
             db.SubmitChanges();
         }
 
@@ -106,6 +107,7 @@ namespace ColorMixERP.Server.DAL
         {
             var element = (from c in db.Sales where c.Id == id select c).FirstOrDefault();
             element.IsDeleted = true;
+            element.DeletedDate = DateTime.Now;
             db.SubmitChanges();
         }
     }

@@ -98,6 +98,7 @@ namespace ColorMixERP.Server.DAL
             productToUpdate.Price = product.Price;
             productToUpdate.CategoryId = product.Category.Id;
             productToUpdate.SupplierId = product.Supplier.Id;
+            productToUpdate.UpdatedDate = DateTime.Now;
             db.SubmitChanges();
         }
 
@@ -105,6 +106,7 @@ namespace ColorMixERP.Server.DAL
         {
             var element = (from c in db.Products where c.Id == id select c).FirstOrDefault();
             element.IsDeleted = true;
+            element.DeletedDate = DateTime.Now;
             db.SubmitChanges();
         }
     }

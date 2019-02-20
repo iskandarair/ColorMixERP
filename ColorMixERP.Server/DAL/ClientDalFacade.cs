@@ -46,6 +46,7 @@ namespace ColorMixERP.Server.DAL
             clientToUpdate.MFO = client.MFO;
             clientToUpdate.INN = client.INN;
             clientToUpdate.OKONX = client.OKONX;
+            clientToUpdate.UpdatedDate = DateTime.Now;
             db.SubmitChanges();
         }
 
@@ -53,6 +54,7 @@ namespace ColorMixERP.Server.DAL
         {
             var element = (from c in db.ClientOrders where c.Id == id select c).FirstOrDefault();
             element.IsDeleted = true;
+            element.DeletedDate = DateTime.Now;
             db.SubmitChanges();
         }
     }

@@ -49,6 +49,7 @@ namespace ColorMixERP.Server.DAL
             var categoryToUpdate = (from c in db.Categories where c.Id == category.Id select c).FirstOrDefault();
             categoryToUpdate.Code = category.Code;
             categoryToUpdate.Name = category.Name;
+            categoryToUpdate.UpdatedDate = DateTime.Now;
             db.SubmitChanges();
         }
 
@@ -56,6 +57,7 @@ namespace ColorMixERP.Server.DAL
         {
             var element = (from c in db.Categories where c.Id == id select c).FirstOrDefault();
             element.IsDeleted = true;
+            element.DeletedDate = DateTime.Now;
             db.SubmitChanges();
         }
     }
