@@ -15,7 +15,7 @@ namespace ColorMixERP.Server.Entities
         public int Id { get; set; }
 
         [Column(Name="SaleId")]
-        private int SaleId { get; set; }
+        public int SaleId { get; set; }
         private EntityRef<Sale> _Sale;
         [Association(Storage = "_Sale", ThisKey = "SaleId")]
         public Sale Sale
@@ -24,7 +24,7 @@ namespace ColorMixERP.Server.Entities
             set { _Sale.Entity = value; }
         }
 
-        [Column(Name = "PhoneNumber")]
+        [Column(Name = "ReturnDate")]
         public DateTime ReturnDate { get; set; }
 
         [Column(Name = "Cause")]

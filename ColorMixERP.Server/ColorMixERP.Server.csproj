@@ -43,11 +43,13 @@
   <ItemGroup>
     <Compile Include="BL\CategoryBL.cs" />
     <Compile Include="BL\ClientBL.cs" />
+    <Compile Include="BL\DebtCoverBL.cs" />
     <Compile Include="BL\ExpenseBL.cs" />
     <Compile Include="BL\InnerMovementBL.cs" />
     <Compile Include="BL\OrderBL.cs" />
     <Compile Include="BL\ProductBL.cs" />
     <Compile Include="BL\ProductStockBL.cs" />
+    <Compile Include="BL\ReturnedSaleBL.cs" />
     <Compile Include="BL\SaleBL.cs" />
     <Compile Include="BL\SupplierBL.cs" />
     <Compile Include="BL\UserBL.cs" />
@@ -56,11 +58,13 @@
     <Compile Include="Config\LinqDB.cs" />
     <Compile Include="DAL\CategoryDalFacade.cs" />
     <Compile Include="DAL\ClientDalFacade.cs" />
+    <Compile Include="DAL\DebtCoverDalFacade.cs" />
     <Compile Include="DAL\ExpenseDalFacade.cs" />
     <Compile Include="DAL\InnerMovementDalFacade.cs" />
     <Compile Include="DAL\OrderDalFacade.cs" />
     <Compile Include="DAL\ProductDalFacade.cs" />
     <Compile Include="DAL\ProductStockDalFacade.cs" />
+    <Compile Include="DAL\ReturnedSaleDalFacade.cs" />
     <Compile Include="DAL\SaleDalFacade.cs" />
     <Compile Include="DAL\SupplierDalFacade.cs" />
     <Compile Include="DAL\UserDalFacade.cs" />
@@ -72,10 +76,12 @@
     <Compile Include="Entities\Currency.cs" />
     <Compile Include="Entities\DebtCover.cs" />
     <Compile Include="Entities\DTO\CategoryDTO.cs" />
+    <Compile Include="Entities\DTO\DebtCoverDTO.cs" />
     <Compile Include="Entities\DTO\InnerMovementDTO.cs" />
     <Compile Include="Entities\DTO\OrderDTO.cs" />
     <Compile Include="Entities\DTO\ProductDTO.cs" />
     <Compile Include="Entities\DTO\ProductStockDTO.cs" />
+    <Compile Include="Entities\DTO\ReturnedSaleDTO.cs" />
     <Compile Include="Entities\DTO\SaleDTO.cs" />
     <Compile Include="Entities\DTO\SupplierDTO.cs" />
     <Compile Include="Entities\DTO\WorkPlaceDTO.cs" />

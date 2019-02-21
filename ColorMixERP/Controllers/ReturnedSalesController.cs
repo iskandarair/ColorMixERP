@@ -4,90 +4,73 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using ColorMixERP.Server.BL;
 using ColorMixERP.Server.Entities.DTO;
+using ColorMixERP.Server.BL;
 
 namespace ColorMixERP.Controllers
 {
-    public class OrdersController : ApiController
+    public class ReturnedSalesController : ApiController
     {
         [Authorize]
         [HttpGet]
-        [Route("api/orders/{id}/ReturnedSales")]
-        public HttpResponseMessage GetOrderReturnedSale(int id)
+        public HttpResponseMessage Get()
         {
-            var data = new ReturnedSaleBL().GetOrderReturnedSale(id);
+            var data = new ReturnedSaleBL().GetReturnedSales();
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
 
         [Authorize]
         [HttpGet]
-        [Route("api/orders/{id}/DebtCovers")]
-        public HttpResponseMessage GetDebtCovers(int id)
+        public HttpResponseMessage Get(int id)
         {
-            var data = new DebtCoverBL().GetOrderDebtCovers(id);
-            return Request.CreateResponse(HttpStatusCode.OK, data);
-        }
-        [Authorize]
-        [HttpGet]
-        [Route("api/orders/")]
-        public HttpResponseMessage GetOrders()
-        {
-            var data  = new OrderBL().GetClientOrders();
-            return Request.CreateResponse(HttpStatusCode.OK, data);
-        }
-
-        [Authorize]
-        [HttpGet]
-        public HttpResponseMessage GetOrder(int id)
-        {
-            var data = new OrderBL().GetClientOrder(id);
+            var data = new ReturnedSaleBL().GetReturnedSale(id);
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
 
         [Authorize]
         [HttpPost]
-        public HttpResponseMessage AddUser(OrderDTO order)
+        public HttpResponseMessage Add(ReturnedSaleDTO element)
         {
             try
             {
-                new OrderBL().Add(order);
+                new ReturnedSaleBL().Add(element);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
-            }
-        }
-        [Authorize]
-        [HttpPut]
-        public HttpResponseMessage UpdateClient(OrderDTO order)
-        {
-            try
-            {
-                new OrderBL().Update(order);
-                return Request.CreateResponse(HttpStatusCode.OK, true);
-            }
-            catch (Exception ex)
+            catch (Exception e)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
 
+        [Authorize]
+        [HttpPut]
+        public HttpResponseMessage Update(ReturnedSaleDTO dto)
+        {
+            try
+            {
+                new ReturnedSaleBL().Update(dto);
+                return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
+            }
+        }
 
         [Authorize]
         [HttpDelete]
-        public HttpResponseMessage DeleteClient(int id)
+        public HttpResponseMessage Delete(int id)
         {
             try
             {
-                new OrderBL().Delete(id);
+                new ReturnedSaleBL().Delete(id);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
+
     }
 }
