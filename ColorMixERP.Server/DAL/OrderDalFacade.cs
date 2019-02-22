@@ -1,6 +1,7 @@
 ﻿using ColorMixERP.Server.Config;
 using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -74,6 +75,8 @@ namespace ColorMixERP.Server.DAL
                 ClientRepresentitive = order.ClientRepresentitive,
                 OverallPrice = order.OverallPrice
             };
+            element.DebtCovers = new EntitySet<DebtCover>();
+            element.Sales = new EntitySet<Sale>();
             db.ClientOrders.InsertOnSubmit(element);
             db.SubmitChanges();
             new SaleBL().AddRange(order.Sales,element.Id);

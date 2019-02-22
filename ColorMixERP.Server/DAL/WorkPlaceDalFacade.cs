@@ -46,7 +46,6 @@ namespace ColorMixERP.Server.DAL
 
         public void Add(WorkPlaceDTO workPlace)
         {
-            //workPlace.Id = null;
             var element = new WorkPlace()
             {
                 Name = workPlace.Name,
