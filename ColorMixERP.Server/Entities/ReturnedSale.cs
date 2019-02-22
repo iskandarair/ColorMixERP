@@ -45,10 +45,10 @@ namespace ColorMixERP.Server.Entities
         public bool IsDeleted { get; set; }
 
         [Column(Name = "DeletedDate")]
-        public DateTime DeletedDate { get; set; }
+        public DateTime? DeletedDate { get; set; }
 
         [Column(Name = "UpdatedDate")]
-        public DateTime UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
 
     }
 }
