@@ -49,7 +49,6 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("api/AccountUsers/{id}")]
         public HttpResponseMessage GetUserById(int id)
         {
             try
@@ -87,6 +86,22 @@ namespace ColorMixERP.Controllers
             try
             {
                 new UserBL().Update(user);
+                return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
+            }
+        }
+        [Authorize]
+        [HttpPut]
+        public HttpResponseMessage UpdateUserPassowrd(AccountUserDTO user)
+        {
+            try
+            {
+                new UserBL().UpdatePassword(user);
+                LogManager.Instance.Info($"User {user.Name} {user.Surname} (User Id - {user.Id}) - Password updated");
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)

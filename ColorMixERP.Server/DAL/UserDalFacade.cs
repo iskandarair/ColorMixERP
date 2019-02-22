@@ -90,6 +90,14 @@ namespace ColorMixERP.Server.DAL
             accountUserToUpdate.UpdatedDate = DateTime.Now;
             db.SubmitChanges();
         }
+
+        public void UpdatePassword(AccountUserDTO user)
+        {
+            var accountUserToUpdate = (from c in db.AccountUsers where c.Id == user.Id select c).FirstOrDefault();
+            accountUserToUpdate.Password = user.Password;
+            accountUserToUpdate.UpdatedDate = DateTime.Now;
+            db.SubmitChanges();
+        }
         public void Delete(int id)
         {
             var element = (from c in db.AccountUsers where c.Id == id select c).FirstOrDefault();

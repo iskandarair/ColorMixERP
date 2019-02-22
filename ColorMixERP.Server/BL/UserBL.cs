@@ -38,6 +38,11 @@ namespace ColorMixERP.Server.BL
             new UserDalFacade().Update(accountUser);
         }
 
+        public void UpdatePassword(AccountUserDTO user)
+        {
+            new UserDalFacade().UpdatePassword(user);
+        }
+
         public void Delete(int id)
         {
             new UserDalFacade().Delete(id);
