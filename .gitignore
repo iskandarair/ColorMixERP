@@ -3,6 +3,7 @@ packages
 
 ColorMixERP/bin
 ColorMixERP/obj
+ColorMixERP/logs
 
 ColorMixERP.Server/obj
 ColorMixERP.Server/bin
