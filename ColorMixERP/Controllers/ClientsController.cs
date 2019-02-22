@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using ColorMixERP.Server.Entities.DTO;
 
 namespace ColorMixERP.Controllers
 {
@@ -46,7 +47,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
-        public HttpResponseMessage AddUser(Client client)
+        public HttpResponseMessage AddUser(ClientDTO client)
         {
             try
             {
@@ -62,7 +63,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPut]
-        public HttpResponseMessage UpdateClient(Client client)
+        public HttpResponseMessage UpdateClient(ClientDTO client)
         {
             try
             {

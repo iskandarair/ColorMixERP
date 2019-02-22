@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ColorMixERP.Server.Entities;
+using ColorMixERP.Server.Entities.DTO;
 
 namespace ColorMixERP.Server.DAL
 {
@@ -16,27 +17,62 @@ namespace ColorMixERP.Server.DAL
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
 
-        public List<Client> GetClients()
+        public List<ClientDTO> GetClients()
         {
-            var query = from c in db.Clients where c.IsDeleted == false select c;
+            var query = from c in db.Clients where c.IsDeleted == false
+                select new ClientDTO()
+                {
+                    Name = c.Name,
+                    Address = c.Address,
+                    Phone = c.Phone,
+                    PaymentAccount = c.PaymentAccount,
+                    BankDetails = c.BankDetails,
+                    City = c.City,
+                    MFO = c.MFO,
+                    INN = c.INN,
+                    OKONX = c.OKONX
+                };
             return query.ToList();
         }
 
-        public Client GetClient(int? id)
+        public ClientDTO GetClient(int? id)
         {
-            var query = from c in db.Clients where c.Id == id select c;
+            var query = from c in db.Clients where c.Id == id select new ClientDTO()
+            {
+                Name = c.Name,
+                Address = c.Address,
+                Phone = c.Phone,
+                PaymentAccount = c.PaymentAccount,
+                BankDetails = c.BankDetails,
+                City = c.City,
+                MFO = c.MFO,
+                INN = c.INN,
+                OKONX = c.OKONX
+            };
             return query.FirstOrDefault();
         }
 
-        public void Add(Client client)
+        public void Add(ClientDTO client)
         {
-            db.Clients.InsertOnSubmit(client);
+            var element = new Client()
+            {
+                Name = client.Name,
+                Address = client.Address,
+                Phone = client.Phone,
+                PaymentAccount = client.PaymentAccount,
+                BankDetails = client.BankDetails,
+                City = client.City,
+                MFO = client.MFO,
+                INN = client.INN,
+                OKONX = client.OKONX
+            };
+            db.Clients.InsertOnSubmit(element);
             db.SubmitChanges();
         }
 
-        public void Update(Client client)
+        public void Update(ClientDTO client)
         {
-            var clientToUpdate = GetClient(client.Id);
+            var clientToUpdate = (from c in db.Clients where c.Id == client.Id select c).FirstOrDefault();
             clientToUpdate.Name = client.Name;
             clientToUpdate.Address = client.Address;
             clientToUpdate.Phone = client.Phone;
@@ -52,7 +88,7 @@ namespace ColorMixERP.Server.DAL
 
         public void Delete(int id)
         {
-            var element = (from c in db.ClientOrders where c.Id == id select c).FirstOrDefault();
+            var element = (from c in db.Clients where c.Id == id select c).FirstOrDefault();
             element.IsDeleted = true;
             element.DeletedDate = DateTime.Now;
             db.SubmitChanges();

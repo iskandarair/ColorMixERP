@@ -5,27 +5,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ColorMixERP.Server.DAL;
+using ColorMixERP.Server.Entities.DTO;
 
 namespace ColorMixERP.Server.BL
 {
     public class ClientBL
     {
-        public List<Client> GetClients()
+        public List<ClientDTO> GetClients()
         {
             return new ClientDalFacade().GetClients();
         }
 
-        public Client GetClient(int? id)
+        public ClientDTO GetClient(int? id)
         {
             return new ClientDalFacade().GetClient(id);
         }
 
-        public void Add(Client client)
+        public void Add(ClientDTO client)
         {
             new ClientDalFacade().Add(client);
         }
 
-        public void Update(Client client)
+        public void Update(ClientDTO client)
         {
             new ClientDalFacade().Update(client);
         }

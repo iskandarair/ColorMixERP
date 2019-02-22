@@ -4,6 +4,7 @@ packages
 ColorMixERP/bin
 ColorMixERP/obj
 ColorMixERP/logs
+ColorMixERP/logs/2019-02-22.log
 
 ColorMixERP.Server/obj
 ColorMixERP.Server/bin

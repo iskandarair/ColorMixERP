@@ -85,6 +85,7 @@
     <Compile Include="Entities\Currency.cs" />
     <Compile Include="Entities\DebtCover.cs" />
     <Compile Include="Entities\DTO\CategoryDTO.cs" />
+    <Compile Include="Entities\DTO\ClientDTO.cs" />
     <Compile Include="Entities\DTO\DebtCoverDTO.cs" />
     <Compile Include="Entities\DTO\InnerMovementDTO.cs" />
     <Compile Include="Entities\DTO\OrderDTO.cs" />
