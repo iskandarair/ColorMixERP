@@ -22,6 +22,7 @@ namespace ColorMixERP.Server.DAL
             var query = from c in db.Clients where c.IsDeleted == false
                 select new ClientDTO()
                 {
+                    Id = c.Id,
                     Name = c.Name,
                     Address = c.Address,
                     Phone = c.Phone,
@@ -39,6 +40,7 @@ namespace ColorMixERP.Server.DAL
         {
             var query = from c in db.Clients where c.Id == id select new ClientDTO()
             {
+                Id =  c.Id,
                 Name = c.Name,
                 Address = c.Address,
                 Phone = c.Phone,
