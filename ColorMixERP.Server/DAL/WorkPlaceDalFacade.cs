@@ -46,13 +46,13 @@ namespace ColorMixERP.Server.DAL
 
         public void Add(WorkPlaceDTO workPlace)
         {
-            workPlace.Id = null;
+            //workPlace.Id = null;
             var element = new WorkPlace()
             {
                 Name = workPlace.Name,
                 Location = workPlace.Location
             };
-        
+            element.ProductStock = new EntitySet<ProductStock>();
             db.WorkPlaces.InsertOnSubmit(element);
             db.SubmitChanges();
         }
