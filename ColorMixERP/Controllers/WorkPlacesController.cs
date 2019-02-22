@@ -7,6 +7,7 @@ using System.Web.Http;
 using ColorMixERP.Server.BL;
 using ColorMixERP.Server.Entities;
 using ColorMixERP.Server.Entities.DTO;
+using ColorMixERP.Server.Logging;
 
 namespace ColorMixERP.Controllers
 {
@@ -16,16 +17,32 @@ namespace ColorMixERP.Controllers
         [HttpGet]
         public HttpResponseMessage GetWorkPlaces()
         {
-            var data = new WorkPlaceBL().GetWorkPlaces();
-            return Request.CreateResponse(HttpStatusCode.OK, data);
+            try
+            {
+                var data = new WorkPlaceBL().GetWorkPlaces();
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
 
         [Authorize]
         [HttpGet]
         public HttpResponseMessage GetWorkPlace(int id)
         {
-            var data = new WorkPlaceBL().GetWorkPlace(id);
-            return Request.CreateResponse(HttpStatusCode.OK, data);
+            try
+            {
+                var data = new WorkPlaceBL().GetWorkPlace(id);
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
 
         [Authorize]
@@ -37,8 +54,9 @@ namespace ColorMixERP.Controllers
                 new WorkPlaceBL().Add(workPlace);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                LogManager.Instance.Error(ex);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
@@ -52,8 +70,9 @@ namespace ColorMixERP.Controllers
                 new WorkPlaceBL().Update(workPlace);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                LogManager.Instance.Error(ex);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
@@ -67,8 +86,9 @@ namespace ColorMixERP.Controllers
                 new WorkPlaceBL().Delete(id);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                LogManager.Instance.Error(ex);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
@@ -84,8 +104,9 @@ namespace ColorMixERP.Controllers
                 new ProductStockBL().Add(id, stock);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                LogManager.Instance.Error(ex);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }

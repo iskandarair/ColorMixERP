@@ -1,5 +1,6 @@
 ﻿using ColorMixERP.Server.BL;
 using ColorMixERP.Server.Entities;
+using ColorMixERP.Server.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,16 +16,32 @@ namespace ColorMixERP.Controllers
         [HttpGet]
         public HttpResponseMessage GetClients()
         {
-            var data = new ClientBL().GetClients();
-            return Request.CreateResponse(HttpStatusCode.OK, data);
+            try
+            {
+                var data = new ClientBL().GetClients();
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
 
         [Authorize]
         [HttpGet]
         public HttpResponseMessage GetClientById(int id)
         {
-            var data = new ClientBL().GetClient(id);
-            return Request.CreateResponse(HttpStatusCode.OK, data);
+            try
+            {
+                var data = new ClientBL().GetClient(id);
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
 
         [Authorize]
@@ -38,6 +55,7 @@ namespace ColorMixERP.Controllers
             }
             catch (Exception ex)
             {
+                LogManager.Instance.Error(ex);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
@@ -53,6 +71,7 @@ namespace ColorMixERP.Controllers
             }
             catch (Exception ex)
             {
+                LogManager.Instance.Error(ex);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
@@ -69,6 +88,7 @@ namespace ColorMixERP.Controllers
             }
             catch (Exception ex)
             {
+                LogManager.Instance.Error(ex);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }

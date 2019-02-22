@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using ColorMixERP.Server.BL;
 using ColorMixERP.Server.Entities.DTO;
+using ColorMixERP.Server.Logging;
 
 namespace ColorMixERP.Controllers
 {
@@ -16,8 +17,16 @@ namespace ColorMixERP.Controllers
         [Route("api/orders/{id}/ReturnedSales")]
         public HttpResponseMessage GetOrderReturnedSale(int id)
         {
-            var data = new ReturnedSaleBL().GetOrderReturnedSale(id);
-            return Request.CreateResponse(HttpStatusCode.OK, data);
+            try
+            {
+                var data = new ReturnedSaleBL().GetOrderReturnedSale(id);
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
+            }
         }
 
         [Authorize]
@@ -25,24 +34,49 @@ namespace ColorMixERP.Controllers
         [Route("api/orders/{id}/DebtCovers")]
         public HttpResponseMessage GetDebtCovers(int id)
         {
-            var data = new DebtCoverBL().GetOrderDebtCovers(id);
-            return Request.CreateResponse(HttpStatusCode.OK, data);
+            try
+            {
+                var data = new DebtCoverBL().GetOrderDebtCovers(id);
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
+            }
         }
+
         [Authorize]
         [HttpGet]
         [Route("api/orders/")]
         public HttpResponseMessage GetOrders()
         {
-            var data  = new OrderBL().GetClientOrders();
-            return Request.CreateResponse(HttpStatusCode.OK, data);
+            try
+            {
+                var data = new OrderBL().GetClientOrders();
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
+            }
         }
 
         [Authorize]
         [HttpGet]
         public HttpResponseMessage GetOrder(int id)
         {
-            var data = new OrderBL().GetClientOrder(id);
-            return Request.CreateResponse(HttpStatusCode.OK, data);
+            try
+            {
+                var data = new OrderBL().GetClientOrder(id);
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
+            }
         }
 
         [Authorize]
@@ -56,6 +90,7 @@ namespace ColorMixERP.Controllers
             }
             catch (Exception ex)
             {
+                LogManager.Instance.Error(ex);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
@@ -70,6 +105,7 @@ namespace ColorMixERP.Controllers
             }
             catch (Exception ex)
             {
+                LogManager.Instance.Error(ex);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
@@ -86,6 +122,7 @@ namespace ColorMixERP.Controllers
             }
             catch (Exception ex)
             {
+                LogManager.Instance.Error(ex);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }

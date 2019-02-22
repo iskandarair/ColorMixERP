@@ -7,6 +7,7 @@ using System.Web.Http;
 using ColorMixERP.Server.Config;
 using ColorMixERP.Server.BL;
 using ColorMixERP.Server.Entities;
+using ColorMixERP.Server.Logging;
 
 namespace ColorMixERP.Controllers
 {
@@ -16,16 +17,32 @@ namespace ColorMixERP.Controllers
         [HttpGet]
         public HttpResponseMessage GetExpenses()
         {
-            var data = new ExpenseBL().GetExpenses();
-            return Request.CreateResponse(HttpStatusCode.OK, data);
+            try
+            {
+                var data = new ExpenseBL().GetExpenses();
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
 
         [Authorize]
         [HttpGet]
         public HttpResponseMessage GetExpense(int id)
         {
-            var data = new ExpenseBL().GetExpense(id);
-            return Request.CreateResponse(HttpStatusCode.OK, data);
+            try
+            {
+                var data = new ExpenseBL().GetExpense(id);
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
 
         [Authorize]
@@ -37,8 +54,9 @@ namespace ColorMixERP.Controllers
                 new ExpenseBL().Add(id,expense);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                LogManager.Instance.Error(ex);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
@@ -52,8 +70,9 @@ namespace ColorMixERP.Controllers
                 new ExpenseBL().Update(expense);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                LogManager.Instance.Error(ex);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
@@ -67,8 +86,9 @@ namespace ColorMixERP.Controllers
                 new ExpenseBL().Delete(id);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                LogManager.Instance.Error(ex);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }

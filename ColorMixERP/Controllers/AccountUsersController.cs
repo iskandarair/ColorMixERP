@@ -7,6 +7,7 @@ using System.Web.Http;
 using ColorMixERP.Server.BL;
 using ColorMixERP.Server.Entities;
 using ColorMixERP.Server.Entities.DTO;
+using ColorMixERP.Server.Logging;
 
 namespace ColorMixERP.Controllers
 {
@@ -17,8 +18,16 @@ namespace ColorMixERP.Controllers
         [Route("api/AccountUsers/{id}/Expenses")]
         public HttpResponseMessage GetUserExpenses(int id)
         {
-            var data = new ExpenseBL().GetUserExpenses(id);
-            return Request.CreateResponse(HttpStatusCode.OK, data);
+            try
+            {
+                var data = new ExpenseBL().GetUserExpenses(id);
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
 
 
@@ -26,8 +35,16 @@ namespace ColorMixERP.Controllers
         [HttpGet]
         public HttpResponseMessage GetAccountUsers()
         {
-            var data = new UserBL().GetAccountUsers();
-            return Request.CreateResponse(HttpStatusCode.OK, data);
+            try
+            {
+                var data = new UserBL().GetAccountUsers();
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
 
         [Authorize]
@@ -35,8 +52,16 @@ namespace ColorMixERP.Controllers
         [Route("api/AccountUsers/{id}")]
         public HttpResponseMessage GetUserById(int id)
         {
-            var data = new UserBL().GetAccountUser(id);
-            return Request.CreateResponse(HttpStatusCode.OK, data);
+            try
+            {
+                var data = new UserBL().GetAccountUser(id);
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
 
         [Authorize]
@@ -50,6 +75,7 @@ namespace ColorMixERP.Controllers
             }
             catch (Exception ex)
             {
+                LogManager.Instance.Error(ex);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
@@ -65,6 +91,7 @@ namespace ColorMixERP.Controllers
             }
             catch (Exception ex)
             {
+                LogManager.Instance.Error(ex);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
@@ -80,6 +107,7 @@ namespace ColorMixERP.Controllers
             }
             catch (Exception ex)
             {
+                LogManager.Instance.Error(ex);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
@@ -88,7 +116,15 @@ namespace ColorMixERP.Controllers
         [HttpPost]
         public HttpResponseMessage Add(int id, Expense expense)
         {
-           return new ExpensesController().Add(id, expense);
+            try
+            {
+                return new ExpensesController().Add(id, expense);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
     }
 }
