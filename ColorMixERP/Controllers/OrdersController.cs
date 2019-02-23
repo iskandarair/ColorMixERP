@@ -81,7 +81,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
-        public HttpResponseMessage AddUser(OrderDTO order)
+        public HttpResponseMessage Add(OrderDTO order)
         {
             try
             {
