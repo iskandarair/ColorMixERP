@@ -96,7 +96,8 @@ namespace ColorMixERP.Controllers
         }
         [Authorize]
         [HttpPut]
-        public HttpResponseMessage UpdateUserPassowrd(AccountUserDTO user)
+        [Route("api/AccountUsers/{id}/ChangeUserPassowrd")]
+        public HttpResponseMessage UpdateUserPassowrd(int id, AccountUserDTO user)
         {
             try
             {
