@@ -65,6 +65,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/orders/{id}")]
         public HttpResponseMessage GetOrder(int id)
         {
             try
@@ -81,6 +82,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
+        [Route("api/orders/")]
         public HttpResponseMessage Add(OrderDTO order)
         {
             try
@@ -96,6 +98,7 @@ namespace ColorMixERP.Controllers
         }
         [Authorize]
         [HttpPut]
+        [Route("api/orders/")]
         public HttpResponseMessage UpdateClient(OrderDTO order)
         {
             try
@@ -113,6 +116,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpDelete]
+        [Route("api/orders/{id}")]
         public HttpResponseMessage DeleteClient(int id)
         {
             try
