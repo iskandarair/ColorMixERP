@@ -31,7 +31,8 @@ namespace ColorMixERP.Server.DAL
                     City = c.City,
                     MFO = c.MFO,
                     INN = c.INN,
-                    OKONX = c.OKONX
+                    OKONX = c.OKONX,
+                    NickName = c.NickName
                 };
             return query.ToList();
         }
@@ -49,7 +50,8 @@ namespace ColorMixERP.Server.DAL
                 City = c.City,
                 MFO = c.MFO,
                 INN = c.INN,
-                OKONX = c.OKONX
+                OKONX = c.OKONX,
+                NickName = c.NickName
             };
             return query.FirstOrDefault();
         }
@@ -66,7 +68,8 @@ namespace ColorMixERP.Server.DAL
                 City = client.City,
                 MFO = client.MFO,
                 INN = client.INN,
-                OKONX = client.OKONX
+                OKONX = client.OKONX,
+                NickName = client.NickName
             };
             db.Clients.InsertOnSubmit(element);
             db.SubmitChanges();
@@ -76,6 +79,7 @@ namespace ColorMixERP.Server.DAL
         {
             var clientToUpdate = (from c in db.Clients where c.Id == client.Id select c).FirstOrDefault();
             clientToUpdate.Name = client.Name;
+            clientToUpdate.NickName = client.NickName;
             clientToUpdate.Address = client.Address;
             clientToUpdate.Phone = client.Phone;
             clientToUpdate.PaymentAccount = client.PaymentAccount;

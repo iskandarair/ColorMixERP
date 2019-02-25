@@ -15,6 +15,8 @@ namespace ColorMixERP.Server.Entities
         public int? Id { get; set; }
         [Column(Name = "Name")]
         public string Name { get; set; }
+        [Column(Name = "NickName")]
+        public string NickName { get; set; }
         [Column(Name = "Address")]
         public string Address { get; set; }
         [Column(Name = "Phone")]

@@ -85,6 +85,7 @@ DeletedDate datetime default getDAte(),
 UpdatedDate datetime default getDAte(),
 PRIMARY KEY (Id),
 );
+Alter Table Client Add NickName nvarchar(255);
 
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'Expense')
 CREATE TABLE Expense (

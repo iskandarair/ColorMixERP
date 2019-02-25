@@ -10,6 +10,7 @@ namespace ColorMixERP.Server.Entities.DTO
     {
         public int? Id { get; set; }
         public string Name { get; set; }
+        public string NickName { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
         public string PaymentAccount { get; set; }
