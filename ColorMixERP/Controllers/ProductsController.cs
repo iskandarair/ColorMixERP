@@ -7,6 +7,7 @@ using System.Web.Http;
 using ColorMixERP.Server.BL;
 using ColorMixERP.Server.Entities;
 using ColorMixERP.Server.Entities.DTO;
+using ColorMixERP.Server.Entities.Pagination;
 using ColorMixERP.Server.Logging;
 
 namespace ColorMixERP.Controllers
@@ -16,11 +17,11 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
-        public HttpResponseMessage GetProduct()
+        public HttpResponseMessage GetProduct(ProductCommand command)
         {
             try
             {
-                var data = new ProductBL().GetProducts();
+                var data = new ProductBL().GetProducts(command);
                 return Request.CreateResponse(HttpStatusCode.OK, data);
             }
             catch (Exception ex)

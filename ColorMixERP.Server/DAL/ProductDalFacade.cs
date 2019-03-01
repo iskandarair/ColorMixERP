@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using ColorMixERP.Server.Entities;
 using ColorMixERP.Server.Config;
 using ColorMixERP.Server.Entities.DTO;
+using ColorMixERP.Server.Entities.Pagination;
+using ColorMixERP.Server.Utils;
 
 namespace ColorMixERP.Server.DAL
 {
@@ -18,30 +20,52 @@ namespace ColorMixERP.Server.DAL
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
 
-        public List<ProductDTO> GetProducts()
-        { 
-            var query = from p in db.Products where p.IsDeleted == false select new ProductDTO()
-            {
-                Id = p.Id,
-                Code = p.Code,
-                Name = p.Name,
-                Category = new CategoryDTO()
+        public List<ProductDTO> GetProducts(ProductCommand command)
+        {
+            var query = from p in db.Products
+                where p.IsDeleted == false &&
+                      p.Code.Contains(command.ProductCode) &&
+                      p.Name.Contains(command.ProductName) &&
+                      p.Category.Code.Contains(command.CategoryCode) &&
+                      p.Category.Name.Contains(command.CategoryName) &&
+                      p.Supplier.Name.Contains(command.SupplierName)
+                select new ProductDTO()
                 {
-                    Id = p.CategoryId,
-                    Code = p.Category.Code,
-                    Name = p.Category.Name
-                },
-                Price = p.Price,
-                Currency = p.Currency,
-                MeasurementUnit = p.MeasurementUnit,
-                BoxedNumber = p.BoxedNumber,
-                Supplier = new SupplierDTO()
-                {
-                    Id = p.SupplierId,
-                    Name = p.Supplier.Name,
-                    SupplierInfo = p.Supplier.SupplierInfo
-                }
-            };
+                    Id = p.Id,
+                    Code = p.Code,
+                    Name = p.Name,
+                    Category = new CategoryDTO()
+                    {
+                        Id = p.CategoryId,
+                        Code = p.Category.Code,
+                        Name = p.Category.Name
+                    },
+                    Price = p.Price,
+                    Currency = p.Currency,
+                    MeasurementUnit = p.MeasurementUnit,
+                    BoxedNumber = p.BoxedNumber,
+                    Supplier = new SupplierDTO()
+                    {
+                        Id = p.SupplierId,
+                        Name = p.Supplier.Name,
+                        SupplierInfo = p.Supplier.SupplierInfo
+                    }
+                };
+
+            if(command.SortByProductCode != null)
+            query = command.SortByProductCode == true ? (from p in query orderby p.Code select p) : (from p in query orderby p.Code descending select p );
+            
+            if (command.SortByproductName != null)
+                query = command.SortByproductName == true ? (from p in query orderby p.Name select p) : (from p in query orderby p.Name descending select p);
+
+            if (command.SortByCategory != null)
+                query = command.SortByCategory == true ? (from p in query orderby p.Category.Code select p) : (from p in query orderby p.Category.Code descending select p);
+
+            if (command.SortBySupplier != null)
+                query = command.SortBySupplier == true ? (from p in query orderby p.Supplier.Name select p) : (from p in query orderby p.Supplier.Name descending select p);
+
+            query = query.Page(command.PageSize, command.Page);
+
             return query.ToList();
         }
 

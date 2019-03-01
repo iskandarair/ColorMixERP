@@ -6,14 +6,35 @@ using System.Threading.Tasks;
 using ColorMixERP.Server.DAL;
 using ColorMixERP.Server.Entities;
 using ColorMixERP.Server.Entities.DTO;
+using ColorMixERP.Server.Entities.Pagination;
 
 namespace ColorMixERP.Server.BL
 {
     public class ProductBL
     {
-        public List<ProductDTO> GetProducts()
+        public List<ProductDTO> GetProducts(ProductCommand command)
         {
-            return new ProductDalFacade().GetProducts();
+            if (string.IsNullOrEmpty(command.ProductCode))
+            {
+               command.ProductCode = string.Empty;
+            }
+            if (string.IsNullOrEmpty(command.ProductName))
+            {
+                command.ProductName = string.Empty;
+            }
+            if (string.IsNullOrEmpty(command.CategoryCode))
+            {
+                command.CategoryCode = string.Empty;
+            }
+            if (string.IsNullOrEmpty(command.CategoryName))
+            {
+                command.CategoryName = string.Empty;
+            }
+            if (string.IsNullOrEmpty(command.SupplierName))
+            {
+                command.SupplierName = string.Empty;
+            }
+            return new ProductDalFacade().GetProducts(command);
         }
 
         public ProductDTO GetProduct(int? id)
