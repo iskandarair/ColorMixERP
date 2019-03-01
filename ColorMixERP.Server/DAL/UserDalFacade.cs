@@ -8,6 +8,8 @@ using ColorMixERP.Server.Entities;
 using System.Data.Linq;
 using ColorMixERP.Server.Entities.DTO;
 using ColorMixERP.Server.Entities.AuthorizationEntities;
+using ColorMixERP.Server.Entities.Pagination;
+using ColorMixERP.Server.Utils;
 
 namespace ColorMixERP.Server.DAL
 {
@@ -19,9 +21,12 @@ namespace ColorMixERP.Server.DAL
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
 
-        public List<AccountUserDTO> GetAccountUsers()
+        public List<AccountUserDTO> GetAccountUsers(UserCommand cmd, ref int pagesCount)
         {
-            var query =  from c in db.AccountUsers where c.IsDeleted == false
+            var query =  from c in db.AccountUsers
+                where c.IsDeleted == false &&
+                      c.Name.Contains(cmd.Name) &&
+                      c.Surname.Contains(cmd.SurName)
                          select new AccountUserDTO()
             {
                 Id = c.Id,
@@ -34,9 +39,49 @@ namespace ColorMixERP.Server.DAL
                 isSunnat = c.isSunnat
                 //Password = c.Password
             };
-            var result = query.ToList();
+            // FILTERING
+            if (cmd.RoleId > 0)
+            {
+                query = from p in query where p.PositionRole == cmd.RoleId select p;
+            }
 
-            return result;
+            if (cmd.WorkPlaceId > 0)
+            {
+                query = from p in query where p.WorkPlaceId == cmd.WorkPlaceId select p;
+            }
+            // SORTING
+            if (cmd.SortByName != null)
+            {
+                query = cmd.SortByName == true
+                    ? (from p in query orderby p.Name select p)
+                    : (from p in query orderby p.Name descending select p);
+            }
+
+            if (cmd.SortBySurName != null)
+            {
+                query = cmd.SortBySurName == true
+                    ? (from p in query orderby p.Surname select p)
+                    : (from p in query orderby p.Surname descending select p);
+            }
+
+            if (cmd.SortByRoleId != null)
+            {
+                query = cmd.SortByRoleId == true
+                    ? (from p in query orderby p.PositionRole select p)
+                    : (from p in query orderby p.PositionRole descending select p);
+            }
+
+            if (cmd.SortByWorkPlaceId != null)
+            {
+                query = cmd.SortByWorkPlaceId == true
+                    ? (from p in query orderby p.WorkPlaceName select p)
+                    : (from p in query orderby p.WorkPlaceName descending select p);
+            }
+
+            pagesCount = (int) Math.Ceiling((double) (from p in query select p).Count()/cmd.PageSize);
+            query = query.Page(cmd.PageSize,cmd.Page);
+
+            return query.ToList();
         }
         public AccountUserDTO GetAccountUser(int? id)
         {

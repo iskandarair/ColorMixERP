@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using ColorMixERP.Server.Config;
 using ColorMixERP.Server.Entities;
 using ColorMixERP.Server.Entities.DTO;
+using ColorMixERP.Server.Entities.Pagination;
+using ColorMixERP.Server.Utils;
 
 namespace ColorMixERP.Server.DAL
 {
@@ -18,20 +20,55 @@ namespace ColorMixERP.Server.DAL
         {
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
-        public List<SaleDTO> GetSales()
+        public List<SaleDTO> GetSales(SaleCommand cmd, ref int pagesCount)
         {
-            var query = from c in db.Sales where c.IsDeleted == false
-                select new SaleDTO()
-                {
-                    Id = c.Id,
-                    ProductId = c.Product.Id,
-                    ProductName = c.ProductName,
-                    Quantity = c.Quantity,
-                    ProductPrice = c.ProductPrice,
-                    SalesPrice = c.SalesPrice,
-                    OrderId = c.OrderId
-                };
-            return query.ToList();
+            var query = from c in db.Sales
+                where c.IsDeleted == false
+                select c;
+            if (cmd.Currency > 0)
+            {
+                query = from c in query where c.Product.Currency == cmd.Currency select c;
+            }
+             var query2 = from c in query select new SaleDTO()
+            {
+                Id = c.Id,
+                ProductId = c.Product.Id,
+                ProductName = c.ProductName,
+                Quantity = c.Quantity,
+                ProductPrice = c.ProductPrice,
+                SalesPrice = c.SalesPrice,
+                OrderId = c.OrderId
+            };
+
+            if (cmd.ProductId > 0)
+            {
+                query2 = from p in query2 where p.ProductId == cmd.ProductId select p;
+            }
+
+            if (cmd.SortByProduct != null)
+            {
+                query2 = cmd.SortByProduct == true
+                    ? (from p in query2 orderby p.ProductId select p)
+                    : (from p in query2 orderby p.ProductId descending select p);
+            }
+
+            if (cmd.SortBySalesPrice != null)
+            {
+                query2 = cmd.SortBySalesPrice == true
+                    ? (from p in query2 orderby p.SalesPrice select p)
+                    : (from p in query2 orderby p.SalesPrice descending select p);
+            }
+
+            if (cmd.SortByQuantity != null)
+            {
+                query2 = cmd.SortByQuantity == true
+                    ? (from p in query2 orderby p.Quantity select p)
+                    : (from p in query2 orderby p.Quantity descending select p);
+            }
+
+            pagesCount = (int)Math.Ceiling((double)(from p in query2 select p).Count()/cmd.PageSize);
+            query2 = query2.Page(cmd.PageSize, cmd.Page);
+            return query2.ToList();
         }
         public List<SaleDTO> GetOrderSale(int orderId)
         {

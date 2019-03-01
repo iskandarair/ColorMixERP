@@ -6,14 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using ColorMixERP.Server.DAL;
 using ColorMixERP.Server.Entities.DTO;
+using ColorMixERP.Server.Entities.Pagination;
 
 namespace ColorMixERP.Server.BL
 {
     public class ProductStockBL
     {
-        public List<ProductStockDTO> GetProductStocks()
+        public List<ProductStockDTO> GetProductStocks(ProductStockCommand cmd, ref int pagesCount)
         {
-            return new ProductStockDalFacade().GetProductStocks();
+            return new ProductStockDalFacade().GetProductStocks(cmd, ref pagesCount);
         }
 
         public ProductStockDTO GetProductStock(int? id)

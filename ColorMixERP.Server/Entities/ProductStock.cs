@@ -22,7 +22,7 @@ namespace ColorMixERP.Server.Entities
         public int Id { get; set; }
 
         [Column(Name = "ProductId")]
-        private int ProductId { get; set; }
+        public int ProductId { get; set; }
         private EntityRef<Product> _Product;
         [Association(Storage = "_Product", ThisKey = "ProductId")]
         public Product Product
@@ -36,7 +36,7 @@ namespace ColorMixERP.Server.Entities
 
         // HIDDEN COLUMNS 
         [Column(Name = "WorkPlaceId")]
-        private int WorkPlaceId { get; set; }
+        public int WorkPlaceId { get; set; }
 
         // =================================================
 

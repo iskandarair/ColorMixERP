@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using ColorMixERP.Server.Entities;
 using ColorMixERP.Server.Config;
 using ColorMixERP.Server.Entities.DTO;
+using ColorMixERP.Server.Entities.Pagination;
+using ColorMixERP.Server.Utils;
 
 namespace ColorMixERP.Server.DAL
 {
@@ -18,17 +20,45 @@ namespace ColorMixERP.Server.DAL
         {
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
-        public List<ProductStockDTO> GetProductStocks()
+        public List<ProductStockDTO> GetProductStocks(ProductStockCommand cmd, ref int pagesCount)
         {
-            var query = from p in db.ProductStocks where p.IsDeleted == false
-                select new ProductStockDTO()
+            var query = from p in db.ProductStocks where p.IsDeleted == false select p;
+
+            if (cmd.ProductId > 0)
+            {
+                query = from p in query where p.ProductId == cmd.ProductId select p;
+            }
+
+            if (cmd.WorkPlaceId > 0)
+            {
+                query = from p in query where p.WorkPlaceId == cmd.WorkPlaceId select p;
+            }
+
+            if (cmd.SortByWorkPlaceId != null)
+            {
+                query = cmd.SortByWorkPlaceId == true
+                    ? (from p in query orderby p.WorkPlaceId select p)
+                    : (from p in query orderby p.WorkPlaceId descending select p);
+            }
+
+            if (cmd.SortByQuantity != null)
+            {
+                query = cmd.SortByQuantity == true
+                    ? (from p in query orderby p.Quantity select p)
+                    : (from p in query orderby p.Quantity descending select p);
+            }
+
+            var query2 = from p in query select new ProductStockDTO()
             {
                 Id = p.Id,
                 ProductId = p.Product.Id,
                 ProductName = p.Product.Name,
                 Quantity = p.Quantity
             };
-            return query.ToList();
+
+            pagesCount = (int)Math.Ceiling((double)(from p in query select p).Count()/cmd.PageSize);
+            query2 = query2.Page(cmd.PageSize, cmd.Page);
+            return query2.ToList();
 
         }
         

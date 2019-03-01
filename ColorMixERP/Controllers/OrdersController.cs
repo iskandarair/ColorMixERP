@@ -7,6 +7,8 @@ using System.Web.Http;
 using ColorMixERP.Server.BL;
 using ColorMixERP.Server.Entities.DTO;
 using ColorMixERP.Server.Logging;
+using ColorMixERP.Server.Entities.Pagination;
+using ColorMixERP.Models;
 
 namespace ColorMixERP.Controllers
 {
@@ -49,12 +51,15 @@ namespace ColorMixERP.Controllers
         [Authorize]
         [HttpGet]
         [Route("api/orders/")]
-        public HttpResponseMessage GetOrders()
+        public HttpResponseMessage GetOrders(OrderCommand cmd)
         {
             try
             {
-                var data = new OrderBL().GetClientOrders();
-                return Request.CreateResponse(HttpStatusCode.OK, data);
+                int pagesCount = 0;
+                var data = new OrderBL().GetClientOrders(cmd, ref pagesCount);
+                var result = Request.CreateResponse(HttpStatusCode.OK, data);
+                result.Headers.Add(Consts.PAGES_COUNT, pagesCount.ToString());
+                return result;
             }
             catch (Exception ex)
             {

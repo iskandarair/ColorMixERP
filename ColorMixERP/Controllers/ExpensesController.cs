@@ -8,6 +8,8 @@ using ColorMixERP.Server.Config;
 using ColorMixERP.Server.BL;
 using ColorMixERP.Server.Entities;
 using ColorMixERP.Server.Logging;
+using ColorMixERP.Server.Entities.Pagination;
+using ColorMixERP.Models;
 
 namespace ColorMixERP.Controllers
 {
@@ -15,12 +17,15 @@ namespace ColorMixERP.Controllers
     {
         [Authorize]
         [HttpGet]
-        public HttpResponseMessage GetExpenses()
+        public HttpResponseMessage GetExpenses(PaginationDTO cmd)
         {
             try
             {
-                var data = new ExpenseBL().GetExpenses();
-                return Request.CreateResponse(HttpStatusCode.OK, data);
+                int pagesCount = 0;
+                var data = new ExpenseBL().GetExpenses(cmd, ref pagesCount);
+                var result = Request.CreateResponse(HttpStatusCode.OK, data);
+                result.Headers.Add(Consts.PAGES_COUNT, pagesCount.ToString());
+                return result;
             }
             catch (Exception ex)
             {

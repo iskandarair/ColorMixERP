@@ -9,11 +9,9 @@ namespace ColorMixERP.Server.Entities.Pagination
     public class ProductCommand : PaginationDTO
     {
         // F I L T E R
-        public string ProductCode { get; set; }
-        public string ProductName { get; set; }
-        public string CategoryCode { get; set; }
-        public string CategoryName { get; set; }
-        public string SupplierName { get; set; }
+        public int ProductId { get; set; }
+        public int CategoryId { get; set; }
+        public int SupplierId { get; set; }
         // S O R T
         public bool? SortByProductCode { get; set; }
         public bool? SortByproductName { get; set; }

@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ColorMixERP.Server.Entities;
 using ColorMixERP.Server.Entities.DTO;
+using ColorMixERP.Server.Entities.Pagination;
+using ColorMixERP.Server.Utils;
 
 namespace ColorMixERP.Server.DAL
 {
@@ -17,9 +19,14 @@ namespace ColorMixERP.Server.DAL
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
 
-        public List<ClientDTO> GetClients()
+        public List<ClientDTO> GetClients(ClientCommand cmd, ref int pagesCount)
         {
-            var query = from c in db.Clients where c.IsDeleted == false
+            var query = from c in db.Clients
+                where c.IsDeleted == false &&
+                      c.Name.Contains(cmd.Name) &&
+                      c.NickName.Contains(cmd.NickName) &&
+                      c.INN.Contains(cmd.INN) &&
+                      c.City.Contains(cmd.City)
                 select new ClientDTO()
                 {
                     Id = c.Id,
@@ -34,6 +41,30 @@ namespace ColorMixERP.Server.DAL
                     OKONX = c.OKONX,
                     NickName = c.NickName
                 };
+            
+            if (cmd.SortByName != null)
+            {
+                query = cmd.SortByName == true
+                    ? (from p in query orderby p.Name select p)
+                    : (from p in query orderby p.Name descending select p);
+            }
+
+            if (cmd.SortByNickName != null)
+            {
+                query = cmd.SortByNickName == true
+                    ? (from p in query orderby p.NickName select p)
+                    : (from p in query orderby p.NickName descending select p);
+            }
+
+            if (cmd.SortByCity != null)
+            {
+                query = cmd.SortByCity == true
+                    ? (from p in query orderby p.City select p)
+                    : (from p in query orderby p.City descending select p);
+            }
+
+            pagesCount = (int)Math.Ceiling((double)(from p in query select p).Count() / cmd.PageSize);
+            query = query.Page(cmd.PageSize, cmd.Page);
             return query.ToList();
         }
 

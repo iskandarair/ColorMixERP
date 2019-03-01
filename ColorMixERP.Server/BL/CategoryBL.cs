@@ -6,14 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using ColorMixERP.Server.DAL;
 using ColorMixERP.Server.Entities.DTO;
+using ColorMixERP.Server.Entities.Pagination;
 
 namespace ColorMixERP.Server.BL
 {
     public class CategoryBL
     {
-        public List<CategoryDTO> GetCategories()
+        public List<CategoryDTO> GetCategories(PaginationDTO cmd, ref int pagesCount)
         {
-            return new CategoryDalFacade().GetCategories();
+            return new CategoryDalFacade().GetCategories(cmd, ref pagesCount);
         }
 
         public CategoryDTO GetCategory(int? id)

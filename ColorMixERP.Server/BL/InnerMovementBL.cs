@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ColorMixERP.Server.DAL;
 using ColorMixERP.Server.Entities;
 using ColorMixERP.Server.Entities.DTO;
+using ColorMixERP.Server.Entities.Pagination;
 
 namespace ColorMixERP.Server.BL
 {
@@ -15,9 +16,9 @@ namespace ColorMixERP.Server.BL
         {
             return new InnerMovementDalFacade().GetInnerMovements();
         }
-        public List<InnerMovementDTO> GetInnerMovementDtos()
+        public List<InnerMovementDTO> GetInnerMovementDtos(InnerMovementCommand cmd, ref int pagesCount)
         {
-            return new InnerMovementDalFacade().GetInnerMovementDtos();
+            return new InnerMovementDalFacade().GetInnerMovementDtos(cmd, ref  pagesCount);
         }
         public InnerMovement GetInnerMovement(int id)
         {

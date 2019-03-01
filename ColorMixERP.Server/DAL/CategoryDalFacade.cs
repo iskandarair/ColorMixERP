@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using ColorMixERP.Server.Config;
 using ColorMixERP.Server.Entities;
 using ColorMixERP.Server.Entities.DTO;
+using ColorMixERP.Server.Entities.Pagination;
+using ColorMixERP.Server.Utils;
 
 namespace ColorMixERP.Server.DAL
 {
@@ -16,7 +18,7 @@ namespace ColorMixERP.Server.DAL
         {
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
-        public List<CategoryDTO> GetCategories()
+        public List<CategoryDTO> GetCategories(PaginationDTO cmd, ref int pagesCount)
         {
             var query = from c in db.Categories where c.IsDeleted == false select new CategoryDTO()
             {
@@ -24,12 +26,20 @@ namespace ColorMixERP.Server.DAL
                 Code = c.Code,
                 Name = c.Name
             };
+            var size = ((from p in query select p).Count() / cmd.PageSize);
+            pagesCount = (int) Math.Ceiling((decimal)size);
+            query = query.Page(cmd.PageSize, cmd.Page);
             return query.ToList();
         }
 
         public CategoryDTO GetCategory(int? id)
         {
-            var categories = GetCategories();
+            var categories = from c in db.Categories where c.IsDeleted == false && c.Id == id select new CategoryDTO()
+            {
+                Id = c.Id ?? 0,
+                Code = c.Code,
+                Name = c.Name
+            };
             return categories.Where(c => c.Id == id).FirstOrDefault();
         }
 

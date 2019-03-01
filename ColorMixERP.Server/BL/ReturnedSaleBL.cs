@@ -5,14 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using ColorMixERP.Server.DAL;
 using ColorMixERP.Server.Entities.DTO;
+using ColorMixERP.Server.Entities.Pagination;
 
 namespace ColorMixERP.Server.BL
 {
     public class ReturnedSaleBL
     {
-        public List<ReturnedSaleDTO> GetReturnedSales()
+        public List<ReturnedSaleDTO> GetReturnedSales(PaginationDTO cmd, ref int pagesCount)
         {
-            return new ReturnedSaleDalFacade().GetReturnedSales();
+            return new ReturnedSaleDalFacade().GetReturnedSales(cmd, ref pagesCount);
         }
 
         public List<ReturnedSaleDTO> GetOrderReturnedSale(int orderId)

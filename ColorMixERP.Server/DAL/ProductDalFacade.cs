@@ -20,15 +20,10 @@ namespace ColorMixERP.Server.DAL
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
 
-        public List<ProductDTO> GetProducts(ProductCommand command)
+        public List<ProductDTO> GetProducts(ProductCommand command, ref int pagesCount)
         {
             var query = from p in db.Products
-                where p.IsDeleted == false &&
-                      p.Code.Contains(command.ProductCode) &&
-                      p.Name.Contains(command.ProductName) &&
-                      p.Category.Code.Contains(command.CategoryCode) &&
-                      p.Category.Name.Contains(command.CategoryName) &&
-                      p.Supplier.Name.Contains(command.SupplierName)
+                where p.IsDeleted == false
                 select new ProductDTO()
                 {
                     Id = p.Id,
@@ -51,8 +46,23 @@ namespace ColorMixERP.Server.DAL
                         SupplierInfo = p.Supplier.SupplierInfo
                     }
                 };
+            // F I L T E R I N G
+            if (command.ProductId > 0)
+            {
+                query = from p in query where p.Id == command.ProductId select p;
+            }
 
-            if(command.SortByProductCode != null)
+            if (command.CategoryId > 0)
+            {
+                query = from p in query where p.Category.Id == command.CategoryId select p;
+            }
+
+            if (command.SupplierId > 0)
+            {
+                query = from p in query where p.Supplier.Id == command.SupplierId select p;
+            }
+            //// S O R T I N G
+            if (command.SortByProductCode != null)
             query = command.SortByProductCode == true ? (from p in query orderby p.Code select p) : (from p in query orderby p.Code descending select p );
             
             if (command.SortByproductName != null)
@@ -64,6 +74,7 @@ namespace ColorMixERP.Server.DAL
             if (command.SortBySupplier != null)
                 query = command.SortBySupplier == true ? (from p in query orderby p.Supplier.Name select p) : (from p in query orderby p.Supplier.Name descending select p);
 
+            pagesCount = (int)Math.Ceiling((double)(from p in query select p).Count()/ command.PageSize);
             query = query.Page(command.PageSize, command.Page);
 
             return query.ToList();

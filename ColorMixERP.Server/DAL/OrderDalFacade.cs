@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using ColorMixERP.Server.BL;
 using ColorMixERP.Server.Entities;
 using ColorMixERP.Server.Entities.DTO;
+using ColorMixERP.Server.Entities.Pagination;
+using ColorMixERP.Server.Utils;
 
 namespace ColorMixERP.Server.DAL
 {
@@ -18,7 +20,7 @@ namespace ColorMixERP.Server.DAL
         {
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
-        public List<OrderDTO> GetClientOrders()
+        public List<OrderDTO> GetClientOrders(OrderCommand cmd, ref int pagesCount)
         {
             var query = from c in db.ClientOrders where c.IsDeleted == false
                 select new OrderDTO()
@@ -38,6 +40,59 @@ namespace ColorMixERP.Server.DAL
                 PaymentByCash = c.PaymentByCash,
                 IsDebt = c.IsDebt
             };
+
+            if (cmd.SalerId > 0)
+            {
+                query = from p in query where p.SalerId == cmd.SalerId select p;
+            }
+
+            if (cmd.ClientId > 0)
+            {
+                query = from p in query where p.ClientId == cmd.ClientId select p;
+            }
+
+            if (cmd.OrderDate != null)
+            {
+                query = from p in query where p.OrderDate.ToString("d") == cmd.OrderDate.Value.ToString("d") select p;
+            }
+
+            if (cmd.FromDate != null && cmd.ToDate != null)
+            {
+                query = from p in query where p.OrderDate >= cmd.FromDate.Value &&
+                                              p.OrderDate <= cmd.ToDate.Value
+                        select p;
+            }
+
+            if (cmd.SortByOrderDate != null)
+            {
+                query = cmd.SortByOrderDate == true
+                    ? (from p in query orderby p.OrderDate select p)
+                    : (from p in query orderby p.OrderDate descending select p);
+            }
+
+            if (cmd.SortBySalerId != null)
+            {
+                query = cmd.SortBySalerId == true
+                    ? (from p in query orderby p.SalerId select p)
+                    : (from p in query orderby p.SalerId descending select p);
+            }
+
+            if (cmd.SortByClientName != null)
+            {
+                query = cmd.SortByClientName == true
+                    ? (from p in query orderby p.ClientName select p)
+                    : (from p in query orderby p.ClientName descending select p);
+            }
+
+            if (cmd.SortByPrice != null)
+            {
+                query = cmd.SortByPrice == true
+                    ? (from p in query orderby p.OverallPrice select p)
+                    : (from p in query orderby p.OverallPrice descending select p);
+            }
+
+            pagesCount = (int)Math.Ceiling((double)(from p in query select p).Count()/cmd.PageSize);
+            query = query.Page(cmd.PageSize, cmd.Page);
             return query.ToList();
         }
         public OrderDTO GetClientOrder(int id)

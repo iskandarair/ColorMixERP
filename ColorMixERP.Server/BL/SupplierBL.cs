@@ -6,14 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using ColorMixERP.Server.DAL;
 using ColorMixERP.Server.Entities.DTO;
+using ColorMixERP.Server.Entities.Pagination;
 
 namespace ColorMixERP.Server.BL
 {
     public class SupplierBL
     {
-        public List<SupplierDTO> GetSuppliers()
+        public List<SupplierDTO> GetSuppliers(PaginationDTO cmd, ref int pagesCount)
         {
-            return new SupplierDalFacade().GetSuppliers();
+            return new SupplierDalFacade().GetSuppliers(cmd, ref pagesCount);
         }
 
         public SupplierDTO GetSupplier(int? id)

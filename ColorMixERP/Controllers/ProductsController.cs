@@ -9,6 +9,7 @@ using ColorMixERP.Server.Entities;
 using ColorMixERP.Server.Entities.DTO;
 using ColorMixERP.Server.Entities.Pagination;
 using ColorMixERP.Server.Logging;
+using ColorMixERP.Models;
 
 namespace ColorMixERP.Controllers
 {
@@ -21,8 +22,11 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                var data = new ProductBL().GetProducts(command);
-                return Request.CreateResponse(HttpStatusCode.OK, data);
+                int pagesCount = 0;
+                var data = new ProductBL().GetProducts(command, ref pagesCount);
+                var result = Request.CreateResponse(HttpStatusCode.OK, data);
+                result.Headers.Add(Consts.PAGES_COUNT, pagesCount.ToString());
+                return result;
             }
             catch (Exception ex)
             {

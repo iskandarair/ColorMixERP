@@ -8,6 +8,8 @@ using ColorMixERP.Server.Entities;
 using System.Data.Linq;
 using System.Security.Principal;
 using ColorMixERP.Server.Entities.DTO;
+using ColorMixERP.Server.Entities.Pagination;
+using ColorMixERP.Server.Utils;
 
 namespace ColorMixERP.Server.DAL
 {
@@ -19,7 +21,7 @@ namespace ColorMixERP.Server.DAL
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
 
-        public List<WorkPlaceDTO> GetWorkPlaces()
+        public List<WorkPlaceDTO> GetWorkPlaces(PaginationDTO cmd, ref int pagesCount)
         { 
             var query = from c in db.WorkPlaces where c.IsDeleted == false
                 select new WorkPlaceDTO()
@@ -29,7 +31,9 @@ namespace ColorMixERP.Server.DAL
                 Location = c.Location,
                 ProductStocks = new ProductStockDalFacade().GetWorkPlaceProductStocks(c.Id ?? 0)
             };
-            return query.ToList();
+            pagesCount = (int) Math.Ceiling((double)(from c in query select c).Count() / cmd.PageSize); 
+            query = query.Page(cmd.PageSize, cmd.Page);
+            return  query.ToList();
         }
 
         public WorkPlaceDTO GetWorkPlace(int? id)

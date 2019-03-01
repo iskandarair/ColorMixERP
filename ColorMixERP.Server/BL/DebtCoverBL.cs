@@ -5,14 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using ColorMixERP.Server.DAL;
 using ColorMixERP.Server.Entities.DTO;
+using ColorMixERP.Server.Entities.Pagination;
 
 namespace ColorMixERP.Server.BL
 {
     public class DebtCoverBL
     {
-        public List<DebtCoverDTO> GetDebtCovers()
+        public List<DebtCoverDTO> GetDebtCovers(PaginationDTO cmd, ref int pagesCount)
         {
-            return new DebtCoverDalFacade().GetDebtCovers();
+            return new DebtCoverDalFacade().GetDebtCovers(cmd, ref pagesCount);
         }
 
         public List<DebtCoverDTO> GetOrderDebtCovers(int orderId)

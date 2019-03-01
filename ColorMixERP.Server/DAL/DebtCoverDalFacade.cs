@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using ColorMixERP.Server.Config;
 using ColorMixERP.Server.Entities;
 using ColorMixERP.Server.Entities.DTO;
+using ColorMixERP.Server.Entities.Pagination;
+using ColorMixERP.Server.Utils;
 
 namespace ColorMixERP.Server.DAL
 {
@@ -18,7 +20,7 @@ namespace ColorMixERP.Server.DAL
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
 
-        public List<DebtCoverDTO> GetDebtCovers()
+        public List<DebtCoverDTO> GetDebtCovers(PaginationDTO cmd, ref int pagesCount)
         {
             var query = from c in db.DebtCovers
                 where c.IsDeleted == false
@@ -31,6 +33,9 @@ namespace ColorMixERP.Server.DAL
                     PaymentByCash = c.PaymentByCash,
                     OrderId = c.OrderId
                 };
+
+            pagesCount = (int)Math.Ceiling((double)(from p in query select p).Count() / cmd.PageSize);
+            query = query.Page(cmd.PageSize, cmd.Page);
             return query.ToList();
         }
 

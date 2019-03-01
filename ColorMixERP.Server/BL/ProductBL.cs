@@ -12,29 +12,9 @@ namespace ColorMixERP.Server.BL
 {
     public class ProductBL
     {
-        public List<ProductDTO> GetProducts(ProductCommand command)
+        public List<ProductDTO> GetProducts(ProductCommand command, ref int pagesCount)
         {
-            if (string.IsNullOrEmpty(command.ProductCode))
-            {
-               command.ProductCode = string.Empty;
-            }
-            if (string.IsNullOrEmpty(command.ProductName))
-            {
-                command.ProductName = string.Empty;
-            }
-            if (string.IsNullOrEmpty(command.CategoryCode))
-            {
-                command.CategoryCode = string.Empty;
-            }
-            if (string.IsNullOrEmpty(command.CategoryName))
-            {
-                command.CategoryName = string.Empty;
-            }
-            if (string.IsNullOrEmpty(command.SupplierName))
-            {
-                command.SupplierName = string.Empty;
-            }
-            return new ProductDalFacade().GetProducts(command);
+            return new ProductDalFacade().GetProducts(command, ref pagesCount);
         }
 
         public ProductDTO GetProduct(int? id)

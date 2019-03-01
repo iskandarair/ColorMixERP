@@ -6,14 +6,32 @@ using System.Text;
 using System.Threading.Tasks;
 using ColorMixERP.Server.DAL;
 using ColorMixERP.Server.Entities.DTO;
+using ColorMixERP.Server.Entities.Pagination;
 
 namespace ColorMixERP.Server.BL
 {
     public class ClientBL
     {
-        public List<ClientDTO> GetClients()
+        public List<ClientDTO> GetClients(ClientCommand cmd, ref int pagesCount)
         {
-            return new ClientDalFacade().GetClients();
+            if (string.IsNullOrEmpty(cmd.Name))
+            {
+                cmd.Name = string.Empty;
+            }
+            if (string.IsNullOrEmpty(cmd.NickName))
+            {
+                cmd.NickName = string.Empty;
+            }
+            if (string.IsNullOrEmpty(cmd.INN))
+            {
+                cmd.INN = string.Empty;
+            }
+            if (string.IsNullOrEmpty(cmd.City))
+            {
+                cmd.City = string.Empty;
+            }
+
+            return new ClientDalFacade().GetClients(cmd, ref pagesCount);
         }
 
         public ClientDTO GetClient(int? id)

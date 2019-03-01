@@ -98,8 +98,14 @@
     <Compile Include="Entities\Expense.cs" />
     <Compile Include="Entities\InnerMovement.cs" />
     <Compile Include="Entities\ClientOrder.cs" />
+    <Compile Include="Entities\Pagination\ClientCommand.cs" />
+    <Compile Include="Entities\Pagination\InnerMovementCommand.cs" />
+    <Compile Include="Entities\Pagination\OrderCommand.cs" />
     <Compile Include="Entities\Pagination\PaginationDTO.cs" />
     <Compile Include="Entities\Pagination\ProductCommand.cs" />
+    <Compile Include="Entities\Pagination\ProductStockCommand.cs" />
+    <Compile Include="Entities\Pagination\SaleCommand.cs" />
+    <Compile Include="Entities\Pagination\UserCommand.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ProductStock.cs" />
     <Compile Include="Entities\ReturnedSale.cs" />

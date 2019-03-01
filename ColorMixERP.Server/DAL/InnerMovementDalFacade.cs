@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using ColorMixERP.Server.Config;
 using ColorMixERP.Server.Entities;
 using ColorMixERP.Server.Entities.DTO;
+using ColorMixERP.Server.Entities.Pagination;
+using ColorMixERP.Server.Utils;
 
 namespace ColorMixERP.Server.DAL
 {
@@ -24,9 +26,9 @@ namespace ColorMixERP.Server.DAL
             return q.ToList();
         }
 
-        public List<InnerMovementDTO> GetInnerMovementDtos()
+        public List<InnerMovementDTO> GetInnerMovementDtos(InnerMovementCommand cmd, ref int pagesCount)
         {
-            var q = from c in db.InnerMovements
+            var query = from c in db.InnerMovements
                 select new InnerMovementDTO()
                 {
                     Id = c.Id,
@@ -39,7 +41,64 @@ namespace ColorMixERP.Server.DAL
                     ToWorkPlaceId = c.ToWorkPlace.Id ?? 0,
                     ToWorkPlaceName =  c.ToWorkPlace.Name,
                 };
-            return q.ToList();
+
+            if (cmd.ProductId > 0)
+            {
+                query = from p in query where p.ProductId == cmd.ProductId select p;
+            }
+            if (cmd.FromPlaceId > 0)
+            {
+                query = from p in query where p.FromWorkPlaceId ==cmd.FromPlaceId select p;
+            }
+            if (cmd.ToPlaceId > 0)
+            {
+                query = from p in query where p.ToWorkPlaceId == cmd.ToPlaceId select p;
+            }
+
+            if (cmd.MoveDate != null)
+            {
+                query = from p in query where p.MoveDate.ToString("d") == cmd.MoveDate.Value.ToString("d") select p;
+            }
+
+            if (cmd.FromDate != null && cmd.ToDate != null)
+            {
+                query = from p in query
+                    where p.MoveDate >= cmd.FromDate.Value &&
+                          p.MoveDate <= cmd.ToDate.Value
+                    select p;
+            }
+
+            if (cmd.SortByProduct != null)
+            {
+                query = cmd.SortByProduct == true
+                    ? (from p in query orderby p.ProductName select p)
+                    : (from p in query orderby p.ProductName descending select p);
+            }
+
+            if (cmd.SortByDate != null)
+            {
+                query = cmd.SortByDate == true
+                    ? (from p in query orderby p.MoveDate select p)
+                    : (from p in query orderby p.MoveDate descending select p);
+            }
+
+            if (cmd.SortByFromPlace != null)
+            {
+                query = cmd.SortByFromPlace == true
+                    ? (from p in query orderby p.FromWorkPlaceName select p)
+                    : (from p in query orderby p.FromWorkPlaceName descending select p);
+            }
+
+            if (cmd.SortByToPlace != null)
+            {
+                query = cmd.SortByToPlace == true
+                    ? (from p in query orderby p.ToWorkPlaceName select p)
+                    : (from p in query orderby p.ToWorkPlaceName descending select p);
+            }
+
+            pagesCount = (int)Math.Ceiling((double)(from p in query select p).Count()/cmd.PageSize);
+            query = query.Page(cmd.PageSize, cmd.Page);
+            return query.ToList();
         }
 
         public InnerMovement GetInnerMovement(int id)

@@ -7,14 +7,24 @@ using System.Threading.Tasks;
 using ColorMixERP.Server.DAL;
 using ColorMixERP.Server.Entities.DTO;
 using ColorMixERP.Server.Entities.AuthorizationEntities;
+using ColorMixERP.Server.Entities.Pagination;
 
 namespace ColorMixERP.Server.BL
 {
     public class UserBL
     {
-        public List<AccountUserDTO> GetAccountUsers()
+        public List<AccountUserDTO> GetAccountUsers(UserCommand cmd, ref int pagesCount)
         {
-            return new UserDalFacade().GetAccountUsers();
+            if (cmd.Name == null)
+            {
+                cmd.Name = string.Empty;
+            }
+
+            if (cmd.SurName == null)
+            {
+                cmd.SurName = string.Empty;
+            }
+            return new UserDalFacade().GetAccountUsers(cmd, ref pagesCount);
         }
 
         public AccountUserDTO GetAccountUser(int? id)

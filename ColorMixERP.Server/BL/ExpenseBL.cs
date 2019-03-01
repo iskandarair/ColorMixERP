@@ -5,14 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using ColorMixERP.Server.DAL;
 using ColorMixERP.Server.Entities;
+using ColorMixERP.Server.Entities.Pagination;
 
 namespace ColorMixERP.Server.BL
 {
     public class ExpenseBL
     {
-        public List<Expense> GetExpenses()
+        public List<Expense> GetExpenses(PaginationDTO cmd, ref int pagesCount)
         {
-            return new ExpenseDalFacade().GetExpenses();
+            return new ExpenseDalFacade().GetExpenses(cmd, ref pagesCount);
         }
 
         public List<Expense> GetUserExpenses(int userId)
