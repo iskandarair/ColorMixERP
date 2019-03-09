@@ -115,5 +115,26 @@ namespace ColorMixERP.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
+
+        [Authorize]
+        [HttpGet]
+        [Route("api/WorkPlaces/{id}/ProductStocks")]
+        public HttpResponseMessage GetProductStockDtosByWp(int id, ProductStockCommand cmd)
+        {
+            try
+            {
+                int pagesCount = 0;
+                var data = new ProductStockBL().GetProductStockDtosByWp(id,cmd, ref pagesCount);
+                var result = Request.CreateResponse(HttpStatusCode.OK, data);
+                result.Headers.Add(Consts.PAGES_COUNT, pagesCount.ToString());
+                return result;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
+            }
+        }
+    
     }
 }

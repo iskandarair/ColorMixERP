@@ -22,7 +22,27 @@ namespace ColorMixERP.Server.DAL
         }
         public List<ProductStockDTO> GetProductStocks(ProductStockCommand cmd, ref int pagesCount)
         {
-            var query = from p in db.ProductStocks where p.IsDeleted == false select p;
+            var query2 = ProductStockDtos(0, cmd, out pagesCount);
+            return query2.ToList();
+
+        }
+        public List<ProductStockDTO> GetProductStocksByWp(int wpId, ProductStockCommand cmd, ref int pagesCount)
+        {
+            var query2 = ProductStockDtos(wpId, cmd, out pagesCount);
+            return query2.ToList();
+        }
+
+        private List<ProductStockDTO> ProductStockDtos(int wpId, ProductStockCommand cmd, out int pagesCount, bool isByWP = true)
+        {
+            IQueryable<ProductStock> query;
+            if (isByWP)
+            {
+              query = from p in db.ProductStocks where p.IsDeleted == false && p.WorkPlaceId == wpId select p;
+            }
+            else
+            {
+                query = from p in db.ProductStocks where p.IsDeleted == false select p;
+            }
 
             if (cmd.ProductId > 0)
             {
@@ -48,20 +68,20 @@ namespace ColorMixERP.Server.DAL
                     : (from p in query orderby p.Quantity descending select p);
             }
 
-            var query2 = from p in query select new ProductStockDTO()
-            {
-                Id = p.Id,
-                ProductId = p.Product.Id,
-                ProductName = p.Product.Name,
-                Quantity = p.Quantity
-            };
+            var query2 = from p in query
+                select new ProductStockDTO()
+                {
+                    Id = p.Id,
+                    ProductId = p.Product.Id,
+                    ProductName = p.Product.Name,
+                    Quantity = p.Quantity
+                };
 
-            pagesCount = (int)Math.Ceiling((double)(from p in query select p).Count()/cmd.PageSize);
+            pagesCount = (int) Math.Ceiling((double) (from p in query select p).Count() / cmd.PageSize);
             query2 = query2.Page(cmd.PageSize, cmd.Page);
             return query2.ToList();
-
         }
-        
+
         public ProductStockDTO GetProductStock(int? id)
         {
             var query = from p in db.ProductStocks where p.Id == id

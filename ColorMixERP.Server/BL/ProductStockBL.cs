@@ -17,6 +17,11 @@ namespace ColorMixERP.Server.BL
             return new ProductStockDalFacade().GetProductStocks(cmd, ref pagesCount);
         }
 
+        public List<ProductStockDTO> GetProductStockDtosByWp(int wpId, ProductStockCommand cmd, ref int pagesCount)
+        {
+            return new ProductStockDalFacade().GetProductStocksByWp(wpId, cmd, ref pagesCount);
+        }
+
         public ProductStockDTO GetProductStock(int? id)
         {
             return new ProductStockDalFacade().GetProductStock(id);
