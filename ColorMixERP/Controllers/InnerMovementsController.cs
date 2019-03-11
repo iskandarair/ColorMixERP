@@ -9,6 +9,7 @@ using ColorMixERP.Server.Entities.DTO;
 using ColorMixERP.Server.Logging;
 using ColorMixERP.Server.Entities.Pagination;
 using ColorMixERP.Models;
+using Newtonsoft.Json;
 
 namespace ColorMixERP.Controllers
 {
@@ -16,10 +17,11 @@ namespace ColorMixERP.Controllers
     {
         [Authorize]
         [HttpGet]
-        public HttpResponseMessage GetInnerMovements(InnerMovementCommand cmd)
+        public HttpResponseMessage GetInnerMovements(string query)
         {
             try
             {
+                var cmd = JsonConvert.DeserializeObject<InnerMovementCommand>(query);
                 int pagesCount = 0;
                 var data = new InnerMovementBL().GetInnerMovementDtos(cmd, ref pagesCount);
                 var result = Request.CreateResponse(HttpStatusCode.OK, data);

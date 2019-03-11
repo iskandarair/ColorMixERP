@@ -10,6 +10,7 @@ using ColorMixERP.Server.Entities.DTO;
 using ColorMixERP.Server.Entities.Pagination;
 using ColorMixERP.Server.Logging;
 using ColorMixERP.Models;
+using Newtonsoft.Json;
 
 namespace ColorMixERP.Controllers
 {
@@ -18,10 +19,11 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
-        public HttpResponseMessage GetProduct(ProductCommand command)
+        public HttpResponseMessage GetProduct(string query)
         {
             try
             {
+                var cmd = JsonConvert.DeserializeObject<ProductCommand>(query);
                 int pagesCount = 0;
                 var data = new ProductBL().GetProducts(command, ref pagesCount);
                 var result = Request.CreateResponse(HttpStatusCode.OK, data);

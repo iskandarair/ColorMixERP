@@ -11,6 +11,7 @@ using ColorMixERP.Server.Entities.DTO;
 using ColorMixERP.Server.Logging;
 using ColorMixERP.Server.Entities.Pagination;
 using ColorMixERP.Models;
+using Newtonsoft.Json;
 
 namespace ColorMixERP.Controllers
 {
@@ -18,10 +19,11 @@ namespace ColorMixERP.Controllers
     {
         [Authorize]
         [HttpGet]
-        public HttpResponseMessage GetCategories(PaginationDTO cmd)
+        public HttpResponseMessage GetCategories(string query)
         {
             try
             {
+                var cmd = JsonConvert.DeserializeObject<PaginationDTO>(query);
                 int pagesCount = 0;
                 var data = new CategoryBL().GetCategories(cmd, ref pagesCount);
                 var result = Request.CreateResponse(HttpStatusCode.OK, data);
