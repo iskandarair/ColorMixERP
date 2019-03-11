@@ -25,7 +25,7 @@ namespace ColorMixERP.Controllers
             {
                 var cmd = JsonConvert.DeserializeObject<ProductCommand>(query);
                 int pagesCount = 0;
-                var data = new ProductBL().GetProducts(command, ref pagesCount);
+                var data = new ProductBL().GetProducts(cmd, ref pagesCount);
                 var result = Request.CreateResponse(HttpStatusCode.OK, data);
                 result.Headers.Add(Consts.PAGES_COUNT, pagesCount.ToString());
                 return result;
