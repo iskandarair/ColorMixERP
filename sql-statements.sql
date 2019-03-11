@@ -202,3 +202,33 @@ UpdatedDate datetime default getDAte(),
 PRIMARY KEY (Id),
 CONSTRAINT DebtCoverOrderId FOREIGN KEY (OrderId) REFERENCES ClientOrder(Id)
 );
+
+SELECT * FROM Income
+SELECT * FROM IncomeProduct
+
+IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'Income')
+CREATE TABLE Income (
+Id int IDENTITY(1,1),
+UserId int not null,
+FromWorkPlace int not null,
+ToWorkPlace int not null,
+CreatedDate datetime default getDate(),
+UpdatedDate datetime default getDate(),
+CONSTRAINT UserIdReference FOREIGN KEY (UserId) REFERENCES AccountUser(Id),
+CONSTRAINT FromWorkPlaceReference FOREIGN KEY (FromWorkPlace) REFERENCES WorkPlace(Id),
+CONSTRAINT ToWorkPlaceReference FOREIGN KEY (ToWorkPlace) REFERENCES WorkPlace(Id),
+PRIMARY KEY (Id),
+);
+
+IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'IncomeProduct')
+CREATE TABLE IncomeProduct (
+Id int IDENTITY(1,1),
+IncomeId int not null,
+ProductId int not null,
+Quantity decimal(19,2) NOT NULL default 0,
+CreatedDate datetime default getDate(),
+UpdatedDate datetime default getDate(),
+CONSTRAINT IncomeIdReference FOREIGN KEY (IncomeId) REFERENCES Income(Id),
+CONSTRAINT ProductIdReference FOREIGN KEY (ProductId) REFERENCES Product(Id),
+PRIMARY KEY (Id),
+);
