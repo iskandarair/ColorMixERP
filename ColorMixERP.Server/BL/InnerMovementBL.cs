@@ -28,9 +28,45 @@ namespace ColorMixERP.Server.BL
         {
             return new InnerMovementDalFacade().GetInnerMovementDto(id);
         }
-        public void Add(InnerMovementDTO dto)
+
+        public void Add(InnerMovementDTO dto, int userId)
         {
             new InnerMovementDalFacade().Add(dto);
+            var incomeProducts = new List<IncomeProductDTO>();
+            incomeProducts.Add(new IncomeProductDTO()
+            {
+                ProductId =  dto.ProductId,
+                Quantity =  dto.Quantity
+            });
+            var incomeDTO = new IncomeDTO()
+            {
+                FromWorkplaceId = dto.FromWorkPlaceId,
+                ToWorkplaceId = dto.ToWorkPlaceId,
+                IncomeProducts = incomeProducts,
+                UserId = userId
+            };
+            new IncomeDalFacade().AddIncome(incomeDTO);
+        }
+        public void Add(List<InnerMovementDTO> dtos, int userId)
+        {
+            new InnerMovementDalFacade().Add(dtos);
+            var incomeProducts = new List<IncomeProductDTO>();
+            foreach (var dto in dtos)
+            {
+                incomeProducts.Add(new IncomeProductDTO()
+                {
+                    ProductId = dto.ProductId,
+                    Quantity = dto.Quantity,
+                });
+            }
+            var incomeDTO = new IncomeDTO()
+            {
+                FromWorkplaceId = dtos.FirstOrDefault().FromWorkPlaceId,
+                ToWorkplaceId = dtos.FirstOrDefault().ToWorkPlaceId,
+                UserId = userId,
+                IncomeProducts = incomeProducts,
+            };
+            new IncomeDalFacade().AddIncome(incomeDTO);
         }
         public void Update(InnerMovementDTO dto)
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,9 +31,9 @@ namespace ColorMixERP.Server.DAL
                     FromWorkplaceName = c.FromWorkPlace.Name,
                     ToWorkplaceId = c.ToWorkplaceId,
                     ToWorkplaceName = c.ToWorkPlace.Name,
-                    CreatedDate = c.CreateDate.Value,
+                    CreatedDate = c.CreatedDate.Value,
                     UpdatedDate = c.UpdatedDate.Value,
-                    IncomeProducts = GetIncomeProducts(c.Id.Value),
+                    IncomeProducts = GetIncomeProducts(c.Id),
                 };
 
             if (command.UserId > 0)
@@ -80,7 +81,7 @@ namespace ColorMixERP.Server.DAL
                     FromWorkplaceName = c.FromWorkPlace.Name,
                     ToWorkplaceId = c.ToWorkplaceId,
                     ToWorkplaceName = c.ToWorkPlace.Name,
-                    CreatedDate = c.CreateDate.Value,
+                    CreatedDate = c.CreatedDate.Value,
                     UpdatedDate = c.UpdatedDate.Value,
                 };
              
@@ -89,7 +90,7 @@ namespace ColorMixERP.Server.DAL
         public List<IncomeDTO> GetIncomes(int[] ids)
         {
             var query = from c in db.Incomes
-                where ids.Contains(c.Id.Value)
+                where ids.Contains(c.Id)
                 select new IncomeDTO()
                 {
                     Id = c.Id,
@@ -99,7 +100,7 @@ namespace ColorMixERP.Server.DAL
                     FromWorkplaceName = c.FromWorkPlace.Name,
                     ToWorkplaceId = c.ToWorkplaceId,
                     ToWorkplaceName = c.ToWorkPlace.Name,
-                    CreatedDate = c.CreateDate.Value,
+                    CreatedDate = c.CreatedDate.Value,
                     UpdatedDate = c.UpdatedDate.Value,
                 };
 
@@ -115,7 +116,7 @@ namespace ColorMixERP.Server.DAL
                     ProductId =  c.ProductId,
                     ProductName = c.Product.Name,
                     Quantity = c.Quantity,
-                    CreatedDate = c.CreateDate.Value,
+                    CreatedDate = c.CreatedDate.Value,
                     UpdatedDate = c.UpdatedDate.Value,
                 };
 
@@ -132,7 +133,7 @@ namespace ColorMixERP.Server.DAL
                     ProductId = c.ProductId,
                     ProductName = c.Product.Name,
                     Quantity = c.Quantity,
-                    CreatedDate = c.CreateDate.Value,
+                    CreatedDate = c.CreatedDate.Value,
                     UpdatedDate = c.UpdatedDate.Value,
                 };
 
@@ -146,10 +147,13 @@ namespace ColorMixERP.Server.DAL
                 UserId = dto.UserId,
                 FromWorkPlaceId = dto.FromWorkplaceId,
                 ToWorkplaceId =  dto.FromWorkplaceId,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now,
+                IncomeProducts = new EntitySet<IncomeProduct>()
             };
             db.Incomes.InsertOnSubmit(income);
             db.SubmitChanges();
-            AddIncomeProducts(income.Id.Value, dto.IncomeProducts);
+            AddIncomeProducts(income.Id, dto.IncomeProducts);
         }
 
         public void AddIncomeProducts(int incomeId,List<IncomeProductDTO> dtos)
@@ -161,7 +165,9 @@ namespace ColorMixERP.Server.DAL
                 {
                     IncomeId = incomeId,
                     ProductId = c.ProductId,
-                    Quantity = c.Quantity
+                    Quantity = c.Quantity,
+                    CreatedDate = DateTime.Now,
+                    UpdatedDate = DateTime.Now
                 });
             }
             db.IncomeProducts.InsertAllOnSubmit(result);

@@ -10,6 +10,8 @@ using ColorMixERP.Server.Logging;
 using ColorMixERP.Server.Entities.Pagination;
 using ColorMixERP.Models;
 using Newtonsoft.Json;
+using System.Security.Claims;
+using ColorMixERP.Helpers;
 
 namespace ColorMixERP.Controllers
 {
@@ -53,11 +55,13 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
+        [Route("api/InnerMovements")]
         public HttpResponseMessage Add(InnerMovementDTO dto)
         {
             try
             {
-                new InnerMovementBL().Add(dto);
+                var userId = AuthHelper.GetUserIdFromClaims(User.Identity as ClaimsIdentity);
+                new InnerMovementBL().Add(dto, userId);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
@@ -67,6 +71,23 @@ namespace ColorMixERP.Controllers
             }
         }
 
+        [Authorize]
+        [HttpPost]
+        [Route("api/InnerMovements/Range")]
+        public HttpResponseMessage Add(InnerMovementDTO[] dto)
+        {
+            try
+            {
+                var userId = AuthHelper.GetUserIdFromClaims(User.Identity as ClaimsIdentity);
+                new InnerMovementBL().Add(dto.ToList(), userId);
+                return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
+            }
+        }
         [Authorize]
         [HttpPut]
         public HttpResponseMessage Update(InnerMovementDTO dto)

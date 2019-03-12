@@ -130,7 +130,16 @@ namespace ColorMixERP.Server.DAL
             db.InnerMovements.InsertOnSubmit(elementToAdd);
             db.SubmitChanges();
         }
-
+        public void Add(List<InnerMovementDTO> dtos)
+        {
+            var result = new  List<InnerMovement>();
+            foreach (var dto in dtos)
+            {
+                result.Add(new InnerMovement(dto.Id, dto.MoveDate, dto.ProductId, dto.Quantity, dto.FromWorkPlaceId, dto.ToWorkPlaceId));
+            }
+            db.InnerMovements.InsertAllOnSubmit(result);
+            db.SubmitChanges();
+        }
         public void Update(InnerMovementDTO dto)
         {
             var elementToUpdate = GetInnerMovement(dto.Id ?? 0);

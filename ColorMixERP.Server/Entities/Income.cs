@@ -11,8 +11,12 @@ namespace ColorMixERP.Server.Entities
     [Table(Name = "Income")]
     public class Income
     {
+        public Income()
+        {
+
+        }
         [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated = true)]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
 
         [Column(Name = "UserId")]
@@ -51,7 +55,8 @@ namespace ColorMixERP.Server.Entities
         }
         //---------------------------------- // 
 
-        private EntitySet<IncomeProduct> _incomeProduct;
+        private EntitySet<IncomeProduct> _incomeProduct { get; set; }
+
         [Association(Storage = "_incomeProduct", OtherKey = "IncomeId")]
         public EntitySet<IncomeProduct> IncomeProducts
         {
@@ -59,8 +64,8 @@ namespace ColorMixERP.Server.Entities
             set { _incomeProduct = value; }
         }
         //---------------------------------- // 
-        [Column(Name = "CreateDate")]
-        public DateTime? CreateDate { get; set; }
+        [Column(Name = "CreatedDate")]
+        public DateTime? CreatedDate { get; set; }
         [Column(Name = "UpdatedDate")]
         public DateTime? UpdatedDate { get; set; }
     }

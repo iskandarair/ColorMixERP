@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ColorMixERP.Server.BL;
 using System.Security.Claims;
+using ColorMixERP.Models;
 using Microsoft.Owin.Security;
 using ColorMixERP.Server.Entities.AuthorizationEntities;
 
@@ -31,7 +32,7 @@ namespace ColorMixERP.Provider
                     var claims = new List<Claim>()
                     {
                         new Claim(ClaimTypes.Name, user.Name),
-                        new Claim("UserID", user.Id.ToString())
+                        new Claim(Consts.USER_ID, user.Id.ToString())
                     };
 
                     ClaimsIdentity oAutIdentity = new ClaimsIdentity(claims, Startup.OAuthOptions.AuthenticationType);

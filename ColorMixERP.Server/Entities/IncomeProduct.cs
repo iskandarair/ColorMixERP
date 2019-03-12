@@ -11,6 +11,10 @@ namespace ColorMixERP.Server.Entities
     [Table(Name= "IncomeProduct")]
    public class IncomeProduct
     {
+        public IncomeProduct()
+        {
+
+        }
         [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated = true)]
         public int? Id { get; set; }
         [Column(Name ="IncomeId")]
@@ -31,8 +35,8 @@ namespace ColorMixERP.Server.Entities
         public decimal Quantity { get; set; }
 
         //---------------------------------- // 
-        [Column(Name = "CreateDate")]
-        public DateTime? CreateDate { get; set; }
+        [Column(Name = "CreatedDate")]
+        public DateTime? CreatedDate { get; set; }
         [Column(Name = "UpdatedDate")]
         public DateTime? UpdatedDate { get; set; }
     }
