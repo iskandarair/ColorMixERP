@@ -50,6 +50,19 @@ namespace ColorMixERP.Server.DAL
                 query = from c in query where c.ToWorkplaceId == command.ToWorkplace select c;
             }
 
+            if (command.Date != null)
+            {
+                query = from p in query where p.CreatedDate.ToString("d") == command.Date.Value.ToString("d") select p;
+            }
+
+            if (command.FromDate != null && command.ToDate != null)
+            {
+                query = from p in query
+                    where p.CreatedDate >= command.FromDate.Value &&
+                          p.CreatedDate <= command.ToDate.Value
+                    select p;
+            }
+
             pagesCount = (int)Math.Ceiling((double)(from p in query select p).Count() / command.PageSize);
             query = query.Page(command.PageSize, command.Page);
 
