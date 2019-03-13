@@ -68,7 +68,7 @@ namespace ColorMixERP.Controllers
             catch (ArgumentOutOfRangeException ex)
             {
                 LogManager.Instance.Error(ex);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
             }
             catch (Exception ex)
             {
@@ -77,28 +77,28 @@ namespace ColorMixERP.Controllers
             }
         }
 
-       //[Authorize]
-       //[HttpPost]
-       //[Route("api/InnerMovements/Range")]
-       //public HttpResponseMessage Add(InnerMovementDTO[] dto)
-       //{
-       //    try
-       //    {
-       //        var userId = AuthHelper.GetUserIdFromClaims(User.Identity as ClaimsIdentity);
-       //        new InnerMovementBL().Add(dto.ToList(), userId);
-       //        return Request.CreateResponse(HttpStatusCode.OK, true);
-       //    }
-       //    catch (ArgumentOutOfRangeException ex)
-       //    {
-       //        LogManager.Instance.Error(ex);
-       //        return Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message);
-       //    }
-       //    catch (Exception ex)
-       //    {
-       //        LogManager.Instance.Error(ex);
-       //        return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
-       //    }
-       //}
+       [Authorize]
+       [HttpPost]
+       [Route("api/InnerMovements/Range")]
+       public HttpResponseMessage Add(InnerMovementDTO[] dto)
+       {
+           try
+           {
+               var userId = AuthHelper.GetUserIdFromClaims(User.Identity as ClaimsIdentity);
+               new InnerMovementBL().Add(dto.ToList(), userId);
+               return Request.CreateResponse(HttpStatusCode.OK, true);
+           }
+           catch (ArgumentOutOfRangeException ex)
+           {
+               LogManager.Instance.Error(ex);
+               return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+           }
+           catch (Exception ex)
+           {
+               LogManager.Instance.Error(ex);
+               return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
+           }
+       }
         [Authorize]
         [HttpPut]
         public HttpResponseMessage Update(InnerMovementDTO dto)

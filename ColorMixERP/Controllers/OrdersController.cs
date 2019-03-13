@@ -100,7 +100,7 @@ namespace ColorMixERP.Controllers
             catch (ArgumentOutOfRangeException ex)
             {
                 LogManager.Instance.Error(ex);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
             }
             catch (Exception ex)
             {
