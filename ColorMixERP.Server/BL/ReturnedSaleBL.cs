@@ -26,10 +26,12 @@ namespace ColorMixERP.Server.BL
             return new ReturnedSaleDalFacade().GetReturnedSale(id);
         }
 
-        public void Add(ReturnedSaleDTO dto)
+        public void Add(ReturnedSaleDTO dto, int userId)
         {
+            new ProductStockBL().UpdateProductStock(dto, userId);
             new ReturnedSaleDalFacade().Add(dto);
         }
+
 
         public void Update(ReturnedSaleDTO dto)
         {

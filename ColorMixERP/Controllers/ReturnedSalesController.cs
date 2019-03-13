@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
+using ColorMixERP.Helpers;
 using ColorMixERP.Server.Entities.DTO;
 using ColorMixERP.Server.BL;
 using ColorMixERP.Server.Entities.Pagination;
@@ -58,7 +60,8 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                new ReturnedSaleBL().Add(element);
+                var userId = AuthHelper.GetUserIdFromClaims(User.Identity as ClaimsIdentity);
+                new ReturnedSaleBL().Add(element, userId);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)

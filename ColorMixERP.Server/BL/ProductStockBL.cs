@@ -62,12 +62,18 @@ namespace ColorMixERP.Server.BL
             productInStockMinus.Quantity -= dto.Quantity;
             new ProductStockDalFacade().Update(productInStockMinus);
 
-            var productInStockAdd =
-                new ProductStockDalFacade().GetProductStockByPlaceAndProduct(dto.ToWorkPlaceId, dto.ProductId);
-            productInStockAdd.Quantity += dto.Quantity;
-            new ProductStockDalFacade().Update(productInStockAdd);
+            var productInStockAdd = new ProductStockDalFacade().GetProductStockByPlaceAndProduct(dto.ToWorkPlaceId, dto.ProductId);
+            if (productInStockAdd == null)
+            {
+                AddProductStock(dto);
+            }
+            else
+            {
+                productInStockAdd.Quantity += dto.Quantity;
+                new ProductStockDalFacade().Update(productInStockAdd);
+            }
         }
-
+        
         public void UpdateProductStocks(List<InnerMovementDTO> dtos)
         {
             var errorMessage = string.Empty;
@@ -102,8 +108,15 @@ namespace ColorMixERP.Server.BL
 
                 var productInStockAdd =
                     new ProductStockDalFacade().GetProductStockByPlaceAndProduct(dto.ToWorkPlaceId, dto.ProductId);
-                productInStockAdd.Quantity += dto.Quantity;
-                new ProductStockDalFacade().Update(productInStockAdd);
+                if (productInStockAdd == null)
+                {
+                    AddProductStock(dto);
+                }
+                else
+                {
+                    productInStockAdd.Quantity += dto.Quantity;
+                    new ProductStockDalFacade().Update(productInStockAdd);
+                }
 
             }
         }
@@ -168,5 +181,44 @@ namespace ColorMixERP.Server.BL
             new ProductStockDalFacade().Update(productInStockMinus);
         }
 
+        public void UpdateProductStock(ReturnedSaleDTO dto, int userId)
+        {
+            var workplaceId = new UserDalFacade().GetAccountUser(userId).WorkPlaceId;
+            var productId = new SaleDalFacade().GetSale(dto.SaleId).ProductId;
+
+            var productInStockAdd =
+                new ProductStockDalFacade().GetProductStockByPlaceAndProduct(workplaceId, productId);
+            if (productInStockAdd == null)
+            {
+                AddProductStock(workplaceId,productId,dto.Quantity);
+            }
+            else
+            {
+                productInStockAdd.Quantity += dto.Quantity;
+                new ProductStockDalFacade().Update(productInStockAdd);
+            }
+        }
+
+        //
+        private static void AddProductStock(InnerMovementDTO dto)
+        {
+            var productStock = new ProductStockDTO()
+            {
+                WorkPlaceId = dto.ToWorkPlaceId,
+                ProductId = dto.ProductId,
+                Quantity = dto.Quantity,
+            };
+            new ProductStockDalFacade().Add(dto.ToWorkPlaceId, productStock);
+        }
+        private static void AddProductStock(int workplaceId, int productId, decimal quantity)
+        {
+            var productStock = new ProductStockDTO()
+            {
+                WorkPlaceId = workplaceId,
+                ProductId = productId,
+                Quantity = quantity,
+            };
+            new ProductStockDalFacade().Add(workplaceId, productStock);
+        }
     }
 }
