@@ -24,6 +24,7 @@ namespace ColorMixERP.Server.BL
 
         public void Add(OrderDTO order)
         {
+            new ProductStockBL().UpdateProductStocks(order);
             new OrderDalFacade().Add(order);
         }
 

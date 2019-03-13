@@ -9,6 +9,7 @@ namespace ColorMixERP.Server.Entities.DTO
     public class ProductStockDTO
     {
         public int Id { get; set; }
+        public int WorkPlaceId { get; set; }
         public int ProductId { get; set; }
         public string ProductName { get; set; }
         public decimal ProductPrice { get; set; }

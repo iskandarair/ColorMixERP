@@ -1,5 +1,4 @@
 ﻿using System;
-using System;
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
@@ -72,6 +71,7 @@ namespace ColorMixERP.Server.DAL
                 select new ProductStockDTO()
                 {
                     Id = p.Id,
+                    WorkPlaceId = p.WorkPlaceId,
                     ProductId = p.Product.Id,
                     ProductName = p.Product.Name,
                     Quantity = p.Quantity,
@@ -90,6 +90,7 @@ namespace ColorMixERP.Server.DAL
                 select new ProductStockDTO()
                 {
                     Id = p.Id,
+                    WorkPlaceId = p.WorkPlaceId,
                     ProductId = p.Product.Id,
                     ProductName = p.Product.Name,
                     Quantity = p.Quantity,
@@ -98,7 +99,22 @@ namespace ColorMixERP.Server.DAL
                 };
             return query.FirstOrDefault();
         }
-
+        public ProductStockDTO GetProductStockByPlaceAndProduct(int workplaceId, int productId)
+        {
+            var query = from p in db.ProductStocks
+                where p.ProductId == productId && p.WorkPlaceId == workplaceId
+                select new ProductStockDTO()
+                {
+                    Id = p.Id,
+                    WorkPlaceId = p.WorkPlaceId,
+                    ProductId = p.Product.Id,
+                    ProductName = p.Product.Name,
+                    Quantity = p.Quantity,
+                    ProductPrice = p.Product.Price,
+                    ProductCurrencId = p.Product.Currency
+                };
+            return query.FirstOrDefault();
+        }
         public void Add(int workPlaceId, ProductStockDTO stock)
         {
             var productToAdd = new ProductStock(stock.ProductId, workPlaceId);

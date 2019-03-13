@@ -31,6 +31,8 @@ namespace ColorMixERP.Server.BL
 
         public void Add(InnerMovementDTO dto, int userId)
         {
+            new ProductStockBL().UpdateProductStock(dto);
+            
             new InnerMovementDalFacade().Add(dto);
             var incomeProducts = new List<IncomeProductDTO>();
             incomeProducts.Add(new IncomeProductDTO()
@@ -47,9 +49,13 @@ namespace ColorMixERP.Server.BL
             };
             new IncomeDalFacade().AddIncome(incomeDTO);
         }
+        
         public void Add(List<InnerMovementDTO> dtos, int userId)
         {
-            new InnerMovementDalFacade().Add(dtos);
+            new ProductStockBL().UpdateProductStocks(dtos);
+            #region Income
+            // INCOME SECTION
+
             var incomeProducts = new List<IncomeProductDTO>();
             foreach (var dto in dtos)
             {
@@ -67,7 +73,9 @@ namespace ColorMixERP.Server.BL
                 IncomeProducts = incomeProducts,
             };
             new IncomeDalFacade().AddIncome(incomeDTO);
+            #endregion
         }
+
         public void Update(InnerMovementDTO dto)
         {
             new InnerMovementDalFacade().Update(dto);

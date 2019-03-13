@@ -97,6 +97,11 @@ namespace ColorMixERP.Controllers
                 new OrderBL().Add(order);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message);
+            }
             catch (Exception ex)
             {
                 LogManager.Instance.Error(ex);
@@ -106,7 +111,7 @@ namespace ColorMixERP.Controllers
         [Authorize]
         [HttpPut]
         [Route("api/orders/")]
-        public HttpResponseMessage UpdateClient(OrderDTO order)
+        public HttpResponseMessage Update(OrderDTO order)
         {
             try
             {
