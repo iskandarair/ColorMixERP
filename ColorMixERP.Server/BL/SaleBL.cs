@@ -26,6 +26,10 @@ namespace ColorMixERP.Server.BL
             return new SaleDalFacade().GetSale(id);
         }
 
+        public decimal GetLatestCurrencyRate()
+        {
+            return new SaleDalFacade().GetLatestCurrencyRate();
+        }
         public void Add(SaleDTO sale)
         {
             new SaleDalFacade().Add(sale);
@@ -36,9 +40,22 @@ namespace ColorMixERP.Server.BL
             new SaleDalFacade().AddRange(sales, orderId);
         }
 
-        public void Update(SaleDTO sale)
+        public void Update(SaleDTO sale, int userId)
         {
-            new SaleDalFacade().Update(sale);
+            var saleOld = new SaleDalFacade().GetSale(sale.Id);
+            var workPlaceId = new UserDalFacade().GetAccountUser(userId).WorkPlaceId;
+            var diff = sale.Quantity - saleOld.Quantity; // should-Be - was
+            var productInStockFrom = new ProductStockDalFacade().GetProductStockByPlaceAndProduct(workPlaceId, sale.ProductId);
+            if (productInStockFrom.Quantity > diff)
+            {
+                productInStockFrom.Quantity -= diff;// dto.Quantity - inMovement.Quantity;
+                new ProductStockDalFacade().Update(productInStockFrom);
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException($"Not Enough Product ({saleOld.ProductId}-{saleOld.ProductName}) in ProductStock to complete transaction.");
+            }
+            new SaleDalFacade().Update(saleOld);
         }
 
         public void Delete(int id)

@@ -77,8 +77,14 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                new ReturnedSaleBL().Update(dto);
+                var userId = AuthHelper.GetUserIdFromClaims(User.Identity as ClaimsIdentity);
+                new ReturnedSaleBL().Update(dto,userId);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
             }
             catch (Exception ex)
             {

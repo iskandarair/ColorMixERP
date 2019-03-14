@@ -152,6 +152,7 @@ PRIMARY KEY (Id),
 CONSTRAINT SaleProductId FOREIGN KEY (ProductID) REFERENCES Product(Id),
 CONSTRAINT OrderId FOREIGN KEY (OrderId) REFERENCES ClientOrder(Id)
 );
+ALTER TABLE SALE ADD CurrencyRate decimal(19,2) 
 
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'ReturnedSale')
 CREATE TABLE ReturnedSale (

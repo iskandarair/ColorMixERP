@@ -78,6 +78,22 @@ namespace ColorMixERP.Server.BL
 
         public void Update(InnerMovementDTO dto)
         {
+            var inMovement = new InnerMovementDalFacade().GetInnerMovement(dto.Id.Value);
+            var diff = dto.Quantity - inMovement.Quantity; // should-Be - was
+            var productInStockFrom = new ProductStockDalFacade().GetProductStockByPlaceAndProduct(dto.FromWorkPlaceId, dto.ProductId);
+            if (productInStockFrom.Quantity > diff)
+            {
+                productInStockFrom.Quantity -= diff;// dto.Quantity - inMovement.Quantity;
+                new ProductStockDalFacade().Update(productInStockFrom);
+
+                var productInStockTo = new ProductStockDalFacade().GetProductStockByPlaceAndProduct(dto.ToWorkPlaceId, dto.ProductId);
+                productInStockTo.Quantity += diff;
+                new ProductStockDalFacade().Update(productInStockTo);
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException($"Not Enough Product ({dto.ProductId}-{dto.ProductName}) in ProductStock to complete transaction.");
+            }
             new InnerMovementDalFacade().Update(dto);
         }
         public void Delete(int id)

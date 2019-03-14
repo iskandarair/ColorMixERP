@@ -37,6 +37,7 @@ namespace ColorMixERP.Server.DAL
                 Quantity = c.Quantity,
                 ProductPrice = c.ProductPrice,
                 SalesPrice = c.SalesPrice,
+                CurrencyRate = c.CurrencyRate,
                 OrderId = c.OrderId
             };
 
@@ -80,7 +81,8 @@ namespace ColorMixERP.Server.DAL
                     Quantity = c.Quantity,
                     ProductPrice = c.ProductPrice,
                     SalesPrice = c.SalesPrice,
-                    OrderId = c.OrderId
+                    CurrencyRate = c.CurrencyRate,
+                OrderId = c.OrderId
                         };
             return query.ToList();
         }
@@ -100,6 +102,12 @@ namespace ColorMixERP.Server.DAL
             return query.FirstOrDefault();
         }
 
+        public decimal GetLatestCurrencyRate()
+        {
+            var query = (from c in db.Sales where c.CurrencyRate != null orderby c.Id descending select c)
+                .FirstOrDefault().CurrencyRate.Value;
+            return query;
+        }
         public void Add(SaleDTO sale)
         {
             var element = new Sale(sale.ProductId)

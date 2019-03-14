@@ -108,6 +108,11 @@ namespace ColorMixERP.Controllers
                 new InnerMovementBL().Update(dto);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
             catch (Exception ex)
             {
                 LogManager.Instance.Error(ex);

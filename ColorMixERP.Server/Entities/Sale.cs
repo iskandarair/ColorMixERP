@@ -44,6 +44,9 @@ namespace ColorMixERP.Server.Entities
         [Column(Name = "SalesPrice")]
         public decimal SalesPrice { get; set; }
 
+        [Column(Name = "CurrencyRate")]
+        public decimal? CurrencyRate { get; set; }
+
         [Column(Name="OrderId")]
         public int OrderId { get; set; }
 
