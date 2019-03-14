@@ -52,6 +52,11 @@ namespace ColorMixERP.Server.DAL
                 query = from p in query where p.Id == command.ProductId select p;
             }
 
+            if (!string.IsNullOrWhiteSpace(command.ProductName))
+            {
+                query = from p in query where p.Name.Contains(command.ProductName) select p;
+            }
+
             if (command.CategoryId > 0)
             {
                 query = from p in query where p.Category.Id == command.CategoryId select p;
