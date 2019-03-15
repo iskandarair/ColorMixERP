@@ -33,7 +33,8 @@ namespace ColorMixERP.Server.DAL
                     {
                         Id = p.CategoryId,
                         Code = p.Category.Code,
-                        Name = p.Category.Name
+                        Name = p.Category.Name,
+                        IsDeleted = p.Category.IsDeleted
                     },
                     Price = p.Price,
                     Currency = p.Currency,
@@ -43,7 +44,8 @@ namespace ColorMixERP.Server.DAL
                     {
                         Id = p.SupplierId,
                         Name = p.Supplier.Name,
-                        SupplierInfo = p.Supplier.SupplierInfo
+                        SupplierInfo = p.Supplier.SupplierInfo,
+                        IsDeleted = p.Supplier.IsDeleted
                     }
                 };
             // F I L T E R I N G
@@ -96,7 +98,8 @@ namespace ColorMixERP.Server.DAL
                 {
                     Id = p.CategoryId,
                     Code = p.Category.Code,
-                    Name = p.Category.Name
+                    Name = p.Category.Name,
+                    IsDeleted = p.Category.IsDeleted
                 },
                 Price = p.Price,
                 Currency = p.Currency,
@@ -106,7 +109,8 @@ namespace ColorMixERP.Server.DAL
                 {
                     Id = p.SupplierId,
                     Name = p.Supplier.Name,
-                    SupplierInfo = p.Supplier.SupplierInfo
+                    SupplierInfo = p.Supplier.SupplierInfo,
+                    IsDeleted = p.Supplier.IsDeleted
                 }
             }; ;
             return query.FirstOrDefault();
