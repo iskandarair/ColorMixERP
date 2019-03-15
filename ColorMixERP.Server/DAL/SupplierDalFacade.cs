@@ -27,6 +27,7 @@ namespace ColorMixERP.Server.DAL
                     Id = c.Id,
                     Name = c.Name,
                     SupplierInfo = c.SupplierInfo,
+                    IsDeleted = c.IsDeleted
                 };
 
             pagesCount = (int)Math.Ceiling((double)(from p in query select p).Count()/cmd.PageSize);
@@ -41,6 +42,7 @@ namespace ColorMixERP.Server.DAL
                 Id = c.Id,
                 Name = c.Name,
                 SupplierInfo = c.SupplierInfo,
+                IsDeleted = c.IsDeleted
             };
             return query.FirstOrDefault();
         }

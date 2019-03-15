@@ -24,7 +24,8 @@ namespace ColorMixERP.Server.DAL
             {
                 Id = c.Id ?? 0,
                 Code = c.Code,
-                Name = c.Name
+                Name = c.Name,
+                IsDeleted = c.IsDeleted
             };
             var size = ((from p in query select p).Count() / cmd.PageSize);
             pagesCount = (int) Math.Ceiling((decimal)size);
@@ -38,7 +39,8 @@ namespace ColorMixERP.Server.DAL
             {
                 Id = c.Id ?? 0,
                 Code = c.Code,
-                Name = c.Name
+                Name = c.Name,
+                IsDeleted = c.IsDeleted
             };
             return categories.Where(c => c.Id == id).FirstOrDefault();
         }
