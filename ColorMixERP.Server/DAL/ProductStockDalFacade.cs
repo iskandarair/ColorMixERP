@@ -21,7 +21,7 @@ namespace ColorMixERP.Server.DAL
         }
         public List<ProductStockDTO> GetProductStocks(ProductStockCommand cmd, ref int pagesCount)
         {
-            var query2 = ProductStockDtos(0, cmd, out pagesCount);
+            var query2 = ProductStockDtos(0, cmd, out pagesCount, false);
             return query2.ToList();
 
         }
