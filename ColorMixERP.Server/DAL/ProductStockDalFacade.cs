@@ -117,7 +117,7 @@ namespace ColorMixERP.Server.DAL
         }
         public void Add( ProductStockDTO stock)
         {
-            var stockToUpdate = (from p in db.ProductStocks where p.ProductId == stock.ProductId && p.WorkPlaceId == stock.WorkPlaceId select p).FirstOrDefault();
+            var stockToUpdate = (from p in db.ProductStocks where p.ProductId == stock.ProductId && p.WorkPlaceId == stock.WorkPlaceId && p.IsDeleted == false select p).FirstOrDefault();
             if (stockToUpdate != null)
             {
                 stock.Id = stockToUpdate.Id;
