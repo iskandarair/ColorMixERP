@@ -72,5 +72,29 @@ namespace ColorMixERP.Server.DAL
             element.DeletedDate = DateTime.Now;
             db.SubmitChanges();
         }
+
+        public int GetOrCreateCategoryId(CategoryDTO category)
+        {
+            var query = from c in db.Categories where c.Name == category.Name select c.Id;
+            if (query.FirstOrDefault() > 0)
+            {
+                return query.FirstOrDefault().Value;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(category.Code))
+                {
+                    category.Code = "  ";
+                }
+                Category categoryToinsert = new Category()
+                {
+                    Code = category.Code,
+                    Name = category.Name
+                };
+                db.Categories.InsertOnSubmit(categoryToinsert);
+                db.SubmitChanges();
+                return categoryToinsert.Id.Value;
+            }
+        }
     }
 }

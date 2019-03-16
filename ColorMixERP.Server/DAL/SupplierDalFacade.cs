@@ -75,5 +75,29 @@ namespace ColorMixERP.Server.DAL
             element.DeletedDate = DateTime.Now;
             db.SubmitChanges();
         }
+
+        public int GetOrCreateSupplierId(SupplierDTO supplier)
+        {
+            var query = from c in db.Categories where c.Name == supplier.Name select c.Id;
+            if (query.FirstOrDefault() > 0)
+            {
+                return query.FirstOrDefault().Value;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(supplier.SupplierInfo))
+                {
+                    supplier.SupplierInfo = "  " ;
+                }
+                Supplier supplierToInsert = new Supplier()
+                {
+                    Name = supplier.Name,
+                    SupplierInfo = supplier.SupplierInfo,
+                };
+                db.Suppliers.InsertOnSubmit(supplierToInsert);
+                db.SubmitChanges();
+                return supplierToInsert.Id;
+            }
+        }
     }
 }

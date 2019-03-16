@@ -19,6 +19,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/Products/")]
         public HttpResponseMessage GetProduct(string query)
         {
             try
@@ -39,6 +40,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/Products/{id}")]
         public HttpResponseMessage GetProductById(int id)
         {
             try
@@ -55,6 +57,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
+        [Route("api/Products")]
         public HttpResponseMessage AddProduct(ProductDTO product)
         {
             try
@@ -69,9 +72,26 @@ namespace ColorMixERP.Controllers
             }
         }
 
+        [Authorize]
+        [HttpPost]
+        [Route("api/Products/Range")]
+        public HttpResponseMessage AddProduct(List<ProductDTO> productDto)
+        {
+            try
+            {
+                new ProductBL().AddRange(productDto);
+                return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
+            }
+        }
 
         [Authorize]
         [HttpPut]
+        [Route("api/Products/")]
         public HttpResponseMessage UpdateProduct(ProductDTO product)
         {
             try
@@ -89,6 +109,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpDelete]
+        [Route("api/Products/")]
         public HttpResponseMessage DeleteProduct(int id)
         {
             try

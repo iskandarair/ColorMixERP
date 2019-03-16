@@ -153,5 +153,29 @@ namespace ColorMixERP.Server.DAL
             element.DeletedDate = DateTime.Now;
             db.SubmitChanges();
         }
+
+        public void AddRange(List<ProductDTO> productsDtos)
+        {
+            var result = new List<Product>();
+
+            foreach (var dto in productsDtos)
+            {
+                dto.Category.Id = new CategoryDalFacade().GetOrCreateCategoryId(dto.Category);
+                dto.Supplier.Id = new SupplierDalFacade().GetOrCreateSupplierId(dto.Supplier);
+
+                var product  = new Product(dto.Category.Id, dto.Supplier.Id)
+                {
+                    Code = dto.Code,
+                    Name = dto.Name,
+                    Price = dto.Price,
+                    Currency = dto.Currency,
+                    MeasurementUnit = dto.MeasurementUnit,
+                    BoxedNumber = dto.BoxedNumber
+                };
+                result.Add(product);
+            }
+            db.Products.InsertAllOnSubmit(result);
+            db.SubmitChanges();
+        }
     }
 }

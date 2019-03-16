@@ -36,5 +36,10 @@ namespace ColorMixERP.Server.BL
         {
             new ProductDalFacade().Delete(id);
         }
+
+        public void AddRange(List<ProductDTO> productDtos)
+        {
+            new ProductDalFacade().AddRange(productDtos);
+        }
     }
 }
