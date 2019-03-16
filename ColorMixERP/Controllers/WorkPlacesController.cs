@@ -108,7 +108,7 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                new ProductStockBL().Add(id, stock);
+                new ProductStockBL().Add(stock);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
