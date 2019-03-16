@@ -34,8 +34,13 @@ namespace ColorMixERP.Server.DAL
                 Surname = c.Surname,
                 PositionRole = c.PositionRole,
                 PhoneNumber = c.PhoneNumber,
-                WorkPlaceId = c.WorkPlace.Id ?? 0,
-                WorkPlaceName = c.WorkPlace.Name,
+                WorkPlace = new WorkPlaceDTO()
+                {
+                    Id = c.WorkPlace.Id,
+                    Name = c.WorkPlace.Name,
+                    Location = c.WorkPlace.Location,
+                    IsDeleted = c.IsDeleted,
+                },
                 isSunnat = c.isSunnat
                 //Password = c.Password
             };
@@ -47,7 +52,7 @@ namespace ColorMixERP.Server.DAL
 
             if (cmd.WorkPlaceId > 0)
             {
-                query = from p in query where p.WorkPlaceId == cmd.WorkPlaceId select p;
+                query = from p in query where p.WorkPlace.Id == cmd.WorkPlaceId select p;
             }
             // SORTING
             if (cmd.SortByName != null)
@@ -74,8 +79,8 @@ namespace ColorMixERP.Server.DAL
             if (cmd.SortByWorkPlaceId != null)
             {
                 query = cmd.SortByWorkPlaceId == true
-                    ? (from p in query orderby p.WorkPlaceName select p)
-                    : (from p in query orderby p.WorkPlaceName descending select p);
+                    ? (from p in query orderby p.WorkPlace.Name select p)
+                    : (from p in query orderby p.WorkPlace.Name descending select p);
             }
 
             pagesCount = (int) Math.Ceiling((double) (from p in query select p).Count()/cmd.PageSize);
@@ -92,9 +97,14 @@ namespace ColorMixERP.Server.DAL
                 Surname = c.Surname,
                 PositionRole =  c.PositionRole,
                 PhoneNumber =  c.PhoneNumber,
-                WorkPlaceId =  c.WorkPlace.Id ?? 0,
-                WorkPlaceName = c.WorkPlace.Name,
-                isSunnat = c.isSunnat
+                isSunnat = c.isSunnat,
+                WorkPlace = new WorkPlaceDTO()
+                {
+                    Id = c.WorkPlace.Id,
+                    Name = c.WorkPlace.Name,
+                    Location = c.WorkPlace.Location,
+                    IsDeleted = c.IsDeleted,
+                },
                 //Password =  c.Password
             };
             var result = query.FirstOrDefault();
@@ -119,7 +129,7 @@ namespace ColorMixERP.Server.DAL
 
         public void Add(AccountUserDTO accountUser)
         {
-            var element = new AccountUser(accountUser.Name, accountUser.Surname,accountUser.PositionRole,accountUser.PhoneNumber,accountUser.WorkPlaceId,accountUser.Password);
+            var element = new AccountUser(accountUser.Name, accountUser.Surname,accountUser.PositionRole,accountUser.PhoneNumber,accountUser.WorkPlace.Id.Value,accountUser.Password);
             element.Expenses = new EntitySet<Expense>();
             db.AccountUsers.InsertOnSubmit(element);
             db.SubmitChanges();
@@ -131,7 +141,7 @@ namespace ColorMixERP.Server.DAL
             accountUserToUpdate.Surname = user.Surname;
             accountUserToUpdate.PhoneNumber = user.PhoneNumber;
             accountUserToUpdate.PositionRole = user.PositionRole;
-            accountUserToUpdate.WorkPlaceId = user.WorkPlaceId;
+            accountUserToUpdate.WorkPlaceId = user.WorkPlace.Id.Value;
             accountUserToUpdate.UpdatedDate = DateTime.Now;
             db.SubmitChanges();
         }

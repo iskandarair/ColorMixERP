@@ -12,5 +12,6 @@ namespace ColorMixERP.Server.Entities.DTO
         public string Name { get; set; }
         public string Location { get; set; }
         public List<ProductStockDTO> ProductStocks { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

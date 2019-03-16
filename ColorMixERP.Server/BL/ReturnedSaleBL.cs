@@ -36,7 +36,7 @@ namespace ColorMixERP.Server.BL
         public void Update(ReturnedSaleDTO dto, int userId)
         {
             var sale = new SaleDalFacade().GetSale(dto.SaleId);
-            var workPlaceId = new UserDalFacade().GetAccountUser(userId).WorkPlaceId;
+            var workPlaceId = new UserDalFacade().GetAccountUser(userId).WorkPlace.Id.Value;
             var diff = dto.Quantity - dto.DefectedQuantity; // quantity - deffectedQuantity !!!(So quantity is general for both)
             var productInStockFrom = new ProductStockDalFacade().GetProductStockByPlaceAndProduct(workPlaceId, sale.ProductId);
             productInStockFrom.Quantity += diff;

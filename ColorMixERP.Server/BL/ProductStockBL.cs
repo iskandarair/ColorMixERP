@@ -124,7 +124,7 @@ namespace ColorMixERP.Server.BL
         public void UpdateProductStocks(OrderDTO order)
         {
             var errorMessage = string.Empty;
-            var workplaceId = new UserDalFacade().GetAccountUser(order.SalerId).WorkPlaceId;
+            var workplaceId = new UserDalFacade().GetAccountUser(order.SalerId).WorkPlace.Id.Value;
             foreach (var sale in order.Sales)
             {
                 var productStock =
@@ -156,7 +156,7 @@ namespace ColorMixERP.Server.BL
         public void UpdateProductStocks(SaleDTO sale, int userId)
         {
             var errorMessage = string.Empty;
-            var workplaceId = new UserDalFacade().GetAccountUser(userId).WorkPlaceId;
+            var workplaceId = new UserDalFacade().GetAccountUser(userId).WorkPlace.Id.Value;
             var productStock =
                 new ProductStockDalFacade().GetProductStockByPlaceAndProduct(workplaceId, sale.ProductId);
             if (sale.Quantity > productStock.Quantity)
@@ -183,7 +183,7 @@ namespace ColorMixERP.Server.BL
 
         public void UpdateProductStock(ReturnedSaleDTO dto, int userId)
         {
-            var workplaceId = new UserDalFacade().GetAccountUser(userId).WorkPlaceId;
+            var workplaceId = new UserDalFacade().GetAccountUser(userId).WorkPlace.Id.Value;
             var productId = new SaleDalFacade().GetSale(dto.SaleId).ProductId;
 
             var productInStockAdd =

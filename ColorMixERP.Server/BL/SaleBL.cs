@@ -43,7 +43,7 @@ namespace ColorMixERP.Server.BL
         public void Update(SaleDTO sale, int userId)
         {
             var saleOld = new SaleDalFacade().GetSale(sale.Id);
-            var workPlaceId = new UserDalFacade().GetAccountUser(userId).WorkPlaceId;
+            var workPlaceId = new UserDalFacade().GetAccountUser(userId).WorkPlace.Id.Value;
             var diff = sale.Quantity - saleOld.Quantity; // should-Be - was
             var productInStockFrom = new ProductStockDalFacade().GetProductStockByPlaceAndProduct(workPlaceId, sale.ProductId);
             if (productInStockFrom.Quantity > diff)
