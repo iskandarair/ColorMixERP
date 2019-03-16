@@ -115,9 +115,9 @@ namespace ColorMixERP.Server.DAL
                 };
             return query.FirstOrDefault();
         }
-        public void Add(int workPlaceId, ProductStockDTO stock)
+        public void Add( ProductStockDTO stock)
         {
-            var productToAdd = new ProductStock(stock.ProductId, workPlaceId);
+            var productToAdd = new ProductStock(stock.ProductId, stock.WorkPlaceId);
             productToAdd.Quantity = stock.Quantity;
             db.ProductStocks.InsertOnSubmit(productToAdd);
             db.SubmitChanges();

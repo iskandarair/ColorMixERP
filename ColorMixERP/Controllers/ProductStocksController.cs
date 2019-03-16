@@ -55,12 +55,13 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
-        public HttpResponseMessage Add(int workplaceId, ProductStockDTO productStock)
+        []
+        public HttpResponseMessage Add(ProductStockDTO productStock)
         {
 
             try
             {
-                new ProductStockBL().Add(workplaceId,productStock);
+                new ProductStockBL().Add(productStock);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
