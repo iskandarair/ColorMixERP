@@ -91,7 +91,8 @@ namespace ColorMixERP.Server.DAL
                     ProductName = p.Product.Name,
                     Quantity = p.Quantity,
                     ProductPrice = p.Product.Price,
-                    ProductCurrencId = p.Product.Currency
+                    ProductCurrencId = p.Product.Currency,
+                    MeasurementUnit = p.Product.MeasurementUnit,
                 };
 
             pagesCount = (int) Math.Ceiling((double) (from p in query select p).Count() / cmd.PageSize);
@@ -110,7 +111,8 @@ namespace ColorMixERP.Server.DAL
                     ProductName = p.Product.Name,
                     Quantity = p.Quantity,
                     ProductPrice = p.Product.Price,
-                    ProductCurrencId = p.Product.Currency
+                    ProductCurrencId = p.Product.Currency,
+                    MeasurementUnit = p.Product.MeasurementUnit,
                 };
             return query.FirstOrDefault();
         }
