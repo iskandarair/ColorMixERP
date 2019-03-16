@@ -208,7 +208,7 @@ namespace ColorMixERP.Server.BL
                 ProductId = dto.ProductId,
                 Quantity = dto.Quantity,
             };
-            new ProductStockDalFacade().Add(dto.ToWorkPlaceId, productStock);
+            new ProductStockDalFacade().Add(productStock);
         }
         private static void AddProductStock(int workplaceId, int productId, decimal quantity)
         {
@@ -218,7 +218,7 @@ namespace ColorMixERP.Server.BL
                 ProductId = productId,
                 Quantity = quantity,
             };
-            new ProductStockDalFacade().Add(workplaceId, productStock);
+            new ProductStockDalFacade().Add( productStock);
         }
     }
 }
