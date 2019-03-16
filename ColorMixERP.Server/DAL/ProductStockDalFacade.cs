@@ -121,12 +121,16 @@ namespace ColorMixERP.Server.DAL
             if (stockToUpdate != null)
             {
                 stock.Id = stockToUpdate.Id;
+                stock.Quantity += stockToUpdate.Quantity;
                 Update(stock);
             }
-            var productToAdd = new ProductStock(stock.ProductId, stock.WorkPlaceId);
-            productToAdd.Quantity = stock.Quantity;
-            db.ProductStocks.InsertOnSubmit(productToAdd);
-            db.SubmitChanges();
+            else
+            {
+                var productToAdd = new ProductStock(stock.ProductId, stock.WorkPlaceId);
+                productToAdd.Quantity = stock.Quantity;
+                db.ProductStocks.InsertOnSubmit(productToAdd);
+                db.SubmitChanges();
+            }
         }
 
         public void Update(ProductStockDTO stock)
