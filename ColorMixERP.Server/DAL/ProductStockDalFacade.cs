@@ -130,6 +130,12 @@ namespace ColorMixERP.Server.DAL
                     ProductPrice = p.Product.Price,
                     ProductCurrencId = p.Product.Currency
                 };
+            if (query.FirstOrDefault() == null)
+            {
+                throw new ArgumentOutOfRangeException(
+                    $"No productStock  at all for workplaceId - {workplaceId} and productId - {productId}");
+
+            }
             return query.FirstOrDefault();
         }
         public void Add( ProductStockDTO stock)
