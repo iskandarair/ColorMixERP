@@ -105,8 +105,12 @@ namespace ColorMixERP.Server.DAL
         public decimal GetLatestCurrencyRate()
         {
             var query = (from c in db.Sales where c.CurrencyRate != null orderby c.Id descending select c)
-                .FirstOrDefault().CurrencyRate.Value;
-            return query;
+                .FirstOrDefault();
+            if (query != null)
+            {
+                return query.CurrencyRate.Value;
+            }
+            return 0;
         }
         public void Add(SaleDTO sale)
         {
