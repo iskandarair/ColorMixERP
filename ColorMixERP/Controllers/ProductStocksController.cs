@@ -55,7 +55,6 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
-        []
         public HttpResponseMessage Add(ProductStockDTO productStock)
         {
 
