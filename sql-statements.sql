@@ -236,3 +236,14 @@ CONSTRAINT IncomeIdReference FOREIGN KEY (IncomeId) REFERENCES Income(Id),
 CONSTRAINT ProductIdReference FOREIGN KEY (ProductId) REFERENCES Product(Id),
 PRIMARY KEY (Id),
 );
+
+IF NOT EXISTS (SELECT [name] FROM sys.tables WHERE [name] = 'DebtorCreditor')
+CREATE TABLE DebtorCreditor (
+Id int IDENTITY(1,1),
+ClientId int not null,
+Amount decimal(19,2) NOT NULL default 0,
+IsDebtor  bit NOT NULL DEFAULT(0),
+CreatedDate datetime default getDate(),
+UpdatedDate datetime default getDate(),
+CONSTRAINT ClientIdREference FOREIGN KEY (ClientId) REFERENCES Client(id)
+);

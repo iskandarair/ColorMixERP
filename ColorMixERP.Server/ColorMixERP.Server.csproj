@@ -69,6 +69,7 @@
     <Compile Include="DAL\CategoryDalFacade.cs" />
     <Compile Include="DAL\ClientDalFacade.cs" />
     <Compile Include="DAL\DebtCoverDalFacade.cs" />
+    <Compile Include="DAL\DebtorCreditorsDalFacade.cs" />
     <Compile Include="DAL\ExpenseDalFacade.cs" />
     <Compile Include="DAL\IncomeDalFacade.cs" />
     <Compile Include="DAL\InnerMovementDalFacade.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="DAL\SupplierDalFacade.cs" />
     <Compile Include="DAL\UserDalFacade.cs" />
     <Compile Include="DAL\WorkPlaceDalFacade.cs" />
+    <Compile Include="Entities\DebtorCreditor.cs" />
     <Compile Include="Entities\DTO\AccountUserDTO.cs" />
     <Compile Include="Entities\AuthorizationEntities\User.cs" />
     <Compile Include="Entities\Category.cs" />
@@ -89,6 +91,8 @@
     <Compile Include="Entities\DTO\CategoryDTO.cs" />
     <Compile Include="Entities\DTO\ClientDTO.cs" />
     <Compile Include="Entities\DTO\DebtCoverDTO.cs" />
+    <Compile Include="Entities\DTO\DebtorCreditorDTO.cs" />
+    <Compile Include="Entities\DTO\DebtorCreditorsBL.cs" />
     <Compile Include="Entities\DTO\IncomeDTO.cs" />
     <Compile Include="Entities\DTO\IncomeProductDTO.cs" />
     <Compile Include="Entities\DTO\InnerMovementDTO.cs" />
@@ -105,6 +109,7 @@
     <Compile Include="Entities\InnerMovement.cs" />
     <Compile Include="Entities\ClientOrder.cs" />
     <Compile Include="Entities\Pagination\ClientCommand.cs" />
+    <Compile Include="Entities\Pagination\DCCommand.cs" />
     <Compile Include="Entities\Pagination\IncomeCommand.cs" />
     <Compile Include="Entities\Pagination\InnerMovementCommand.cs" />
     <Compile Include="Entities\Pagination\OrderCommand.cs" />
