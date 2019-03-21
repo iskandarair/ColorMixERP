@@ -27,19 +27,55 @@ namespace ColorMixERP.Server.BL
             return new ProductStockDalFacade().GetProductStock(id);
         }
 
-        public void Add(ProductStockDTO stock)
+        public void Add(ProductStockDTO stock, int userId)
         {
+            var workPlaceId = new UserDalFacade().GetAccountUser(userId).WorkPlace.Id;
+            var incomeProducts = new List<IncomeProductDTO>();
+
+            var income = CreateLogIncome(userId, stock.ProductId, stock.Quantity, workPlaceId);
+            new IncomeDalFacade().AddIncome(income);
             new ProductStockDalFacade().Add(stock);
         }
 
-        public void Update(ProductStockDTO stock)
+        public void Update(ProductStockDTO stock, int userId)
         {
+            var workPlaceId = new UserDalFacade().GetAccountUser(userId).WorkPlace.Id;
+            var existedStock = new ProductStockDalFacade().GetProductStock(stock.Id);
+            var quantity = stock.Quantity - existedStock.Quantity;
+            var income = CreateLogIncome(userId, existedStock.ProductId, quantity, workPlaceId);
+            new IncomeDalFacade().AddIncome(income);
             new ProductStockDalFacade().Update(stock);
         }
 
-        public void Delete(int? id)
+        public void Delete(int? id, int userId)
         {
+            var workPlaceId = new UserDalFacade().GetAccountUser(userId).WorkPlace.Id;
+            var existedStock = new ProductStockDalFacade().GetProductStock(id);
+            var quantity = existedStock.Quantity * -1;
+            var income = CreateLogIncome(userId, existedStock.ProductId, quantity, workPlaceId);
+            new IncomeDalFacade().AddIncome(income);
             new ProductStockDalFacade().Delete(id);
+        }
+
+        private IncomeDTO CreateLogIncome(int userId, int productId, decimal quantity, int? workPlaceId)
+        {
+            var incomeProducts = new List<IncomeProductDTO>();
+            incomeProducts.Add(new IncomeProductDTO()
+            {
+                ProductId = productId,
+                Quantity = quantity
+            });
+            var income = new IncomeDTO()
+            {
+                FromWorkplaceId = workPlaceId.Value,
+                ToWorkplaceId = workPlaceId.Value,
+                UserId = userId,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now,
+                IsProductStock = true,
+                IncomeProducts = incomeProducts
+            };
+            return income;
         }
 
         public List<ProductStockDTO> GetWorkPlaceProductStocks(int wpId)
@@ -48,7 +84,7 @@ namespace ColorMixERP.Server.BL
         }
 
 
-        // To Keep up-to-Date with Novements and sales 
+        // To Keep up-to-Date with Movements and sales 
         public void UpdateProductStock(InnerMovementDTO dto)
         {
             var productInStockMinus =

@@ -19,6 +19,7 @@ namespace ColorMixERP.Server.Entities.DTO
         public List<IncomeProductDTO> IncomeProducts { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
+        public bool IsProductStock { get; set; }
 
     }
 }

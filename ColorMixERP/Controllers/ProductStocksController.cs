@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
+using ColorMixERP.Helpers;
 using ColorMixERP.Server.BL;
 using ColorMixERP.Server.Entities.DTO;
 using ColorMixERP.Server.Entities.Pagination;
@@ -60,7 +62,8 @@ namespace ColorMixERP.Controllers
 
             try
             {
-                new ProductStockBL().Add(productStock);
+                var userId = AuthHelper.GetUserIdFromClaims(User.Identity as ClaimsIdentity);
+                new ProductStockBL().Add(productStock, userId);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
@@ -76,7 +79,8 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                new ProductStockBL().Update(productStock);
+                var userId = AuthHelper.GetUserIdFromClaims(User.Identity as ClaimsIdentity);
+                new ProductStockBL().Update(productStock, userId);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
@@ -92,7 +96,8 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                new ProductStockBL().Delete(id);
+                var userId = AuthHelper.GetUserIdFromClaims(User.Identity as ClaimsIdentity);
+                new ProductStockBL().Delete(id, userId);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
