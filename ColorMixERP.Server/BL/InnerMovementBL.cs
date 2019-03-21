@@ -76,7 +76,7 @@ namespace ColorMixERP.Server.BL
             #endregion
         }
 
-        public void Update(InnerMovementDTO dto)
+        public void Update(InnerMovementDTO dto, int userId)
         {
             var inMovement = new InnerMovementDalFacade().GetInnerMovement(dto.Id.Value);
             var diff = dto.Quantity - inMovement.Quantity; // should-Be - was
@@ -94,6 +94,21 @@ namespace ColorMixERP.Server.BL
             {
                 throw new ArgumentOutOfRangeException($"Not Enough Product ({dto.ProductId}-{dto.ProductName}) in ProductStock to complete transaction.");
             }
+
+            var quantity = inMovement.Quantity - dto.Quantity;
+            var incomeProducts = new List<IncomeProductDTO>();
+            incomeProducts.Add(new IncomeProductDTO()
+            {
+                ProductId = dto.ProductId,
+                Quantity = quantity
+            });
+            var incomeDTO = new IncomeDTO()
+            {
+                FromWorkplaceId = dto.FromWorkPlaceId,
+                ToWorkplaceId = dto.ToWorkPlaceId,
+                IncomeProducts = incomeProducts,
+                UserId = userId
+            };
             new InnerMovementDalFacade().Update(dto);
         }
         public void Delete(int id)

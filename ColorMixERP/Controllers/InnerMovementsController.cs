@@ -105,7 +105,8 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                new InnerMovementBL().Update(dto);
+                var userId = AuthHelper.GetUserIdFromClaims(User.Identity as ClaimsIdentity);
+                new InnerMovementBL().Update(dto, userId);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (ArgumentOutOfRangeException ex)
