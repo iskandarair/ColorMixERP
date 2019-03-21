@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
+using ColorMixERP.Helpers;
 using ColorMixERP.Server.BL;
 using ColorMixERP.Server.Entities;
 using ColorMixERP.Server.Entities.DTO;
@@ -104,11 +106,12 @@ namespace ColorMixERP.Controllers
         [Authorize]
         [HttpPost]
         [ActionName("ProductStocks")]
-        public HttpResponseMessage Add(int id, ProductStockDTO stock)
+        public HttpResponseMessage Add(ProductStockDTO stock)
         {
             try
             {
-                new ProductStockBL().Add(stock);
+                var userId = AuthHelper.GetUserIdFromClaims(User.Identity as ClaimsIdentity);
+                new ProductStockBL().Add(stock, userId);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
