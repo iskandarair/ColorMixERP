@@ -45,6 +45,7 @@ namespace ColorMixERP.Server.BL
                 FromWorkplaceId = dto.FromWorkPlaceId,
                 ToWorkplaceId = dto.ToWorkPlaceId,
                 IncomeProducts = incomeProducts,
+                IsProductStock = false,
                 UserId = userId
             };
             new IncomeDalFacade().AddIncome(incomeDTO);
@@ -71,6 +72,7 @@ namespace ColorMixERP.Server.BL
                 ToWorkplaceId = dtos.FirstOrDefault().ToWorkPlaceId,
                 UserId = userId,
                 IncomeProducts = incomeProducts,
+                IsProductStock = false,
             };
             new IncomeDalFacade().AddIncome(incomeDTO);
             #endregion
@@ -107,8 +109,10 @@ namespace ColorMixERP.Server.BL
                 FromWorkplaceId = dto.FromWorkPlaceId,
                 ToWorkplaceId = dto.ToWorkPlaceId,
                 IncomeProducts = incomeProducts,
+                IsProductStock = false,
                 UserId = userId
             };
+            new IncomeDalFacade().AddIncome(incomeDTO);
             new InnerMovementDalFacade().Update(dto);
         }
         public void Delete(int id)

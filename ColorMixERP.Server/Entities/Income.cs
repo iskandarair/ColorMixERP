@@ -68,5 +68,8 @@ namespace ColorMixERP.Server.Entities
         public DateTime? CreatedDate { get; set; }
         [Column(Name = "UpdatedDate")]
         public DateTime? UpdatedDate { get; set; }
+
+        [Column(Name = "IsProductStock")]
+        public bool IsProductStock { get; set; }
     }
 }

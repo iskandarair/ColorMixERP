@@ -222,6 +222,8 @@ CONSTRAINT ToWorkPlaceReference FOREIGN KEY (ToWorkPlace) REFERENCES WorkPlace(I
 PRIMARY KEY (Id),
 );
 
+ALTER TABLE Income ADD IsProductStock bit not null default(0);
+
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'IncomeProduct')
 CREATE TABLE IncomeProduct (
 Id int IDENTITY(1,1),
