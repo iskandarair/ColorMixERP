@@ -37,6 +37,16 @@ namespace ColorMixERP.Server.Entities.DTO
                 dto.Amount = -1 * dto.Amount;
             }
             new DebtorCreditorsDalFacade().Update(dto);
+            var creditorDebtorExsting = new DebtorCreditorsDalFacade().GetDebtorCreditorById(dto.Id);
+            if (dto.IsDebtor)
+            {
+                dto.Amount = creditorDebtorExsting.Amount - dto.Amount;
+            }
+            else
+            {
+                dto.Amount = dto.Amount - creditorDebtorExsting.Amount;
+            }
+
             UpdateDebtorCreditorPart(dto);
         }
 
