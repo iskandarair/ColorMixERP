@@ -35,6 +35,8 @@ namespace ColorMixERP.Server.Entities
         public string OKONX { get; set; }
 
         // =================================================
+        [Column(Name= "DebtorCreditor")]
+        public decimal DebtorCreditor { get; set; }
 
         [Column(Name = "IsDeleted")]
         public bool IsDeleted { get; set; }

@@ -39,7 +39,8 @@ namespace ColorMixERP.Server.DAL
                     MFO = c.MFO,
                     INN = c.INN,
                     OKONX = c.OKONX,
-                    NickName = c.NickName
+                    NickName = c.NickName,
+                    DebtorCreditor = c.DebtorCreditor
                 };
             
             if (cmd.SortByName != null)
@@ -82,7 +83,8 @@ namespace ColorMixERP.Server.DAL
                 MFO = c.MFO,
                 INN = c.INN,
                 OKONX = c.OKONX,
-                NickName = c.NickName
+                NickName = c.NickName,
+                DebtorCreditor = c.DebtorCreditor
             };
             return query.FirstOrDefault();
         }
@@ -128,6 +130,13 @@ namespace ColorMixERP.Server.DAL
             var element = (from c in db.Clients where c.Id == id select c).FirstOrDefault();
             element.IsDeleted = true;
             element.DeletedDate = DateTime.Now;
+            db.SubmitChanges();
+        }
+
+        public void UpdateDebtorCreditorPart(int id, decimal debtorCreditor)
+        {
+            var element = (from c in db.Clients where c.Id == id select c).FirstOrDefault();
+            element.DebtorCreditor = debtorCreditor;
             db.SubmitChanges();
         }
     }

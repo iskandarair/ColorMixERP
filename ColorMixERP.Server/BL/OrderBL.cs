@@ -26,13 +26,30 @@ namespace ColorMixERP.Server.BL
         {
             new ProductStockBL().UpdateProductStocks(order);
             new OrderDalFacade().Add(order);
+            //
+            var client = new ClientDalFacade().GetClient(order.ClientId);
+            var creditorDebtor = new DebtorCreditorDTO()
+            {
+                ClientId = order.ClientId,
+                Amount =  -1 * order.PaymentByTransfer
+            };
+            new DebtorCreditorsBL().UpdateDebtorCreditorPart(creditorDebtor);
         }
 
         public void Update(OrderDTO order)
         {
             new OrderDalFacade().Update(order);
-        }
+            var orderExisting = new OrderDalFacade().GetClientOrder(order.Id);
+            var amount = orderExisting.PaymentByTransfer - order.PaymentByTransfer;
 
+            var debtorCreditor = new DebtorCreditorDTO()
+            {
+                ClientId = order.ClientId,
+                Amount =  amount
+            };
+            new DebtorCreditorsBL().UpdateDebtorCreditorPart(debtorCreditor);
+        }
+        
         public void Delete(int id)
         {
             new OrderDalFacade().Delete(id);

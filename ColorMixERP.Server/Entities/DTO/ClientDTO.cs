@@ -19,5 +19,6 @@ namespace ColorMixERP.Server.Entities.DTO
         public string MFO { get; set; }
         public string INN { get; set; }
         public string OKONX { get; set; }
+        public decimal DebtorCreditor { get; set; }
     }
 }

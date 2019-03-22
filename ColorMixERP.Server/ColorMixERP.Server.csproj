@@ -92,7 +92,7 @@
     <Compile Include="Entities\DTO\ClientDTO.cs" />
     <Compile Include="Entities\DTO\DebtCoverDTO.cs" />
     <Compile Include="Entities\DTO\DebtorCreditorDTO.cs" />
-    <Compile Include="Entities\DTO\DebtorCreditorsBL.cs" />
+    <Compile Include="BL\DebtorCreditorsBL.cs" />
     <Compile Include="Entities\DTO\IncomeDTO.cs" />
     <Compile Include="Entities\DTO\IncomeProductDTO.cs" />
     <Compile Include="Entities\DTO\InnerMovementDTO.cs" />

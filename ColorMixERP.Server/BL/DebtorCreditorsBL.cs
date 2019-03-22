@@ -22,12 +22,29 @@ namespace ColorMixERP.Server.Entities.DTO
 
         public void Add(DebtorCreditorDTO dto)
         {
+            if (dto.IsDebtor)
+            {
+                dto.Amount = -1 * dto.Amount;
+            }
             new DebtorCreditorsDalFacade().Add(dto);
+            UpdateDebtorCreditorPart(dto);
         }
 
         public void Update(DebtorCreditorDTO dto)
         {
+            if (dto.IsDebtor)
+            {
+                dto.Amount = -1 * dto.Amount;
+            }
             new DebtorCreditorsDalFacade().Update(dto);
+            UpdateDebtorCreditorPart(dto);
         }
-    }
+
+        public void UpdateDebtorCreditorPart(DebtorCreditorDTO dto)
+        {
+            var client = new ClientDalFacade().GetClient(dto.Id);
+            var amount = client.DebtorCreditor + dto.Amount;
+            new ClientDalFacade().UpdateDebtorCreditorPart(dto.Id, amount);
+        }
+    } 
 }
