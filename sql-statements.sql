@@ -86,6 +86,7 @@ UpdatedDate datetime default getDAte(),
 PRIMARY KEY (Id),
 );
 Alter Table Client Add NickName nvarchar(255);
+Alter Table Client Add DebtorCreditor decimal(19,2) NOT NULL default(0);
 
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'Expense')
 CREATE TABLE Expense (
