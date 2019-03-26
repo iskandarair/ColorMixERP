@@ -11,6 +11,10 @@ namespace ColorMixERP.Server.BL
 {
     public class IncomeBL
     {
+        public List<ProductArrivalDTO> GetProductArrivals(IncomeCommand command, ref int pagesCount)
+        {
+            return new IncomeDalFacade().GetProductArrivals(command, ref pagesCount);
+        }
         public List<IncomeDTO> GetIncomes(IncomeCommand command, ref int pagesCount)
         {
             return new IncomeDalFacade().GetIncomes(command, ref pagesCount);

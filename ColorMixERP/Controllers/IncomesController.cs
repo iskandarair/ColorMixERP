@@ -17,6 +17,29 @@ namespace ColorMixERP.Controllers
     {
         [Authorize]
         [HttpGet]
+        [Route("api/Incomes/ProductArrivals")]
+        public HttpResponseMessage GetProductArrivals(string query)
+        {
+            try
+            {
+                var cmd = JsonConvert.DeserializeObject<IncomeCommand>(query);
+                int pagesCount = 0;
+                var data = new IncomeBL().GetProductArrivals(cmd, ref pagesCount);
+                var result = Request.CreateResponse(HttpStatusCode.OK, data);
+                result.Headers.Add(Consts.PAGES_COUNT, pagesCount.ToString());
+                return result;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
+
+        [Route("api/Incomes/")]
+        [Authorize]
+        [HttpGet]
         public HttpResponseMessage GetIncomes(string query)
         {
             try

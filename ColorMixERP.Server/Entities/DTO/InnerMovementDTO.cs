@@ -17,5 +17,8 @@ namespace ColorMixERP.Server.Entities.DTO
         public string FromWorkPlaceName { get; set; }
         public int ToWorkPlaceId { get; set; }
         public string ToWorkPlaceName { get; set; }
+        // ADDED AFTER Shams gave Stats
+        public decimal ProductPrice { get; set; }
+        public decimal TotalPrice { get; set; }
     }
 }

@@ -19,6 +19,39 @@ namespace ColorMixERP.Server.DAL
         {
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
+
+        public List<ProductArrivalDTO> GetProductArrivals(IncomeCommand command, ref int pagesCount)
+        {
+            var query = from c in db.IncomeProducts
+                group c by new {c.Product, c.CreatedDate.Value.Date } into grp
+                let  SumQuantity = grp.Sum(x => x.Quantity)
+                orderby grp.Key.Date
+                select new ProductArrivalDTO()
+                {
+                    ProductCode = grp.Key.Product.Code,
+                    ProductName = grp.Key.Product.Name,
+                    Date = grp.Key.Date,
+                    Quantity = SumQuantity,
+                    SupplierName = grp.Key.Product.Supplier.Name
+                };
+
+            if (command.Date != null)
+            {
+                query = from p in query where p.Date.ToString("d") == command.Date.Value.ToString("d") select p;
+            }
+
+            if (command.FromDate != null && command.ToDate != null)
+            {
+                query = from p in query
+                    where p.Date >= command.FromDate.Value &&
+                          p.Date <= command.ToDate.Value
+                    select p;
+            }
+            
+            pagesCount = (int)Math.Ceiling((double)(from p in query select p).Count() / command.PageSize);
+            query = query.Page(command.PageSize, command.Page);
+            return query.ToList();
+        }
         public List<IncomeDTO> GetIncomes(IncomeCommand command, ref int pagesCount)
         {
             var query = from c in db.Incomes
@@ -70,6 +103,8 @@ namespace ColorMixERP.Server.DAL
 
             return query.ToList();
         }
+
+
         public IncomeDTO GetIncome(int id)
         {
             var query = from c in db.Incomes
@@ -183,6 +218,8 @@ namespace ColorMixERP.Server.DAL
         {
             var elementToUpdate = (from c in db.IncomeProducts where c.Id == dto.Id select c).FirstOrDefault();
             elementToUpdate.Quantity = dto.Quantity;
+            elementToUpdate.UpdatedDate = DateTime.Now;
+            db.SubmitChanges();
         }
     }
 }

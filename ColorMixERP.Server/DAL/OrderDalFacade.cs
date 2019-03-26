@@ -38,7 +38,9 @@ namespace ColorMixERP.Server.DAL
                 PaymentByCard = c.PaymentByCard,
                 PaymentByTransfer = c.PaymentByTransfer,
                 PaymentByCash = c.PaymentByCash,
-                IsDebt = c.IsDebt
+                IsDebt = c.IsDebt,
+                WorkPlaceName = c.Saler.WorkPlace.Name,
+                WorkPlaceLocation = c.Saler.WorkPlace.Location
             };
 
             if (cmd.SalerId > 0)
@@ -112,8 +114,10 @@ namespace ColorMixERP.Server.DAL
                     PaymentByCard = c.PaymentByCard,
                     PaymentByTransfer = c.PaymentByTransfer,
                     PaymentByCash = c.PaymentByCash,
-                    IsDebt = c.IsDebt
-                };
+                    IsDebt = c.IsDebt,
+                    WorkPlaceName = c.Saler.WorkPlace.Name,
+                    WorkPlaceLocation = c.Saler.WorkPlace.Location
+            };
             return query.FirstOrDefault();
         }
 

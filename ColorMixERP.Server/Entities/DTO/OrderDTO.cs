@@ -11,6 +11,8 @@ namespace ColorMixERP.Server.Entities.DTO
         public int Id { get; set; }
         public string TransactionId { get; set; }
         public int SalerId { get; set; }
+        public string WorkPlaceName { get; set; }
+        public string WorkPlaceLocation { get; set; }
         public string SalerName { get; set; }
         public DateTime OrderDate { get; set; }
         public List<SaleDTO> Sales { get; set; }

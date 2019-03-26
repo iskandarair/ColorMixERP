@@ -40,6 +40,8 @@ namespace ColorMixERP.Server.DAL
                     FromWorkPlaceName = c.FromWorkPlace.Name,
                     ToWorkPlaceId = c.ToWorkPlace.Id ?? 0,
                     ToWorkPlaceName =  c.ToWorkPlace.Name,
+                    ProductPrice = c.Product.Price,
+                    TotalPrice = c.Quantity * c.Product.Price
                 };
 
             if (cmd.ProductId > 0)
@@ -119,7 +121,9 @@ namespace ColorMixERP.Server.DAL
                 FromWorkPlaceId = c.FromWorkPlace.Id ?? 0,
                 FromWorkPlaceName = c.FromWorkPlace.Name,
                 ToWorkPlaceId = c.ToWorkPlace.Id ?? 0,
-                ToWorkPlaceName = c.ToWorkPlace.Name
+                ToWorkPlaceName = c.ToWorkPlace.Name,
+                ProductPrice = c.Product.Price,
+                TotalPrice = c.Quantity * c.Product.Price
             };
             return q.FirstOrDefault();
         }
