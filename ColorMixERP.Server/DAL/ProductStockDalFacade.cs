@@ -40,7 +40,7 @@ namespace ColorMixERP.Server.DAL
             }
             else
             {
-                query = from p in db.ProductStocks where p.IsDeleted == false select p;
+                query = from p in db.ProductStocks where p.IsDeleted == false && p.Quantity > 0 select p;
             }
 
             if (cmd.ProductId > 0)
