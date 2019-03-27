@@ -22,11 +22,7 @@ namespace ColorMixERP.Server.DAL
         public List<ClientDTO> GetClients(ClientCommand cmd, ref int pagesCount)
         {
             var query = from c in db.Clients
-                where c.IsDeleted == false &&
-                      c.Name.Contains(cmd.Name) &&
-                      c.NickName.Contains(cmd.NickName) &&
-                      c.INN.Contains(cmd.INN) &&
-                      c.City.Contains(cmd.City)
+                where c.IsDeleted == false
                 select new ClientDTO()
                 {
                     Id = c.Id,
@@ -42,7 +38,27 @@ namespace ColorMixERP.Server.DAL
                     NickName = c.NickName,
                     DebtorCreditor = c.DebtorCreditor
                 };
-            
+
+            if (!string.IsNullOrEmpty(cmd.Name))
+            {
+                query = from c in query where c.Name.Contains(cmd.Name) select c;
+            }
+
+            if (!string.IsNullOrEmpty(cmd.NickName))
+            {
+                query = from c in query where c.NickName.Contains(cmd.NickName) select c;
+            }
+
+            if (!string.IsNullOrEmpty(cmd.INN))
+            {
+                query = from c in query where c.INN.Contains(cmd.INN) select c;
+            }
+
+            if (!string.IsNullOrEmpty(cmd.City))
+            {
+                query = from c in query where c.City.Contains(cmd.City) select c;
+            }
+            //S O R T I N G
             if (cmd.SortByName != null)
             {
                 query = cmd.SortByName == true
