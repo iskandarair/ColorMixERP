@@ -119,7 +119,8 @@ namespace ColorMixERP.Server.DAL
                 ProductPrice = sale.ProductPrice,
                 SalesPrice = sale.SalesPrice,
                 Quantity = sale.Quantity,
-                OrderId = sale.OrderId
+                OrderId = sale.OrderId,
+                CurrencyRate = sale.CurrencyRate
             };
             db.Sales.InsertOnSubmit(element);
             db.SubmitChanges();
@@ -134,7 +135,8 @@ namespace ColorMixERP.Server.DAL
                     ProductPrice = sale.ProductPrice,
                     SalesPrice = sale.SalesPrice,
                     Quantity =  sale.Quantity,
-                    OrderId = orderId
+                    OrderId = orderId,
+                    CurrencyRate = sale.CurrencyRate
                 });
             }
             db.Sales.InsertAllOnSubmit(result);
@@ -149,6 +151,7 @@ namespace ColorMixERP.Server.DAL
             element.ProductPrice = sale.ProductPrice;
             element.SalesPrice = sale.SalesPrice;
             element.UpdatedDate = DateTime.Now;
+            element.CurrencyRate = sale.CurrencyRate;
             db.SubmitChanges();
         }
 
