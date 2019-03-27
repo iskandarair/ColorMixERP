@@ -37,7 +37,7 @@ namespace ColorMixERP.Server.DAL
                 Quantity = c.Quantity,
                 ProductPrice = c.ProductPrice,
                 SalesPrice = c.SalesPrice,
-                CurrencyRate = c.CurrencyRate,
+                CurrencyRate = c.CurrencyRate == null ? 0 : c.CurrencyRate,
                 OrderId = c.OrderId
             };
 
@@ -82,7 +82,7 @@ namespace ColorMixERP.Server.DAL
                     ProductPrice = c.ProductPrice,
                     SalesPrice = c.SalesPrice,
                     CurrencyRate = c.CurrencyRate == null ? 0 : c.CurrencyRate,
-                OrderId = c.OrderId
+                    OrderId = c.OrderId
                         };
             return query.ToList();
         }
@@ -97,8 +97,9 @@ namespace ColorMixERP.Server.DAL
                     Quantity = c.Quantity,
                     ProductPrice = c.ProductPrice,
                     SalesPrice = c.SalesPrice,
-                    OrderId = c.OrderId
-                 };
+                    OrderId = c.OrderId,
+                    CurrencyRate = c.CurrencyRate == null ? 0 : c.CurrencyRate,
+            };
             return query.FirstOrDefault();
         }
 
