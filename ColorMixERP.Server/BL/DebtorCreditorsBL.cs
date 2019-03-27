@@ -54,7 +54,7 @@ namespace ColorMixERP.Server.Entities.DTO
         {
             var client = new ClientDalFacade().GetClient(dto.ClientId);
             var amount = client.DebtorCreditor + dto.Amount;
-            new ClientDalFacade().UpdateDebtorCreditorPart(dto.Id, amount);
+            new ClientDalFacade().UpdateDebtorCreditorPart(dto.ClientId, amount);
         }
     } 
 }
