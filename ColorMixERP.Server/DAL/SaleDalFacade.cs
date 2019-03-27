@@ -81,7 +81,7 @@ namespace ColorMixERP.Server.DAL
                     Quantity = c.Quantity,
                     ProductPrice = c.ProductPrice,
                     SalesPrice = c.SalesPrice,
-                    CurrencyRate = c.CurrencyRate,
+                    CurrencyRate = c.CurrencyRate == null ? 0 : c.CurrencyRate,
                 OrderId = c.OrderId
                         };
             return query.ToList();
