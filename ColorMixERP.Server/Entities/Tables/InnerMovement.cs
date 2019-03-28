@@ -71,5 +71,10 @@ namespace ColorMixERP.Server.Entities
 
         [Column(Name = "UpdatedDate")]
         public DateTime? UpdatedDate { get; set; }
+
+        [Column(Name = "GroupID")]
+        public int? GroupId { get; set; }
+        [Column(Name = "CreatedDate")]
+        public DateTime? CreatedDate { get; set; }
     }
 }

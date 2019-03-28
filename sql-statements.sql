@@ -190,6 +190,9 @@ CONSTRAINT ProductId FOREIGN KEY (ProductId) REFERENCES Product(Id),
 CONSTRAINT FromWorkPlace FOREIGN KEY (FromWorkPlaceId) REFERENCES WorkPlace(Id),
 CONSTRAINT ToWorkPlace FOREIGN KEY (ToWorkPlaceId) REFERENCES WorkPlace(Id)
 );
+Alter Table InnerMovement ADD GroupID int;
+Alter Table InnerMovement ADD CreatedDate datetime;
+
 
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'DebtCover')
 CREATE TABLE DebtCover (

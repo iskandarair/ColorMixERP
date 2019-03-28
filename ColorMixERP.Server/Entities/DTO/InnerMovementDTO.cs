@@ -20,5 +20,7 @@ namespace ColorMixERP.Server.Entities.DTO
         // ADDED AFTER Shams gave Stats
         public decimal ProductPrice { get; set; }
         public decimal TotalPrice { get; set; }
+        public int? GroupId { get; set; }
+        public DateTime? CreatedDate { get; set; }
     }
 }

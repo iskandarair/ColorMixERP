@@ -16,6 +16,11 @@ namespace ColorMixERP.Server.BL
         {
             return new InnerMovementDalFacade().GetInnerMovements();
         }
+
+        public List<InnerMovementDTO> GetInnerMovementDtoByGroup(int groupId, DateTime createdDate)
+        {
+            return new InnerMovementDalFacade().GetInnerMovementDtoByGroup(groupId, createdDate);
+        }
         public List<InnerMovementDTO> GetInnerMovementDtos(InnerMovementCommand cmd, ref int pagesCount)
         {
             return new InnerMovementDalFacade().GetInnerMovementDtos(cmd, ref  pagesCount);
@@ -54,9 +59,9 @@ namespace ColorMixERP.Server.BL
         public void Add(List<InnerMovementDTO> dtos, int userId)
         {
             new ProductStockBL().UpdateProductStocks(dtos);
+            new InnerMovementDalFacade().Add(dtos);
             #region Income
             // INCOME SECTION
-
             var incomeProducts = new List<IncomeProductDTO>();
             foreach (var dto in dtos)
             {

@@ -41,7 +41,9 @@ namespace ColorMixERP.Server.DAL
                     ToWorkPlaceId = c.ToWorkPlace.Id ?? 0,
                     ToWorkPlaceName =  c.ToWorkPlace.Name,
                     ProductPrice = c.Product.Price,
-                    TotalPrice = c.Quantity * c.Product.Price
+                    TotalPrice = c.Quantity * c.Product.Price,
+                    CreatedDate = c.CreatedDate,
+                    GroupId = c.GroupId
                 };
 
             if (cmd.ProductId > 0)
@@ -123,14 +125,42 @@ namespace ColorMixERP.Server.DAL
                 ToWorkPlaceId = c.ToWorkPlace.Id ?? 0,
                 ToWorkPlaceName = c.ToWorkPlace.Name,
                 ProductPrice = c.Product.Price,
-                TotalPrice = c.Quantity * c.Product.Price
+                TotalPrice = c.Quantity * c.Product.Price,
+                CreatedDate = c.CreatedDate,
+                GroupId = c.GroupId
             };
             return q.FirstOrDefault();
         }
-
+        public List<InnerMovementDTO> GetInnerMovementDtoByGroup(int groupId, DateTime craetedDate)
+        {
+            var q = from c in db.InnerMovements
+                where c.GroupId == groupId && c.CreatedDate.Value >= craetedDate && c.CreatedDate.Value <= craetedDate
+                    select new InnerMovementDTO()
+                {
+                    Id = c.Id,
+                    MoveDate = c.MoveDate,
+                    ProductId = c.Product.Id,
+                    ProductName = c.Product.Name,
+                    Quantity = c.Quantity,
+                    FromWorkPlaceId = c.FromWorkPlace.Id ?? 0,
+                    FromWorkPlaceName = c.FromWorkPlace.Name,
+                    ToWorkPlaceId = c.ToWorkPlace.Id ?? 0,
+                    ToWorkPlaceName = c.ToWorkPlace.Name,
+                    ProductPrice = c.Product.Price,
+                    TotalPrice = c.Quantity * c.Product.Price,
+                    CreatedDate = c.CreatedDate,
+                    GroupId = c.GroupId
+                };
+            return q.ToList();
+        }
         public void Add(InnerMovementDTO dto)
         {
-            var elementToAdd = new InnerMovement(dto.Id, dto.MoveDate, dto.ProductId, dto.Quantity, dto.FromWorkPlaceId, dto.ToWorkPlaceId);
+            var elementToAdd = new InnerMovement(dto.Id, dto.MoveDate, dto.ProductId, dto.Quantity, dto.FromWorkPlaceId,
+                    dto.ToWorkPlaceId)
+            {
+                CreatedDate = DateTime.Now.Date,
+                GroupId = GetRandomGroupId()
+            };
             db.InnerMovements.InsertOnSubmit(elementToAdd);
             db.SubmitChanges();
         }
@@ -139,7 +169,12 @@ namespace ColorMixERP.Server.DAL
             var result = new  List<InnerMovement>();
             foreach (var dto in dtos)
             {
-                result.Add(new InnerMovement(dto.Id, dto.MoveDate, dto.ProductId, dto.Quantity, dto.FromWorkPlaceId, dto.ToWorkPlaceId));
+                result.Add(new InnerMovement(dto.Id, dto.MoveDate, dto.ProductId, dto.Quantity, dto.FromWorkPlaceId,
+                    dto.ToWorkPlaceId)
+                {
+                    CreatedDate = DateTime.Now.Date,
+                    GroupId = GetRandomGroupId()
+                });
             }
             db.InnerMovements.InsertAllOnSubmit(result);
             db.SubmitChanges();
@@ -147,7 +182,6 @@ namespace ColorMixERP.Server.DAL
         public void Update(InnerMovementDTO dto)
         {
             var elementToUpdate = GetInnerMovement(dto.Id ?? 0);
-           // elementToUpdate.Product = new ProductDalFacade().GetProduct(dto.ProductId);
             elementToUpdate.Quantity = dto.Quantity;
             elementToUpdate.MoveDate = dto.MoveDate;
             elementToUpdate.UpdatedDate = DateTime.Now;
@@ -161,5 +195,11 @@ namespace ColorMixERP.Server.DAL
             db.SubmitChanges();
         }
 
+        public static int GetRandomGroupId()
+        {
+            Random rnd = new Random();
+            int myRandomNo = rnd.Next(10000000, 99999999);
+            return myRandomNo;
+        }
     }
 }

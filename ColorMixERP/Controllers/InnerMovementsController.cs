@@ -37,7 +37,23 @@ namespace ColorMixERP.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
-
+        [Authorize]
+        [HttpGet]
+        [Route("api/InnerMovements/Group")]
+        public HttpResponseMessage GetInnerMovements(int  groupId, DateTime createdDate)
+        {
+            try
+            {
+                var data = new InnerMovementBL().GetInnerMovementDtoByGroup(groupId, createdDate);
+                var result = Request.CreateResponse(HttpStatusCode.OK, data);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
         [Authorize]
         [HttpGet]
         public HttpResponseMessage GetInnerMovementDto(int id)
