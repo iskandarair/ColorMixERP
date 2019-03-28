@@ -248,3 +248,17 @@ CreatedDate datetime default getDate(),
 UpdatedDate datetime default getDate(),
 CONSTRAINT ClientIdREference FOREIGN KEY (ClientId) REFERENCES Client(id)
 );
+
+IF NOT EXISTS (SELECT [name] FROM sys.tables WHERE [name] = 'DailyBalance')
+CREATE TABLE DailyBalance (
+Id int IDENTITY(1,1),
+ProductId int not null,
+BalanceDate datetime default getDate(),
+Quantity decimal(19,2) NOT NULL default 0,
+CONSTRAINT ProductIdRef FOREIGN KEY (ProductId) REFERENCES Product(Id)
+);
+
+ALTER TABLE DailyBalance ADD WorkPlaceId int not null;
+ALTER TABLE DailyBalance ADD CONSTRAINT WorkPlaceIdDailyBalance FOREIGN KEY (WorkPlaceId) REFERENCES WorkPlace(Id);
+
+

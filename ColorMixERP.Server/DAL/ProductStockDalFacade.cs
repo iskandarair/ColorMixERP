@@ -189,5 +189,19 @@ namespace ColorMixERP.Server.DAL
             }
             return result;
         }
+
+        ///
+        public List<DailyBalanceDTO> GetAllDailyBalanceDTO()
+        {
+            var query = from c in db.ProductStocks where c.IsDeleted == false
+                select new DailyBalanceDTO()
+            {
+                ProductId = c.ProductId,
+                Quantity = c.Quantity,
+                BalanceDate = DateTime.Now,
+                WorkPlaceId = c.WorkPlaceId
+            };
+            return query.ToList();
+        }
     }
 }
