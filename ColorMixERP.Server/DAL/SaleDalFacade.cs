@@ -117,6 +117,7 @@ namespace ColorMixERP.Server.DAL
         {
             var element = new Sale(sale.ProductId)
             {
+                ProductName = sale.ProductName,
                 ProductPrice = sale.ProductPrice,
                 SalesPrice = sale.SalesPrice,
                 Quantity = sale.Quantity,
@@ -134,6 +135,7 @@ namespace ColorMixERP.Server.DAL
                 result.Add(new Sale(sale.ProductId)
                 {
                     ProductPrice = sale.ProductPrice,
+                    ProductName = sale.ProductName,
                     SalesPrice = sale.SalesPrice,
                     Quantity =  sale.Quantity,
                     OrderId = orderId,
@@ -152,6 +154,7 @@ namespace ColorMixERP.Server.DAL
             element.ProductPrice = sale.ProductPrice;
             element.SalesPrice = sale.SalesPrice;
             element.UpdatedDate = DateTime.Now;
+            element.ProductName = sale.ProductName;
             element.CurrencyRate = sale.CurrencyRate;
             db.SubmitChanges();
         }
@@ -165,3 +168,6 @@ namespace ColorMixERP.Server.DAL
         }
     }
 }
+
+
+
