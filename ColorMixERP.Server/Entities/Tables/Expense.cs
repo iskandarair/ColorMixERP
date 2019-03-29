@@ -33,8 +33,8 @@ namespace ColorMixERP.Server.Entities
         public string ExpenseCause { get; set; }
 
         [Column(Name = "UserId")]
-        private int UserId { get; set; }
-
+        public int UserId { get; set; }
+        
 
 
         // =================================================

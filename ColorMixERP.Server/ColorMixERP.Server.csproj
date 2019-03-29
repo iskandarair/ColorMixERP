@@ -84,6 +84,7 @@
     <Compile Include="DAL\UserDalFacade.cs" />
     <Compile Include="DAL\WorkPlaceDalFacade.cs" />
     <Compile Include="Entities\DTO\DailyBalanceDTO.cs" />
+    <Compile Include="Entities\DTO\ExpenseDTO.cs" />
     <Compile Include="Entities\DTO\ProductArrivalDTO.cs" />
     <Compile Include="Entities\Pagination\DailyBalanceCommand.cs" />
     <Compile Include="Entities\Tables\DailyBalance.cs" />

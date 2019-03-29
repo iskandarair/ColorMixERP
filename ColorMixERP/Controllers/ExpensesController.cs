@@ -11,6 +11,7 @@ using ColorMixERP.Server.Logging;
 using ColorMixERP.Server.Entities.Pagination;
 using ColorMixERP.Models;
 using Newtonsoft.Json;
+using ColorMixERP.Server.Entities.DTO;
 
 namespace ColorMixERP.Controllers
 {
@@ -54,7 +55,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
-        public HttpResponseMessage Add(int id, Expense expense)
+        public HttpResponseMessage Add(int id, ExpenseDTO expense)
         {
             try
             { /// ID =  userId (MUST BE!!!)
@@ -70,7 +71,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPut]
-        public HttpResponseMessage Update(Expense expense)
+        public HttpResponseMessage Update(ExpenseDTO expense)
         {
             try
             {

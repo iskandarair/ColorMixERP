@@ -137,7 +137,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
-        public HttpResponseMessage Add(int id, Expense expense)
+        public HttpResponseMessage Add(int id, ExpenseDTO expense)
         {
             try
             {
