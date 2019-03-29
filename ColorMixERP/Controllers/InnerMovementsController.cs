@@ -93,30 +93,32 @@ namespace ColorMixERP.Controllers
             }
         }
 
-       [Authorize]
-       [HttpPost]
-       [Route("api/InnerMovements/Range")]
-       public HttpResponseMessage Add(InnerMovementDTO[] dto)
-       {
-           try
-           {
-               var userId = AuthHelper.GetUserIdFromClaims(User.Identity as ClaimsIdentity);
-               new InnerMovementBL().Add(dto.ToList(), userId);
-               return Request.CreateResponse(HttpStatusCode.OK, true);
-           }
-           catch (ArgumentOutOfRangeException ex)
-           {
-               LogManager.Instance.Error(ex);
-               return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
-           }
-           catch (Exception ex)
-           {
-               LogManager.Instance.Error(ex);
-               return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
-           }
-       }
+        [Authorize]
+        [HttpPost]
+        [Route("api/InnerMovements/Range")]
+        public HttpResponseMessage Add(InnerMovementDTO[] dto)
+        {
+            try
+            {
+                var userId = AuthHelper.GetUserIdFromClaims(User.Identity as ClaimsIdentity);
+                new InnerMovementBL().Add(dto.ToList(), userId);
+                return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
+            }
+        }
+
         [Authorize]
         [HttpPut]
+        [Route("api/InnerMovements")]
         public HttpResponseMessage Update(InnerMovementDTO dto)
         {
             try
@@ -136,7 +138,28 @@ namespace ColorMixERP.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
             }
         }
-
+        [Authorize]
+        [HttpPut]
+        [Route("api/InnerMovements/Range")]
+        public HttpResponseMessage Update(InnerMovementDTO[] dto)
+        {
+            try
+            {
+                var userId = AuthHelper.GetUserIdFromClaims(User.Identity as ClaimsIdentity);
+                new InnerMovementBL().Update(dto, userId);
+                return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
+            }
+        }
         [Authorize]
         [HttpDelete]
         public HttpResponseMessage Delete(int id)

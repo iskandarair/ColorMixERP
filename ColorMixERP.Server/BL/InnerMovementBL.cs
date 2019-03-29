@@ -120,6 +120,56 @@ namespace ColorMixERP.Server.BL
             new IncomeDalFacade().AddIncome(incomeDTO);
             new InnerMovementDalFacade().Update(dto);
         }
+
+        public void Update(InnerMovementDTO[] dtos, int userId)
+        {
+            string exMsg = null;
+            foreach (var dto in dtos)
+            {
+                var inMovement = new InnerMovementDalFacade().GetInnerMovement(dto.Id.Value);
+                var diff = dto.Quantity - inMovement.Quantity; // should-Be - was
+                var productInStockFrom = new ProductStockDalFacade().GetProductStockByPlaceAndProduct(dto.FromWorkPlaceId, dto.ProductId);
+                if (productInStockFrom.Quantity > diff)
+                {
+                    productInStockFrom.Quantity -= diff;// dto.Quantity - inMovement.Quantity;
+                    new ProductStockDalFacade().Update(productInStockFrom);
+
+                    var productInStockTo = new ProductStockDalFacade().GetProductStockByPlaceAndProduct(dto.ToWorkPlaceId, dto.ProductId);
+                    productInStockTo.Quantity += diff;
+                    new ProductStockDalFacade().Update(productInStockTo);
+                }
+                else
+                {
+                    exMsg = $"Not Enough Product ({dto.ProductId}-{dto.ProductName}) in ProductStock to complete transaction.";
+                }
+            }
+
+            if (exMsg != null)
+            {
+                throw new ArgumentOutOfRangeException(exMsg);
+            }
+            foreach (var dto in dtos)
+            {
+                var inMovement = new InnerMovementDalFacade().GetInnerMovement(dto.Id.Value);
+                var quantity = inMovement.Quantity - dto.Quantity;
+                var incomeProducts = new List<IncomeProductDTO>();
+                incomeProducts.Add(new IncomeProductDTO()
+                {
+                    ProductId = dto.ProductId,
+                    Quantity = quantity
+                });
+                var incomeDTO = new IncomeDTO()
+                {
+                    FromWorkplaceId = dto.FromWorkPlaceId,
+                    ToWorkplaceId = dto.ToWorkPlaceId,
+                    IncomeProducts = incomeProducts,
+                    IsProductStock = false,
+                    UserId = userId
+                };
+                new IncomeDalFacade().AddIncome(incomeDTO);
+                new InnerMovementDalFacade().Update(dto);
+            }
+        }
         public void Delete(int id)
         {
             new InnerMovementDalFacade().Delete(id);
