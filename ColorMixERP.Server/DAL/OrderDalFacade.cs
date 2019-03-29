@@ -152,6 +152,7 @@ namespace ColorMixERP.Server.DAL
             element.PaymentByTransfer = order.PaymentByTransfer;
             element.PaymentByCash = order.PaymentByCash;
             element.UpdatedDate = DateTime.Now;
+            element.OverallPrice = order.OverallPrice;
             db.SubmitChanges();
             foreach (var sale in order.Sales)
             {
