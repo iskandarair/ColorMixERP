@@ -11,4 +11,4 @@ ColorMixERP.Server/bin
 
 obj
 bin
-/ColorMixERP.Server/Config/LinqContext.cs
+ColorMixERP/Web.config
