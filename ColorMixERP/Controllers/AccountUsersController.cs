@@ -141,7 +141,8 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                return new ExpensesController().Add(id, expense);
+                new ExpenseBL().Add(expense.UserId, expense);
+                return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
             {

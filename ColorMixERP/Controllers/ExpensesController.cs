@@ -55,11 +55,11 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
-        public HttpResponseMessage Add(int id, ExpenseDTO expense)
+        public HttpResponseMessage Add(ExpenseDTO expense)
         {
             try
             { /// ID =  userId (MUST BE!!!)
-                new ExpenseBL().Add(id,expense);
+                new ExpenseBL().Add(expense.UserId, expense);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
