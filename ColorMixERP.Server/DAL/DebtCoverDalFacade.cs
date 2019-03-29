@@ -34,7 +34,7 @@ namespace ColorMixERP.Server.DAL
                     OrderId = c.OrderId
                 };
 
-            pagesCount = (int)Math.Ceiling((double)(from p in query select p).Count() / cmd.PageSize);
+            pagesCount = (int)Math.Ceiling((from p in query select p).Count() / cmd.PageSize);
             query = query.Page(cmd.PageSize, cmd.Page);
             return query.ToList();
         }

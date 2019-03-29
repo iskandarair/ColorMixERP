@@ -9,6 +9,6 @@ namespace ColorMixERP.Server.Entities.Pagination
     public class PaginationDTO
     {
         public int Page { get; set; }
-        public int PageSize { get; set; }
+        public double PageSize { get; set; }
     }
 }

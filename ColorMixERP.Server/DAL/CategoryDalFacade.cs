@@ -27,8 +27,8 @@ namespace ColorMixERP.Server.DAL
                 Name = c.Name,
                 IsDeleted = c.IsDeleted
             };
-            var size = ((from p in query select p).Count() / cmd.PageSize);
-            pagesCount = (int) Math.Ceiling((decimal)size);
+            double size = ((from p in query select p).Count() / cmd.PageSize);
+            pagesCount = (int) Math.Ceiling(size);
             query = query.Page(cmd.PageSize, cmd.Page);
             return query.ToList();
         }
