@@ -153,6 +153,10 @@ namespace ColorMixERP.Server.DAL
             element.PaymentByCash = order.PaymentByCash;
             element.UpdatedDate = DateTime.Now;
             db.SubmitChanges();
+            foreach (var sale in order.Sales)
+            {
+                new SaleDalFacade().Update(sale);
+            }
         }
 
         public void Delete(int id)
