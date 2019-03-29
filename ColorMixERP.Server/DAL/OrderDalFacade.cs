@@ -55,13 +55,15 @@ namespace ColorMixERP.Server.DAL
 
             if (cmd.OrderDate != null)
             {
-                query = from p in query where p.OrderDate.ToString("d") == cmd.OrderDate.Value.ToString("d") select p;
+                query = from p in query where p.OrderDate.Date >= cmd.OrderDate.Value.Date
+                                            && p.OrderDate.Date <= cmd.OrderDate.Value.Date
+                        select p;
             }
 
             if (cmd.FromDate != null && cmd.ToDate != null)
             {
-                query = from p in query where p.OrderDate >= cmd.FromDate.Value &&
-                                              p.OrderDate <= cmd.ToDate.Value
+                query = from p in query where p.OrderDate.Date >= cmd.FromDate.Value.Date &&
+                                              p.OrderDate.Date <= cmd.ToDate.Value.Date
                         select p;
             }
 

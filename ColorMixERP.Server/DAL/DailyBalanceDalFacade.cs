@@ -49,7 +49,10 @@ namespace ColorMixERP.Server.DAL
 
             if (cmd.Date != null)
             {
-                query = from c in query where c.BalanceDate.ToString("d") == cmd.Date.Value.ToString("d") select c;
+                query = from c in query
+                    where c.BalanceDate >= cmd.Date.Value.Date
+                          && c.BalanceDate <= cmd.Date.Value.Date
+                    select c;
             }
 
             if (cmd.FromDate != null && cmd.ToDate != null)

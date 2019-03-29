@@ -37,14 +37,15 @@ namespace ColorMixERP.Server.DAL
 
             if (command.Date != null)
             {
-                query = from p in query where p.Date.ToString("d") == command.Date.Value.ToString("d") select p;
+                query = from p in query where p.Date.Date >= command.Date.Value.Date
+                                              && p.Date.Date <= command.Date.Value.Date select p;
             }
 
             if (command.FromDate != null && command.ToDate != null)
             {
                 query = from p in query
-                    where p.Date >= command.FromDate.Value &&
-                          p.Date <= command.ToDate.Value
+                    where p.Date.Date >= command.FromDate.Value.Date &&
+                          p.Date.Date <= command.ToDate.Value.Date
                     select p;
             }
             
@@ -87,14 +88,16 @@ namespace ColorMixERP.Server.DAL
 
             if (command.Date != null)
             {
-                query = from p in query where p.CreatedDate.ToString("d") == command.Date.Value.ToString("d") select p;
+                query = from p in query where p.CreatedDate.Date >= command.Date.Value.Date
+                        && p.CreatedDate.Date <= command.Date.Value.Date
+                        select p;
             }
 
             if (command.FromDate != null && command.ToDate != null)
             {
                 query = from p in query
-                    where p.CreatedDate >= command.FromDate.Value &&
-                          p.CreatedDate <= command.ToDate.Value
+                    where p.CreatedDate.Date >= command.FromDate.Value.Date &&
+                          p.CreatedDate.Date <= command.ToDate.Value.Date
                     select p;
             }
 
