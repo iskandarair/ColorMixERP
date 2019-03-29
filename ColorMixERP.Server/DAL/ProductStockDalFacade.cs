@@ -116,7 +116,7 @@ namespace ColorMixERP.Server.DAL
                 };
             return query.FirstOrDefault();
         }
-        public ProductStockDTO GetProductStockByPlaceAndProduct(int workplaceId, int productId)
+        public ProductStockDTO GetProductStockByPlaceAndProduct(int workplaceId, int productId,bool isAddIncoming = false)
         {
             var query = from p in db.ProductStocks
                 where p.ProductId == productId && p.WorkPlaceId == workplaceId
@@ -130,7 +130,7 @@ namespace ColorMixERP.Server.DAL
                     ProductPrice = p.Product.Price,
                     ProductCurrencId = p.Product.Currency
                 };
-            if (query.FirstOrDefault() == null)
+            if (!isAddIncoming && query.FirstOrDefault() == null)
             {
                 throw new ArgumentOutOfRangeException(
                     $"No productStock  at all for workplaceId - {workplaceId} and productId - {productId}");

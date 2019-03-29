@@ -143,7 +143,7 @@ namespace ColorMixERP.Server.BL
                 new ProductStockDalFacade().Update(productInStockMinus);
 
                 var productInStockAdd =
-                    new ProductStockDalFacade().GetProductStockByPlaceAndProduct(dto.ToWorkPlaceId, dto.ProductId);
+                    new ProductStockDalFacade().GetProductStockByPlaceAndProduct(dto.ToWorkPlaceId, dto.ProductId, true);
                 if (productInStockAdd == null)
                 {
                     AddProductStock(dto);
