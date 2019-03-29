@@ -76,5 +76,8 @@ namespace ColorMixERP.Server.Entities
         public int? GroupId { get; set; }
         [Column(Name = "CreatedDate")]
         public DateTime? CreatedDate { get; set; }
+
+        [Column(Name = "TotalPrice")]
+        public decimal TotalPrice { get; set; }
     }
 }

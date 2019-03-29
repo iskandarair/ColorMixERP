@@ -192,6 +192,7 @@ CONSTRAINT ToWorkPlace FOREIGN KEY (ToWorkPlaceId) REFERENCES WorkPlace(Id)
 );
 Alter Table InnerMovement ADD GroupID int;
 Alter Table InnerMovement ADD CreatedDate datetime;
+Alter Table InnerMovement ADD TotalPrice  decimal(19,2);
 
 
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'DebtCover')

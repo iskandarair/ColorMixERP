@@ -26,30 +26,25 @@ namespace ColorMixERP.Server.DAL
             return q.ToList();
         }
 
-        public List<InnerMovementDTO> GetInnerMovementDtos(InnerMovementCommand cmd, ref int pagesCount)
+        public List<InnerMovementGroupDTO> GetInnerMovementDtos(InnerMovementCommand cmd, ref int pagesCount)
         {
             var query = from c in db.InnerMovements
-                select new InnerMovementDTO()
+                group c by new { c.GroupId, c.CreatedDate, c.MoveDate.Date, c.FromWorkPlace, c.ToWorkPlace} into grp
+                let productCount = grp.Select(x => x.Product.Id).Count()
+                let totalPrice = grp.Sum(x => x.TotalPrice)
+                select new InnerMovementGroupDTO()
                 {
-                    Id = c.Id,
-                    MoveDate = c.MoveDate,
-                    ProductId = c.Product.Id,
-                    ProductName = c.Product.Name,
-                    Quantity = c.Quantity,
-                    FromWorkPlaceId = c.FromWorkPlace.Id ?? 0,
-                    FromWorkPlaceName = c.FromWorkPlace.Name,
-                    ToWorkPlaceId = c.ToWorkPlace.Id ?? 0,
-                    ToWorkPlaceName =  c.ToWorkPlace.Name,
-                    ProductPrice = c.Product.Price,
-                    TotalPrice = c.Quantity * c.Product.Price,
-                    CreatedDate = c.CreatedDate,
-                    GroupId = c.GroupId
+                    MoveDate = grp.Key.Date,
+                    CreatedDate = grp.Key.CreatedDate,
+                    FromWorkPlaceId = grp.Key.FromWorkPlace.Id.Value,
+                    FromWorkPlaceName = grp.Key.FromWorkPlace.Name,
+                    ToWorkPlaceId = grp.Key.ToWorkPlace.Id.Value,
+                    ToWorkPlaceName = grp.Key.ToWorkPlace.Name,
+                    ProductCount = productCount,
+                    TotalPrice = totalPrice,
+                    GroupId = grp.Key.GroupId
                 };
-
-            if (cmd.ProductId > 0)
-            {
-                query = from p in query where p.ProductId == cmd.ProductId select p;
-            }
+            
             if (cmd.FromPlaceId > 0)
             {
                 query = from p in query where p.FromWorkPlaceId ==cmd.FromPlaceId select p;
@@ -71,13 +66,7 @@ namespace ColorMixERP.Server.DAL
                           p.MoveDate <= cmd.ToDate.Value
                     select p;
             }
-
-            if (cmd.SortByProduct != null)
-            {
-                query = cmd.SortByProduct == true
-                    ? (from p in query orderby p.ProductName select p)
-                    : (from p in query orderby p.ProductName descending select p);
-            }
+            
 
             if (cmd.SortByDate != null)
             {
@@ -125,7 +114,7 @@ namespace ColorMixERP.Server.DAL
                 ToWorkPlaceId = c.ToWorkPlace.Id ?? 0,
                 ToWorkPlaceName = c.ToWorkPlace.Name,
                 ProductPrice = c.Product.Price,
-                TotalPrice = c.Quantity * c.Product.Price,
+                TotalPrice = c.TotalPrice,
                 CreatedDate = c.CreatedDate,
                 GroupId = c.GroupId
             };
@@ -147,7 +136,7 @@ namespace ColorMixERP.Server.DAL
                     ToWorkPlaceId = c.ToWorkPlace.Id ?? 0,
                     ToWorkPlaceName = c.ToWorkPlace.Name,
                     ProductPrice = c.Product.Price,
-                    TotalPrice = c.Quantity * c.Product.Price,
+                    TotalPrice = c.TotalPrice,
                     CreatedDate = c.CreatedDate,
                     GroupId = c.GroupId
                 };
@@ -159,7 +148,8 @@ namespace ColorMixERP.Server.DAL
                     dto.ToWorkPlaceId)
             {
                 CreatedDate = DateTime.Now.Date,
-                GroupId = GetRandomGroupId()
+                GroupId = GetRandomGroupId(),
+                TotalPrice = dto.TotalPrice,
             };
             db.InnerMovements.InsertOnSubmit(elementToAdd);
             db.SubmitChanges();
@@ -173,7 +163,8 @@ namespace ColorMixERP.Server.DAL
                     dto.ToWorkPlaceId)
                 {
                     CreatedDate = DateTime.Now.Date,
-                    GroupId = GetRandomGroupId()
+                    GroupId = GetRandomGroupId(),
+                    TotalPrice = dto.TotalPrice,
                 });
             }
             db.InnerMovements.InsertAllOnSubmit(result);
@@ -183,6 +174,7 @@ namespace ColorMixERP.Server.DAL
         {
             var elementToUpdate = GetInnerMovement(dto.Id ?? 0);
             elementToUpdate.Quantity = dto.Quantity;
+            elementToUpdate.TotalPrice = dto.TotalPrice;
             elementToUpdate.MoveDate = dto.MoveDate;
             elementToUpdate.UpdatedDate = DateTime.Now;
             db.SubmitChanges();
