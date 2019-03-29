@@ -31,13 +31,12 @@ WorkPlace int NOT NULL,
 IsDeleted bit NOT NULL DEFAULT(0),
 DeletedDate datetime default getDAte(),
 UpdatedDate datetime default getDAte(),
+Password nvarchar(255) NOT NULL default '_M?;Z?e??''?????',
+isSunnat bit NOT NULL default 0,
 PRIMARY KEY (Id),
 CONSTRAINT UserWorkPlace FOREIGN KEY (WorkPlace) REFERENCES WorkPlace(Id)
 );
 
---Adding Password Column
-ALTER TABLE AccountUser ADD Password nvarchar(255) NOT NULL default '_M?;Z?e??''?????';
-ALTER TABLE AccountUser ADD isSunnat bit NOT NULL default 0;                                   ----- ONLY THIS NEEDED
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'Supplier')
 CREATE TABLE Supplier (
 Id int IDENTITY(1,1),
@@ -46,6 +45,7 @@ SupplierInfo nvarchar(255) NOT NULL,
 IsDeleted bit NOT NULL DEFAULT(0),
 DeletedDate datetime default getDAte(),
 UpdatedDate datetime default getDAte(),
+IsLocal bit NOT NULL DEFAULT(0),
 PRIMARY KEY (Id),
 );
 
@@ -83,10 +83,10 @@ OKONX nvarchar(255) NOT NULL,
 IsDeleted bit NOT NULL DEFAULT(0),
 DeletedDate datetime default getDAte(),
 UpdatedDate datetime default getDAte(),
+NickName nvarchar(255),
+ DebtorCreditor decimal(19,2) NOT NULL default(0),
 PRIMARY KEY (Id),
 );
-Alter Table Client Add NickName nvarchar(255);
-Alter Table Client Add DebtorCreditor decimal(19,2) NOT NULL default(0);
 
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'Expense')
 CREATE TABLE Expense (
@@ -110,12 +110,12 @@ WorkPlaceId int NOT NULL,
 IsDeleted bit NOT NULL DEFAULT(0),
 DeletedDate datetime default getDAte(),
 UpdatedDate datetime default getDAte(),
+Quantity decimal(19,2) NOT NULL default 0
 PRIMARY KEY (Id),
 CONSTRAINT ProductStockProductId FOREIGN KEY (ProductId) REFERENCES Product(Id),
 CONSTRAINT ProductStockWorkPlaceId FOREIGN KEY (WorkPlaceId) REFERENCES WorkPlace(Id)
 );
 
-ALTER TABLE ProductStock ADD Quantity decimal(19,2) NOT NULL default 0
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'ClientOrder')
 CREATE TABLE ClientOrder (
 Id int IDENTITY(1,1),
@@ -149,12 +149,11 @@ OrderId int NOT NULL,
 IsDeleted bit NOT NULL DEFAULT(0),
 DeletedDate datetime default getDAte(),
 UpdatedDate datetime default getDAte(),
+CurrencyRate decimal(19,2),
 PRIMARY KEY (Id),
 CONSTRAINT SaleProductId FOREIGN KEY (ProductID) REFERENCES Product(Id),
 CONSTRAINT OrderId FOREIGN KEY (OrderId) REFERENCES ClientOrder(Id)
 );
-ALTER TABLE SALE ADD CurrencyRate decimal(19,2) 
-ALTER TABLE SALE ADD CurrencyRate decimal(19,2) 
 
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'ReturnedSale')
 CREATE TABLE ReturnedSale (
@@ -172,8 +171,6 @@ PRIMARY KEY (Id),
 CONSTRAINT SaleId FOREIGN KEY (SaleId) REFERENCES Sale(Id),
 );
 
---ALTER TABLE Sale ADD  OrderId int NOT NULL
---ALTER TABLE Sale ADD  CONSTRAINT  OrderId FOREIGN KEY (OrderId) REFERENCES ClientOrder(Id)
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'InnerMovement')
 CREATE TABLE InnerMovement (
 Id int IDENTITY(1,1),
@@ -185,15 +182,14 @@ ToWorkPlaceId int NOT NULL,
 IsDeleted bit NOT NULL DEFAULT(0),
 DeletedDate datetime default getDAte(),
 UpdatedDate datetime default getDAte(),
+GroupID int,
+CreatedDate datetime,
+TotalPrice  decimal(19,2),
 PRIMARY KEY (Id),
 CONSTRAINT ProductId FOREIGN KEY (ProductId) REFERENCES Product(Id),
 CONSTRAINT FromWorkPlace FOREIGN KEY (FromWorkPlaceId) REFERENCES WorkPlace(Id),
 CONSTRAINT ToWorkPlace FOREIGN KEY (ToWorkPlaceId) REFERENCES WorkPlace(Id)
 );
-Alter Table InnerMovement ADD GroupID int;
-Alter Table InnerMovement ADD CreatedDate datetime;
-Alter Table InnerMovement ADD TotalPrice  decimal(19,2);
-
 
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'DebtCover')
 CREATE TABLE DebtCover (
@@ -210,9 +206,6 @@ PRIMARY KEY (Id),
 CONSTRAINT DebtCoverOrderId FOREIGN KEY (OrderId) REFERENCES ClientOrder(Id)
 );
 
-SELECT * FROM Income
-SELECT * FROM IncomeProduct
-
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'Income')
 CREATE TABLE Income (
 Id int IDENTITY(1,1),
@@ -221,13 +214,12 @@ FromWorkPlace int not null,
 ToWorkPlace int not null,
 CreatedDate datetime default getDate(),
 UpdatedDate datetime default getDate(),
+IsProductStock bit not null default(0),
 CONSTRAINT UserIdReference FOREIGN KEY (UserId) REFERENCES AccountUser(Id),
 CONSTRAINT FromWorkPlaceReference FOREIGN KEY (FromWorkPlace) REFERENCES WorkPlace(Id),
 CONSTRAINT ToWorkPlaceReference FOREIGN KEY (ToWorkPlace) REFERENCES WorkPlace(Id),
 PRIMARY KEY (Id),
 );
-
-ALTER TABLE Income ADD IsProductStock bit not null default(0);
 
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'IncomeProduct')
 CREATE TABLE IncomeProduct (
@@ -259,10 +251,10 @@ Id int IDENTITY(1,1),
 ProductId int not null,
 BalanceDate datetime default getDate(),
 Quantity decimal(19,2) NOT NULL default 0,
+ WorkPlaceId int not null,
+CONSTRAINT WorkPlaceIdDailyBalance FOREIGN KEY (WorkPlaceId) REFERENCES WorkPlace(Id),
 CONSTRAINT ProductIdRef FOREIGN KEY (ProductId) REFERENCES Product(Id)
 );
 
-ALTER TABLE DailyBalance ADD WorkPlaceId int not null;
-ALTER TABLE DailyBalance ADD CONSTRAINT WorkPlaceIdDailyBalance FOREIGN KEY (WorkPlaceId) REFERENCES WorkPlace(Id);
 
 
