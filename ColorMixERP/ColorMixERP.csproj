@@ -134,6 +134,7 @@
     <Compile Include="Controllers\AccountUsersController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
+    <Compile Include="Controllers\CompanyInfosController.cs" />
     <Compile Include="Controllers\DailyBalancesController.cs" />
     <Compile Include="Controllers\DebtCoversController.cs" />
     <Compile Include="Controllers\DebtorCreditorsController.cs" />

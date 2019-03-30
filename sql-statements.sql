@@ -256,5 +256,22 @@ CONSTRAINT WorkPlaceIdDailyBalance FOREIGN KEY (WorkPlaceId) REFERENCES WorkPlac
 CONSTRAINT ProductIdRef FOREIGN KEY (ProductId) REFERENCES Product(Id)
 );
 
-
-
+IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'CompanyInfo')
+CREATE TABLE CompanyInfo (
+Id int IDENTITY(1,1),
+LegalName nvarchar(255) NOT NULL,
+Address nvarchar(255) NOT NULL,
+Phone nvarchar(255) NOT NULL,
+PaymentAccount nvarchar(255) NOT NULL,
+BankDetails nvarchar(255) NOT NULL,
+City nvarchar(255) NOT NULL,
+MFO nvarchar(255) NOT NULL,
+INN nvarchar(255) NOT NULL,
+OKONX nvarchar(255) NOT NULL,
+Director nvarchar(255) NOT NULL,
+Accountant nvarchar(255) NOT NULL,
+IsDeleted bit NOT NULL DEFAULT(0),
+DeletedDate datetime default getDAte(),
+UpdatedDate datetime default getDAte(),
+PRIMARY KEY (Id),
+);

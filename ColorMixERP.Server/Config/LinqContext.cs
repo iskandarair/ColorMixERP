@@ -5,6 +5,7 @@ using System.Data.Linq;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ColorMixERP.Server.Entities.Tables;
 
 namespace ColorMixERP.Server.Config
 {
@@ -35,5 +36,6 @@ namespace ColorMixERP.Server.Config
         public Table<IncomeProduct> IncomeProducts;
         public Table<DebtorCreditor> DebtorCreditors;
         public Table<DailyBalance> DailyBalances;
+        public Table<CompanyInfo> CompanyInfos;
     }
 }

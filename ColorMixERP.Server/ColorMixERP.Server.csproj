@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="BL\CategoryBL.cs" />
     <Compile Include="BL\ClientBL.cs" />
+    <Compile Include="BL\CompanyInfoBL.cs" />
     <Compile Include="BL\DailyBalanceBL.cs" />
     <Compile Include="BL\DebtCoverBL.cs" />
     <Compile Include="BL\ExpenseBL.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Config\LinqDB.cs" />
     <Compile Include="DAL\CategoryDalFacade.cs" />
     <Compile Include="DAL\ClientDalFacade.cs" />
+    <Compile Include="DAL\CompanyInfoDalFacade.cs" />
     <Compile Include="DAL\DailyBalanceDalFacade.cs" />
     <Compile Include="DAL\DebtCoverDalFacade.cs" />
     <Compile Include="DAL\DebtorCreditorsDalFacade.cs" />
@@ -83,11 +85,13 @@
     <Compile Include="DAL\SupplierDalFacade.cs" />
     <Compile Include="DAL\UserDalFacade.cs" />
     <Compile Include="DAL\WorkPlaceDalFacade.cs" />
+    <Compile Include="Entities\DTO\CompanyInfoDTO.cs" />
     <Compile Include="Entities\DTO\DailyBalanceDTO.cs" />
     <Compile Include="Entities\DTO\ExpenseDTO.cs" />
     <Compile Include="Entities\DTO\InnerMovementGroupDTO.cs" />
     <Compile Include="Entities\DTO\ProductArrivalDTO.cs" />
     <Compile Include="Entities\Pagination\DailyBalanceCommand.cs" />
+    <Compile Include="Entities\Tables\CompanyInfo.cs" />
     <Compile Include="Entities\Tables\DailyBalance.cs" />
     <Compile Include="Entities\Tables\DebtorCreditor.cs" />
     <Compile Include="Entities\DTO\AccountUserDTO.cs" />
