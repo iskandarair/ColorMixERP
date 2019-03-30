@@ -33,6 +33,7 @@ namespace ColorMixERP.Server.BL
 
             var lostInMoney = dto.ReturnedPrice * dto.Quantity;
             var sale = new SaleDalFacade().GetSale(dto.SaleId);
+            sale.Quantity -= dto.Quantity;
             sale.SalesPrice -= lostInMoney;
             new SaleDalFacade().Update(sale);
 
@@ -60,8 +61,10 @@ namespace ColorMixERP.Server.BL
             var lostInMoneyInInsert = existingReturnSale.ReturnedPrice * existingReturnSale.Quantity;
             var lostInMoneyInUpdate = dto.ReturnedPrice * dto.Quantity;
             var lostInMoney = lostInMoneyInInsert - lostInMoneyInUpdate;
+            var quantity = existingReturnSale.Quantity - dto.Quantity;
             var sale2 = new SaleDalFacade().GetSale(dto.SaleId);
             sale2.SalesPrice -= lostInMoney;
+            sale2.Quantity -= quantity;
             new SaleDalFacade().Update(sale2);
 
             var order = new OrderDalFacade().GetClientOrder(sale.OrderId);
