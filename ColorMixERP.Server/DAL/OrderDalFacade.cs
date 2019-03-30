@@ -20,9 +20,10 @@ namespace ColorMixERP.Server.DAL
         {
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
-        public List<OrderDTO> GetClientOrders(OrderCommand cmd, ref int pagesCount)
+        public List<OrderDTO> GetClientOrders(OrderCommand cmd, int workplaceId, ref int pagesCount)
         {
-            var query = from c in db.ClientOrders where c.IsDeleted == false
+            var query = from c in db.ClientOrders where c.IsDeleted == false 
+                                                        && c.Saler.WorkPlaceId == workplaceId
                 select new OrderDTO()
             {
                 Id =  c.Id,

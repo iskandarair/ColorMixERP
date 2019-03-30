@@ -30,6 +30,17 @@ namespace ColorMixERP.Server.BL
         {
             new ProductStockBL().UpdateProductStock(dto, userId);
             new ReturnedSaleDalFacade().Add(dto);
+
+            var lostInMoney = dto.ReturnedPrice * dto.Quantity;
+            var sale = new SaleDalFacade().GetSale(dto.SaleId);
+            sale.Quantity -= dto.Quantity;
+            sale.SalesPrice -= lostInMoney;
+            new SaleDalFacade().Update(sale);
+
+            var order = new OrderDalFacade().GetClientOrder(sale.OrderId);
+            order.OverallPrice -= lostInMoney;
+            order.PaymentByCash -= lostInMoney;
+            new OrderDalFacade().Update(order);
         }
 
 
@@ -44,6 +55,22 @@ namespace ColorMixERP.Server.BL
             new ProductStockDalFacade().Update(productInStockFrom);
             
             new ReturnedSaleDalFacade().Update(dto);
+            //
+
+            var existingReturnSale = new ReturnedSaleBL().GetReturnedSale(dto.Id);
+            var lostInMoneyInInsert = existingReturnSale.ReturnedPrice * existingReturnSale.Quantity;
+            var lostInMoneyInUpdate = dto.ReturnedPrice * dto.Quantity;
+            var lostInMoney = lostInMoneyInInsert - lostInMoneyInUpdate;
+            var quantity = existingReturnSale.Quantity - dto.Quantity;
+            var sale2 = new SaleDalFacade().GetSale(dto.SaleId);
+            sale2.SalesPrice -= lostInMoney;
+            sale2.Quantity -= quantity;
+            new SaleDalFacade().Update(sale2);
+
+            var order = new OrderDalFacade().GetClientOrder(sale.OrderId);
+            order.OverallPrice -= lostInMoney;
+            order.PaymentByCash -= lostInMoney;
+            new OrderDalFacade().Update(order);
         }
 
         public void Delete(int id)
