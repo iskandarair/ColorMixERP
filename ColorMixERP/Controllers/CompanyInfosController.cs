@@ -67,6 +67,31 @@ namespace ColorMixERP.Controllers
             }
         }
 
+
+        [Authorize]
+        [HttpPost]
+        [Route("api/companyInfo/addOrUpdate")]
+        public HttpResponseMessage AddOrUpdate(CompanyInfoDTO dto)
+        {
+            try
+            {
+                if(dto.Id > 0)
+                {
+                    new CompanyInfoBL().Update(dto);
+                }else
+                {
+                    new CompanyInfoBL().Add(dto);
+                }
+                
+                return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
+            }
+        }
+
         [Authorize]
         [HttpPut]
         public HttpResponseMessage Update(CompanyInfoDTO dto)

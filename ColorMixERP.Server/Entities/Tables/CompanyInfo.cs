@@ -12,8 +12,6 @@ namespace ColorMixERP.Server.Entities.Tables
     {
         [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated = true)]
         public int? Id { get; set; }
-        [Column(Name = "Name")]
-        public string Name { get; set; }
         [Column(Name = "LegalName")]
         public string LegalName { get; set; }
         [Column(Name = "Address")]

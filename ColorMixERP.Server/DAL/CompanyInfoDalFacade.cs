@@ -26,7 +26,6 @@ namespace ColorMixERP.Server.DAL
                 where c.IsDeleted == false
                 select new CompanyInfoDTO()
                 {
-                    Name = c.Name,
                     Accountant = c.Accountant,
                     Address = c.Address,
                     BankDetails = c.BankDetails,
@@ -53,7 +52,6 @@ namespace ColorMixERP.Server.DAL
                 where c.Id == id
                 select new CompanyInfoDTO()
                 {
-                    Name = c.Name,
                     Accountant = c.Accountant,
                     Address = c.Address,
                     BankDetails = c.BankDetails,
@@ -70,12 +68,11 @@ namespace ColorMixERP.Server.DAL
 
             return query.FirstOrDefault();
         }
-
+        
         public void Add(CompanyInfoDTO c)
         {
             var compInfo = new CompanyInfo()
             {
-                Name = c.Name,
                 Accountant = c.Accountant,
                 Address = c.Address,
                 BankDetails = c.BankDetails,
@@ -96,7 +93,7 @@ namespace ColorMixERP.Server.DAL
         public void Update(CompanyInfoDTO c)
         {
             var compInfo = (from p in db.CompanyInfos where p.Id == c.Id select p).FirstOrDefault();
-            compInfo.Name = c.Name;
+            
             compInfo.Accountant = c.Accountant;
             compInfo.Address = c.Address;
             compInfo.BankDetails = c.BankDetails;
