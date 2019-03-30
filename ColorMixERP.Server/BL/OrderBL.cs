@@ -12,9 +12,10 @@ namespace ColorMixERP.Server.BL
 {
     public class OrderBL
     {
-        public List<OrderDTO> GetClientOrders(OrderCommand cmd, ref int pagesCount)
+        public List<OrderDTO> GetClientOrders(OrderCommand cmd, int userId, ref int pagesCount)
         {
-            return new OrderDalFacade().GetClientOrders(cmd, ref pagesCount);
+            var user = new UserDalFacade().GetAccountUser(userId);
+            return new OrderDalFacade().GetClientOrders(cmd, user.WorkPlace.Id.Value, ref pagesCount);
         }
 
         public OrderDTO GetClientOrder(int id)
