@@ -17,7 +17,7 @@ namespace ColorMixERP.Controllers
     {
         [Authorize]
         [HttpGet]
-        public HttpResponseMessage getObjects(string query)
+        public HttpResponseMessage GetObjects(string query)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
-        public HttpResponseMessage getObject(int id)
+        public HttpResponseMessage GetObject(int id)
         {
             try
             {
@@ -78,7 +78,8 @@ namespace ColorMixERP.Controllers
                 if(dto.Id > 0)
                 {
                     new CompanyInfoBL().Update(dto);
-                }else
+                }
+                else
                 {
                     new CompanyInfoBL().Add(dto);
                 }

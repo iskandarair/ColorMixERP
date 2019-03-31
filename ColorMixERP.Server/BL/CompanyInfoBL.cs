@@ -11,12 +11,12 @@ namespace ColorMixERP.Server.BL
 {
     public class CompanyInfoBL
     {
-        public List<CompanyInfoDTO> getObjects(PaginationDTO cmd, ref int pagesCount)
+        public List<CompanyInfoDTO> GetObjects(PaginationDTO cmd, ref int pagesCount)
         {
             return new CompanyInfoDalFacade().GetCompanyInfos(cmd, ref pagesCount);
         }
 
-        public CompanyInfoDTO getObject(int id)
+        public CompanyInfoDTO GetObject(int id)
         {
             return new CompanyInfoDalFacade().GetCompanyInfo(id);
         }
