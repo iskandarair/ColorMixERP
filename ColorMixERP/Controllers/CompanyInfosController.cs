@@ -23,7 +23,7 @@ namespace ColorMixERP.Controllers
             {
                 var cmd = JsonConvert.DeserializeObject<PaginationDTO>(query);
                 int pagesCount = 0;
-                var data = new CompanyInfoBL().getObjects(cmd, ref pagesCount);
+                var data = new CompanyInfoBL().GetObjects(cmd, ref pagesCount);
                 var result = Request.CreateResponse(HttpStatusCode.OK, data);
                 result.Headers.Add(Consts.PAGES_COUNT, pagesCount.ToString());
                 return result;
@@ -41,7 +41,7 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                var data = new CompanyInfoBL().getObject(id);
+                var data = new CompanyInfoBL().GetObject(id);
                 return Request.CreateResponse(HttpStatusCode.OK, data);
             }
             catch (Exception ex)
