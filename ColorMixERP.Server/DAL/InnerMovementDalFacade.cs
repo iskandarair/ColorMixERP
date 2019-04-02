@@ -122,6 +122,47 @@ namespace ColorMixERP.Server.DAL
             };
             return q.FirstOrDefault();
         }
+        public List< InnerMovementDTO> GetInnerMovementDtosStats(InnerMovementCommand cmd, ref int pagesCount)
+        {
+            var query = from c in db.InnerMovements
+                where  c.IsDeleted == false
+                select new InnerMovementDTO()
+                {
+                    Id = c.Id,
+                    MoveDate = c.MoveDate,
+                    ProductId = c.Product.Id,
+                    ProductName = c.Product.Name,
+                    Quantity = c.Quantity,
+                    FromWorkPlaceId = c.FromWorkPlace.Id ?? 0,
+                    FromWorkPlaceName = c.FromWorkPlace.Name,
+                    ToWorkPlaceId = c.ToWorkPlace.Id ?? 0,
+                    ToWorkPlaceName = c.ToWorkPlace.Name,
+                    ProductPrice = c.Product.Price,
+                    TotalPrice = c.TotalPrice,
+                    CreatedDate = c.CreatedDate,
+                    GroupId = c.GroupId
+                };
+            
+            if (cmd.MoveDate != null)
+            {
+                query = from p in query
+                    where p.MoveDate.Date >= cmd.MoveDate.Value.Date &&
+                          p.MoveDate.Date <= cmd.MoveDate.Value.Date
+                    select p;
+            }
+
+            if (cmd.FromDate != null && cmd.ToDate != null)
+            {
+                query = from p in query
+                    where p.MoveDate >= cmd.FromDate.Value.Date &&
+                          p.MoveDate <= cmd.ToDate.Value.Date
+                    select p;
+            }
+            
+            pagesCount = (int)Math.Ceiling((double)(from p in query select p).Count() / cmd.PageSize);
+            query = query.Page(cmd.PageSize, cmd.Page);
+            return query.ToList();
+        }
         public List<InnerMovementDTO> GetInnerMovementDtoByGroup(int groupId, DateTime craetedDate)
         {
             var q = from c in db.InnerMovements

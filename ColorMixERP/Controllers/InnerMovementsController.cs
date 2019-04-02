@@ -37,6 +37,27 @@ namespace ColorMixERP.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
+
+        [Authorize]
+        [HttpGet]
+        [Route("api/InnerMovements/Statistical")]
+        public HttpResponseMessage GetInnerMovementsStats(string query)
+        {
+            try
+            {
+                var cmd = JsonConvert.DeserializeObject<InnerMovementCommand>(query);
+                int pagesCount = 0;
+                var data = new InnerMovementBL().GetInnerMovementDtosStats(cmd, ref pagesCount);
+                var result = Request.CreateResponse(HttpStatusCode.OK, data);
+                result.Headers.Add(Consts.PAGES_COUNT, pagesCount.ToString());
+                return result;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
         [Authorize]
         [HttpGet]
         [Route("api/InnerMovements/Group")]

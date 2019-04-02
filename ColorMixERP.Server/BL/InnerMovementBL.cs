@@ -29,6 +29,11 @@ namespace ColorMixERP.Server.BL
         {
             return  new InnerMovementDalFacade().GetInnerMovement(id);
         }
+
+        public List<InnerMovementDTO> GetInnerMovementDtosStats(InnerMovementCommand cmd, ref int pagesCount)
+        {
+            return new InnerMovementDalFacade().GetInnerMovementDtosStats(cmd, ref pagesCount);
+        }
         public InnerMovementDTO GetInnerMovementDto(int id)
         {
             return new InnerMovementDalFacade().GetInnerMovementDto(id);
