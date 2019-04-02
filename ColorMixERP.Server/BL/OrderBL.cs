@@ -15,7 +15,8 @@ namespace ColorMixERP.Server.BL
         public List<OrderDTO> GetClientOrders(OrderCommand cmd, int userId, ref int pagesCount)
         {
             var user = new UserDalFacade().GetAccountUser(userId);
-            return new OrderDalFacade().GetClientOrders(cmd, user.WorkPlace.Id.Value, ref pagesCount);
+            var isAdmin = user.isSunnat || user.PositionRole == 1;
+            return new OrderDalFacade().GetClientOrders(cmd, user.WorkPlace.Id.Value, isAdmin, ref pagesCount);
         }
 
         public OrderDTO GetClientOrder(int id)

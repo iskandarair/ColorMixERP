@@ -20,29 +20,60 @@ namespace ColorMixERP.Server.DAL
         {
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
-        public List<OrderDTO> GetClientOrders(OrderCommand cmd, int workplaceId, ref int pagesCount)
+        public List<OrderDTO> GetClientOrders(OrderCommand cmd, int workplaceId,bool isAdmin,  ref int pagesCount)
         {
-            var query = from c in db.ClientOrders where c.IsDeleted == false 
-                                                        && c.Saler.WorkPlaceId == workplaceId
-                select new OrderDTO()
+            IQueryable<OrderDTO> query;
+            if (isAdmin)
             {
-                Id =  c.Id,
-                TransactionId = c.TransactinoId,
-                SalerId =  c.Saler.Id ?? 0,
-                SalerName = c.Saler.Name + " " + c.Saler.Surname,
-                OrderDate = c.OrderDate,
-                Sales = new SaleBL().GetOrderSale(c.Id),
-                ClientId = c.Client.Id ?? 0,
-                ClientName = c.Client.Name,
-                ClientRepresentitive = c.ClientRepresentitive,
-                OverallPrice = c.OverallPrice,
-                PaymentByCard = c.PaymentByCard,
-                PaymentByTransfer = c.PaymentByTransfer,
-                PaymentByCash = c.PaymentByCash,
-                IsDebt = c.IsDebt,
-                WorkPlaceName = c.Saler.WorkPlace.Name,
-                WorkPlaceLocation = c.Saler.WorkPlace.Location
-            };
+                query = from c in db.ClientOrders
+                    where c.IsDeleted == false
+                    select new OrderDTO()
+                    {
+                        Id = c.Id,
+                        TransactionId = c.TransactinoId,
+                        SalerId = c.Saler.Id ?? 0,
+                        SalerName = c.Saler.Name + " " + c.Saler.Surname,
+                        OrderDate = c.OrderDate,
+                        Sales = new SaleBL().GetOrderSale(c.Id),
+                        ClientId = c.Client.Id ?? 0,
+                        ClientName = c.Client.Name,
+                        ClientRepresentitive = c.ClientRepresentitive,
+                        OverallPrice = c.OverallPrice,
+                        PaymentByCard = c.PaymentByCard,
+                        PaymentByTransfer = c.PaymentByTransfer,
+                        PaymentByCash = c.PaymentByCash,
+                        IsDebt = c.IsDebt,
+                        WorkPlaceName = c.Saler.WorkPlace.Name,
+                        WorkPlaceLocation = c.Saler.WorkPlace.Location
+                    };
+
+            }
+            else
+            {
+                query = from c in db.ClientOrders
+                    where c.IsDeleted == false
+                    join user in db.AccountUsers on c.Saler.Id equals user.Id
+                    where user.WorkPlaceId == workplaceId
+                    select new OrderDTO()
+                    {
+                        Id = c.Id,
+                        TransactionId = c.TransactinoId,
+                        SalerId = c.Saler.Id ?? 0,
+                        SalerName = c.Saler.Name + " " + c.Saler.Surname,
+                        OrderDate = c.OrderDate,
+                        Sales = new SaleBL().GetOrderSale(c.Id),
+                        ClientId = c.Client.Id ?? 0,
+                        ClientName = c.Client.Name,
+                        ClientRepresentitive = c.ClientRepresentitive,
+                        OverallPrice = c.OverallPrice,
+                        PaymentByCard = c.PaymentByCard,
+                        PaymentByTransfer = c.PaymentByTransfer,
+                        PaymentByCash = c.PaymentByCash,
+                        IsDebt = c.IsDebt,
+                        WorkPlaceName = c.Saler.WorkPlace.Name,
+                        WorkPlaceLocation = c.Saler.WorkPlace.Location
+                    };
+            }
 
             if (cmd.SalerId > 0)
             {
