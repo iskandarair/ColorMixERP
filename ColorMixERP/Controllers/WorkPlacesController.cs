@@ -56,6 +56,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
+        [Route("api/WorkPlaces/")]
         public HttpResponseMessage AddWorkPlace(WorkPlaceDTO workPlace)
         {
             try
@@ -105,7 +106,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
-        [ActionName("ProductStocks")]
+        [Route("api/WorkPlaces/ProductStocks")]
         public HttpResponseMessage Add(ProductStockDTO stock)
         {
             try
