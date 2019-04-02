@@ -89,7 +89,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpDelete]
-        public HttpResponseMessage UpdateWorkPlace(int id)
+        public HttpResponseMessage DeleteeWorkPlace(int id)
         {
             try
             {
