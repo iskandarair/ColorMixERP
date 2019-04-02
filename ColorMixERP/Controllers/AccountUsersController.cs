@@ -36,6 +36,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/AccountUsers")]
         public HttpResponseMessage GetAccountUsers(string query)
         {
             try
@@ -56,6 +57,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/AccountUsers/{id}")]
         public HttpResponseMessage GetUserById(int id)
         {
             try
@@ -72,6 +74,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
+        [Route("api/AccountUsers")]
         public HttpResponseMessage AddUser(AccountUserDTO user)
         {
             try
@@ -88,6 +91,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPut]
+        [Route("api/AccountUsers")]
         public HttpResponseMessage UpdateUser(AccountUserDTO user)
         {
             try
@@ -121,6 +125,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpDelete]
+        [Route("api/AccountUsers/{id}")]
         public HttpResponseMessage DeleteUser(int id)
         {
             try
@@ -135,20 +140,21 @@ namespace ColorMixERP.Controllers
             }
         }
 
-        [Authorize]
-        [HttpPost]
-        public HttpResponseMessage Add(int id, ExpenseDTO expense)
-        {
-            try
-            {
-                new ExpenseBL().Add(expense.UserId, expense);
-                return Request.CreateResponse(HttpStatusCode.OK, true);
-            }
-            catch (Exception ex)
-            {
-                LogManager.Instance.Error(ex);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError);
-            }
-        }
+       // [Authorize]
+       // [HttpPost]
+       // [Route("api/AccountUsers/{id}")]
+       // public HttpResponseMessage Add(int id, ExpenseDTO expense)
+       // {
+       //     try
+       //     {
+       //         new ExpenseBL().Add(expense.UserId, expense);
+       //         return Request.CreateResponse(HttpStatusCode.OK, true);
+       //     }
+       //     catch (Exception ex)
+       //     {
+       //         LogManager.Instance.Error(ex);
+       //         return Request.CreateResponse(HttpStatusCode.InternalServerError);
+       //     }
+       // }
     }
 }

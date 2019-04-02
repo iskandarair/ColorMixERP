@@ -53,7 +53,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("api/orders/")]
+        [Route("api/orders")]
         public HttpResponseMessage GetOrders(string query)
         {
             try
@@ -92,7 +92,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
-        [Route("api/orders/")]
+        [Route("api/orders")]
         public HttpResponseMessage Add(OrderDTO order)
         {
             try
@@ -113,7 +113,7 @@ namespace ColorMixERP.Controllers
         }
         [Authorize]
         [HttpPut]
-        [Route("api/orders/")]
+        [Route("api/orders")]
         public HttpResponseMessage Update(OrderDTO order)
         {
             try

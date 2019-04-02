@@ -19,7 +19,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("api/Products/")]
+        [Route("api/Products")]
         public HttpResponseMessage GetProduct(string query)
         {
             try
@@ -91,7 +91,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPut]
-        [Route("api/Products/")]
+        [Route("api/Products")]
         public HttpResponseMessage UpdateProduct(ProductDTO product)
         {
             try
@@ -109,7 +109,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpDelete]
-        [Route("api/Products/")]
+        [Route("api/Products/{id}")]
         public HttpResponseMessage DeleteProduct(int id)
         {
             try

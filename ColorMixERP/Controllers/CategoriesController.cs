@@ -19,6 +19,7 @@ namespace ColorMixERP.Controllers
     {
         [Authorize]
         [HttpGet]
+        [Route("api/Categories")]
         public HttpResponseMessage GetCategories(string query)
         {
             try
@@ -39,6 +40,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/Categories/{id}")]
         public HttpResponseMessage GetCategory(int id)
         {
             try
@@ -55,6 +57,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
+        [Route("api/Categories")]
         public HttpResponseMessage AddCategory(CategoryDTO category)
         {
             try
@@ -71,6 +74,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPut]
+        [Route("api/Categories")]
         public HttpResponseMessage UpdateCategory(CategoryDTO category)
         {
             try
@@ -87,6 +91,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpDelete]
+        [Route("api/Categories/{id}")]
         public HttpResponseMessage DeleteCategory(int id)
         {
             try
