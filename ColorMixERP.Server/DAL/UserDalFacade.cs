@@ -113,7 +113,7 @@ namespace ColorMixERP.Server.DAL
         }
         public User GetAccountByName(string name, string password)
         {
-            var query = from c in db.AccountUsers where c.Name == name && c.Password ==password  select new User(c.Id, c.Name)
+            var query = from c in db.AccountUsers where c.Name == name && c.Password ==password && c.IsDeleted == false  select new User(c.Id, c.Name)
             {
                 Name = c.Name,
                 SurName = c.Surname,
@@ -156,6 +156,10 @@ namespace ColorMixERP.Server.DAL
         public void Delete(int id)
         {
             var element = (from c in db.AccountUsers where c.Id == id select c).FirstOrDefault();
+            if (element.isSunnat)
+            {
+                throw new Exception($"User {element.Name} {element.Surname} cannot be deleted. It is a super user ");
+            }
             element.IsDeleted = true;
             element.DeletedDate = DateTime.Now;
             db.SubmitChanges();

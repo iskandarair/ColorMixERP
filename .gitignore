@@ -12,3 +12,4 @@ ColorMixERP.Server/bin
 obj
 bin
 ColorMixERP/Web.config
+/ColorMixERP.Server/ColorMixERP.Server.csproj.user
