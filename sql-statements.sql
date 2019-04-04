@@ -84,9 +84,14 @@ IsDeleted bit NOT NULL DEFAULT(0),
 DeletedDate datetime default getDAte(),
 UpdatedDate datetime default getDAte(),
 NickName nvarchar(255),
- DebtorCreditor decimal(19,2) NOT NULL default(0),
+DebtorCreditor decimal(19,2) NOT NULL default(0),
+WorkPlaceId int NOT NULL,
 PRIMARY KEY (Id),
+CONSTRAINT WorkPlaceIdClientReference FOREIGN KEY (WorkPlaceId) REFERENCES WorkPlace(Id),
 );
+
+--ALTER TAble Client Add WorkPlaceId int NOT NULL default(1);
+--ALTER TAble Client ADD CONSTRAINT WorkPlaceIdClientReference FOREIGN KEY (WorkPlaceId) REFERENCES WorkPlace(Id);
 
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'Expense')
 CREATE TABLE Expense (

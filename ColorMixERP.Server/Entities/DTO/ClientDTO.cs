@@ -20,5 +20,7 @@ namespace ColorMixERP.Server.Entities.DTO
         public string INN { get; set; }
         public string OKONX { get; set; }
         public decimal DebtorCreditor { get; set; }
+        public int WorkPlaceId { get; set; }
+        public string WorkPlaceName { get; set; }
     }
 }
