@@ -18,6 +18,12 @@ namespace ColorMixERP.Server.BL
             var isAdmin = user.isSunnat || user.PositionRole == 1;
             return new OrderDalFacade().GetClientOrders(cmd, user.WorkPlace.Id.Value, isAdmin, ref pagesCount);
         }
+        public ClientOrderStatisticalDTO GetClientOrdersStatistics(OrderCommand cmd, int userId, ref int pagesCount)
+        {
+            var user = new UserDalFacade().GetAccountUser(userId);
+            var isAdmin = user.isSunnat || user.PositionRole == 1;
+            return new OrderDalFacade().GetClientOrdersStats(cmd, user.WorkPlace.Id.Value, isAdmin, ref pagesCount);
+        }
 
         public OrderDTO GetClientOrder(int id)
         {

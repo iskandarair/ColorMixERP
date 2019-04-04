@@ -46,7 +46,6 @@ namespace ColorMixERP.Server.DAL
                         WorkPlaceName = c.Saler.WorkPlace.Name,
                         WorkPlaceLocation = c.Saler.WorkPlace.Location
                     };
-
             }
             else
             {
@@ -131,6 +130,103 @@ namespace ColorMixERP.Server.DAL
             query = query.Page(cmd.PageSize, cmd.Page);
             return query.ToList();
         }
+
+        public ClientOrderStatisticalDTO GetClientOrdersStats(OrderCommand cmd, int workplaceId, bool isAdmin, ref int pagesCount)
+        {
+            IQueryable<OrderDTO> query;
+            if (isAdmin)
+            {
+                query = from c in db.ClientOrders
+                        where c.IsDeleted == false
+                        select new OrderDTO()
+                        {
+                            Id = c.Id,
+                            TransactionId = c.TransactinoId,
+                            SalerId = c.Saler.Id ?? 0,
+                            SalerName = c.Saler.Name + " " + c.Saler.Surname,
+                            OrderDate = c.OrderDate,
+                            Sales = new SaleBL().GetOrderSale(c.Id),
+                            ClientId = c.Client.Id ?? 0,
+                            ClientName = c.Client.Name,
+                            ClientRepresentitive = c.ClientRepresentitive,
+                            OverallPrice = c.OverallPrice,
+                            PaymentByCard = c.PaymentByCard,
+                            PaymentByTransfer = c.PaymentByTransfer,
+                            PaymentByCash = c.PaymentByCash,
+                            IsDebt = c.IsDebt,
+                            WorkPlaceName = c.Saler.WorkPlace.Name,
+                            WorkPlaceLocation = c.Saler.WorkPlace.Location
+                        };
+            }
+            else
+            {
+                query = from c in db.ClientOrders
+                        where c.IsDeleted == false
+                        join user in db.AccountUsers on c.Saler.Id equals user.Id
+                        where user.WorkPlaceId == workplaceId
+                        select new OrderDTO()
+                        {
+                            Id = c.Id,
+                            TransactionId = c.TransactinoId,
+                            SalerId = c.Saler.Id ?? 0,
+                            SalerName = c.Saler.Name + " " + c.Saler.Surname,
+                            OrderDate = c.OrderDate,
+                            Sales = new SaleBL().GetOrderSale(c.Id),
+                            ClientId = c.Client.Id ?? 0,
+                            ClientName = c.Client.Name,
+                            ClientRepresentitive = c.ClientRepresentitive,
+                            OverallPrice = c.OverallPrice,
+                            PaymentByCard = c.PaymentByCard,
+                            PaymentByTransfer = c.PaymentByTransfer,
+                            PaymentByCash = c.PaymentByCash,
+                            IsDebt = c.IsDebt,
+                            WorkPlaceName = c.Saler.WorkPlace.Name,
+                            WorkPlaceLocation = c.Saler.WorkPlace.Location
+                        };
+            }
+            
+
+            if (cmd.ClientId > 0)
+            {
+                query = from p in query where p.ClientId == cmd.ClientId select p;
+            }
+
+            if (cmd.OrderDate != null)
+            {
+                query = from p in query
+                        where p.OrderDate.Date >= cmd.OrderDate.Value.Date
+                            && p.OrderDate.Date <= cmd.OrderDate.Value.Date
+                        select p;
+            }
+
+            if (cmd.FromDate != null && cmd.ToDate != null)
+            {
+                query = from p in query
+                        where p.OrderDate.Date >= cmd.FromDate.Value.Date &&
+                              p.OrderDate.Date <= cmd.ToDate.Value.Date
+                        select p;
+            }
+
+            var aggregation = from c in query
+                group c by 1  into grp
+            let totalOverallPrice = grp.Sum(x => x.OverallPrice)
+            let totalPaymentByTransfer = grp.Sum(x => x.PaymentByTransfer)
+            let totalPaymentByCard = grp.Sum(x => x.PaymentByCard)
+            let totalPaymentByCash = grp.Sum(x => x.PaymentByCash)
+            select new ClientOrderStatisticalDTO()
+            {
+                TotalOverallPrice = totalOverallPrice,
+                TotalPaymentCard = totalPaymentByCard,
+                TotalPaymentCash = totalPaymentByCash,
+                TotalPaymentTransfer = totalPaymentByTransfer
+
+            };
+            var result2 = aggregation.FirstOrDefault();
+            result2.ClientOrders = GetClientOrders(cmd, workplaceId, isAdmin, ref pagesCount);
+
+            return result2;
+        }
+
         public OrderDTO GetClientOrder(int id)
         {
             var query = from c in db.ClientOrders where c.Id == id select new OrderDTO()
