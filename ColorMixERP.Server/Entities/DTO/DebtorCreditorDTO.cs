@@ -9,7 +9,7 @@ namespace ColorMixERP.Server.Entities.DTO
     public class DebtorCreditorDTO
     {
         public int Id { get; set; }
-        public int ClientId { get; set; }
+        public int? ClientId { get; set; }
         public decimal Amount { get; set; }
         public bool IsDebtor { get; set; }
         public DateTime CreatedDate { get; set; }

@@ -13,7 +13,7 @@ namespace ColorMixERP.Server.Entities
     {
         public ClientOrder() { }
 
-        public ClientOrder(int salerId, int clientId)
+        public ClientOrder(int salerId, int? clientId)
         {
             SalerId = salerId;
             ClientId = clientId;
@@ -55,7 +55,7 @@ namespace ColorMixERP.Server.Entities
         public bool IsDebt { get; set; }
 
         [Column(Name="ClientId")]
-        private int ClientId { get; set; }
+        private int? ClientId { get; set; }
         private EntityRef<Client> _Client;
 
         [Association(Storage = "_Client", ThisKey = "ClientId")]
@@ -64,6 +64,7 @@ namespace ColorMixERP.Server.Entities
             get { return _Client.Entity;}
             set { _Client.Entity = value; }
         }
+        [Column(Name = "ClientRepresentitive")]
         public string ClientRepresentitive { get; set; }
 
         [Column(Name = "OverallPrice")]
