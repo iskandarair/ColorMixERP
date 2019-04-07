@@ -53,7 +53,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("api/orders/")]
+        [Route("api/orders")]
         public HttpResponseMessage GetOrders(string query)
         {
             try
@@ -62,6 +62,28 @@ namespace ColorMixERP.Controllers
                 var cmd = JsonConvert.DeserializeObject<OrderCommand>(query);
                 int pagesCount = 0;
                 var data = new OrderBL().GetClientOrders(cmd, userId, ref pagesCount);
+                var result = Request.CreateResponse(HttpStatusCode.OK, data);
+                result.Headers.Add(Consts.PAGES_COUNT, pagesCount.ToString());
+                return result;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.Error(ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, false);
+            }
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("api/orders/statistical")]
+        public HttpResponseMessage GetOrdersStatistical(string query)
+        {
+            try
+            {
+                var userId = AuthHelper.GetUserIdFromClaims(User.Identity as ClaimsIdentity);
+                var cmd = JsonConvert.DeserializeObject<OrderCommand>(query);
+                int pagesCount = 0;
+                var data = new OrderBL().GetClientOrdersStatistics(cmd, userId, ref pagesCount);
                 var result = Request.CreateResponse(HttpStatusCode.OK, data);
                 result.Headers.Add(Consts.PAGES_COUNT, pagesCount.ToString());
                 return result;
@@ -92,7 +114,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
-        [Route("api/orders/")]
+        [Route("api/orders")]
         public HttpResponseMessage Add(OrderDTO order)
         {
             try
@@ -113,7 +135,7 @@ namespace ColorMixERP.Controllers
         }
         [Authorize]
         [HttpPut]
-        [Route("api/orders/")]
+        [Route("api/orders")]
         public HttpResponseMessage Update(OrderDTO order)
         {
             try

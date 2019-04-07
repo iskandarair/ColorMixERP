@@ -48,5 +48,15 @@ namespace ColorMixERP.Server.Entities
         [Column(Name = "UpdatedDate")]
         public DateTime? UpdatedDate { get; set; }
 
+        [Column(Name = "WorkPlaceId")]
+        public int WorkPlaceId { get; set; }
+
+        private EntityRef<WorkPlace> _WorkPlace;
+        [Association(Storage = "_WorkPlace", ThisKey = "WorkPlaceId")]
+        public WorkPlace WorkPlace
+        {
+            get { return _WorkPlace.Entity; }
+            set { _WorkPlace.Entity = value; }
+        }
     }
 }

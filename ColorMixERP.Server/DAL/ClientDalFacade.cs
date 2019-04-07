@@ -36,7 +36,9 @@ namespace ColorMixERP.Server.DAL
                     INN = c.INN,
                     OKONX = c.OKONX,
                     NickName = c.NickName,
-                    DebtorCreditor = c.DebtorCreditor
+                    DebtorCreditor = c.DebtorCreditor,
+                    WorkPlaceId = c.WorkPlaceId,
+                    WorkPlaceName = c.WorkPlace.Name,
                 };
 
             if (!string.IsNullOrEmpty(cmd.Name))
@@ -57,6 +59,11 @@ namespace ColorMixERP.Server.DAL
             if (!string.IsNullOrEmpty(cmd.City))
             {
                 query = from c in query where c.City.Contains(cmd.City) select c;
+            }
+            //WorkPlaceId
+            if (cmd.WorkPlaceId != null)
+            {
+                query = from c in query where c.WorkPlaceId == cmd.WorkPlaceId.Value select c;
             }
             //S O R T I N G
             if (cmd.SortByName != null)
@@ -100,7 +107,9 @@ namespace ColorMixERP.Server.DAL
                 INN = c.INN,
                 OKONX = c.OKONX,
                 NickName = c.NickName,
-                DebtorCreditor = c.DebtorCreditor
+                DebtorCreditor = c.DebtorCreditor,
+                WorkPlaceId = c.WorkPlaceId,
+                WorkPlaceName = c.WorkPlace.Name,
             };
             return query.FirstOrDefault();
         }
@@ -118,7 +127,8 @@ namespace ColorMixERP.Server.DAL
                 MFO = client.MFO,
                 INN = client.INN,
                 OKONX = client.OKONX,
-                NickName = client.NickName
+                NickName = client.NickName,
+                WorkPlaceId = client.WorkPlaceId,
             };
             db.Clients.InsertOnSubmit(element);
             db.SubmitChanges();
@@ -137,6 +147,7 @@ namespace ColorMixERP.Server.DAL
             clientToUpdate.MFO = client.MFO;
             clientToUpdate.INN = client.INN;
             clientToUpdate.OKONX = client.OKONX;
+            clientToUpdate.WorkPlaceId = client.WorkPlaceId;
             clientToUpdate.UpdatedDate = DateTime.Now;
             db.SubmitChanges();
         }

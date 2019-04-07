@@ -37,9 +37,9 @@ namespace ColorMixERP.Controllers
         }
 
 
-        [Route("api/Incomes/")]
         [Authorize]
         [HttpGet]
+        [Route("api/Incomes")]
         public HttpResponseMessage GetIncomes(string query)
         {
             try
@@ -60,6 +60,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/Incomes")]
         public HttpResponseMessage GetIncomes(int[] ids)
         {
             try
@@ -77,6 +78,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/Incomes/{id}")]
         public HttpResponseMessage GetIncomeProducts(int id)
         {
             try
@@ -94,6 +96,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
+        [Route("api/Incomes/{id}")]
         public HttpResponseMessage GetIncomeProductById(int id)
         {
             try
@@ -111,6 +114,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
+        [Route("api/Incomes")]
         public HttpResponseMessage AddIncome(IncomeDTO dto)
         {
             try
@@ -128,6 +132,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPut]
+        [Route("api/Incomes")]
         public HttpResponseMessage UpdateIncome(IncomeProductDTO dto)
         {
             try

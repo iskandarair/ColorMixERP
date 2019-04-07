@@ -20,6 +20,7 @@ namespace ColorMixERP.Controllers
     {
         [Authorize]
         [HttpGet]
+        [Route("api/WorkPlaces")]
         public HttpResponseMessage GetWorkPlaces(string query)
         {
             try
@@ -40,6 +41,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/WorkPlaces/{id}")]
         public HttpResponseMessage GetWorkPlace(int id)
         {
             try
@@ -56,6 +58,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
+        [Route("api/WorkPlaces")]
         public HttpResponseMessage AddWorkPlace(WorkPlaceDTO workPlace)
         {
             try
@@ -72,6 +75,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPut]
+        [Route("api/WorkPlaces")]
         public HttpResponseMessage UpdateWorkPlace(WorkPlaceDTO workPlace)
         {
             try
@@ -88,7 +92,8 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpDelete]
-        public HttpResponseMessage UpdateWorkPlace(int id)
+        [Route("api/WorkPlaces/")]
+        public HttpResponseMessage DeleteeWorkPlace(int id)
         {
             try
             {
@@ -105,7 +110,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
-        [ActionName("ProductStocks")]
+        [Route("api/WorkPlaces/ProductStocks")]
         public HttpResponseMessage Add(ProductStockDTO stock)
         {
             try

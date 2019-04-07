@@ -77,6 +77,7 @@ namespace ColorMixERP.Controllers
         }
         [Authorize]
         [HttpGet]
+        [Route("api/InnerMovements/{id}")]
         public HttpResponseMessage GetInnerMovementDto(int id)
         {
             try
@@ -183,6 +184,7 @@ namespace ColorMixERP.Controllers
         }
         [Authorize]
         [HttpDelete]
+        [Route("api/InnerMovements/{id}")]
         public HttpResponseMessage Delete(int id)
         {
             try

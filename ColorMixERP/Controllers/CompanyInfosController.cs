@@ -17,6 +17,7 @@ namespace ColorMixERP.Controllers
     {
         [Authorize]
         [HttpGet]
+        [Route("api/CompanyInfos")]
         public HttpResponseMessage GetObjects(string query)
         {
             try
@@ -37,6 +38,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/CompanyInfos/{id}")]
         public HttpResponseMessage GetObject(int id)
         {
             try
@@ -53,6 +55,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
+        [Route("api/CompanyInfos")]
         public HttpResponseMessage Add(CompanyInfoDTO dto)
         {
             try
@@ -95,6 +98,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPut]
+        [Route("api/CompanyInfos")]
         public HttpResponseMessage Update(CompanyInfoDTO dto)
         {
             try
@@ -111,6 +115,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpDelete]
+        [Route("api/CompanyInfos/{id}")]
         public HttpResponseMessage Delete(int id)
         {
             try

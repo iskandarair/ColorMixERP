@@ -17,6 +17,7 @@ namespace ColorMixERP.Controllers
     {
         [Authorize]
         [HttpGet]
+        [Route("api/DebtCovers")]
         public HttpResponseMessage Get(string query)
         {
             try
@@ -37,6 +38,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/DebtCovers/{id}")]
         public HttpResponseMessage Get(int id)
         {
             try
@@ -54,6 +56,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
+        [Route("api/DebtCovers")]
         public HttpResponseMessage Add(DebtCoverDTO element)
         {
             try
@@ -70,6 +73,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPut]
+        [Route("api/DebtCovers")]
         public HttpResponseMessage Update(DebtCoverDTO dto)
         {
             try
@@ -86,6 +90,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpDelete]
+        [Route("api/DebtCovers/{id}")]
         public HttpResponseMessage Delete(int id)
         {
             try

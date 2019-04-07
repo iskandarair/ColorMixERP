@@ -20,6 +20,7 @@ namespace ColorMixERP.Controllers
     {
         [Authorize]
         [HttpGet]
+        [Route("api/Suppliers")]
         public HttpResponseMessage GetSuppliers(string query)
         {
             try
@@ -40,6 +41,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/Suppliers/{id}")]
         public HttpResponseMessage GetSupplier(int? id)
         {
             try
@@ -56,6 +58,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
+        [Route("api/Suppliers")]
         public HttpResponseMessage Add(SupplierDTO supplier)
         {
             try
@@ -71,6 +74,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPut]
+        [Route("api/Suppliers")]
         public HttpResponseMessage Update(SupplierDTO supplier)
         {
             try
@@ -86,6 +90,7 @@ namespace ColorMixERP.Controllers
         }
         [Authorize]
         [HttpDelete]
+        [Route("api/Suppliers/{id}")]
         public HttpResponseMessage Delete(int id)
         {
             try

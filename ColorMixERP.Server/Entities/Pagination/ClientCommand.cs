@@ -12,6 +12,7 @@ namespace ColorMixERP.Server.Entities.Pagination
         public string NickName { get; set; }
         public string INN { get; set; }
         public string City { get; set; }
+        public int? WorkPlaceId { get; set; }
 
         public bool? SortByName { get; set; }
         public bool? SortByNickName { get; set; }

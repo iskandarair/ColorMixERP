@@ -16,6 +16,7 @@ namespace ColorMixERP.Controllers
     {
         [Authorize]
         [HttpGet]
+        [Route("api/DebtorCreditors")]
         public HttpResponseMessage Get(string query)
         {
             try
@@ -36,6 +37,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/DebtorCreditors/{id}")]
         public HttpResponseMessage GetUserById(int id)
         {
             try
@@ -52,6 +54,7 @@ namespace ColorMixERP.Controllers
         
         [Authorize]
         [HttpPut]
+        [Route("api/DebtorCreditors")]
         public HttpResponseMessage Update(DebtorCreditorDTO dto)
         {
             try
@@ -68,6 +71,7 @@ namespace ColorMixERP.Controllers
         
         [Authorize]
         [HttpPost]
+        [Route("api/DebtorCreditors")]
         public HttpResponseMessage Add(DebtorCreditorDTO dto)
         {
             try

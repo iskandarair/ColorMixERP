@@ -90,7 +90,7 @@ namespace ColorMixERP.Server.DAL
         {
             var debtorCreditor = new DebtorCreditor()
             {
-                ClientId =  dto.ClientId,
+                ClientId =  dto.ClientId.Value,
                 Amount = dto.Amount,
                 CreatedDate = dto.CreatedDate,
                 UpdatedDate = dto.UpdatedDate,

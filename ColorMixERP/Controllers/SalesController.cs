@@ -19,6 +19,7 @@ namespace ColorMixERP.Controllers
     {
         [Authorize]
         [HttpGet]
+        [Route("api/Sales")]
         public HttpResponseMessage GetSales(string query)
         {
             try
@@ -39,6 +40,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/Sales/{id}")]
         public HttpResponseMessage GetSale(int id)
         {
             try
@@ -70,6 +72,7 @@ namespace ColorMixERP.Controllers
         }
         [Authorize]
         [HttpPost]
+        [Route("api/Sales")]
         public HttpResponseMessage Add(SaleDTO dto)
         {
             try
@@ -86,6 +89,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPut]
+        [Route("api/Sales")]
         public HttpResponseMessage Update(SaleDTO sale)
         {
             try
@@ -108,6 +112,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpDelete]
+        [Route("api/Sales/{id}")]
         public HttpResponseMessage Delete(int id)
         {
             try

@@ -18,6 +18,7 @@ namespace ColorMixERP.Controllers
     {
         [Authorize]
         [HttpGet]
+        [Route("api/Clients")]
         public HttpResponseMessage GetClients(string query)
         {
             try
@@ -38,6 +39,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/Clients/{id}")]
         public HttpResponseMessage GetClientById(int id)
         {
             try
@@ -54,6 +56,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPost]
+        [Route("api/Clients")]
         public HttpResponseMessage AddUser(ClientDTO client)
         {
             try
@@ -70,6 +73,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpPut]
+        [Route("api/Clients")]
         public HttpResponseMessage UpdateClient(ClientDTO client)
         {
             try
@@ -87,6 +91,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpDelete]
+        [Route("api/Clients/{id}")]
         public HttpResponseMessage DeleteClient(int id)
         {
             try
