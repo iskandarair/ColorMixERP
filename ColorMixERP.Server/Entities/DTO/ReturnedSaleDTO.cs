@@ -9,12 +9,15 @@ namespace ColorMixERP.Server.Entities.DTO
     public class ReturnedSaleDTO
     {
         public int Id { get; set; }
-        public int SaleId { get; set; }
+        public int? SaleId { get; set; }
+        public int ProductId { get; set; }
+        public string ProductName { get; set; }
         public DateTime ReturnDate { get; set; }
         public string Cause { get; set; }
         public decimal DefectedQuantity { get; set; }
         public decimal Quantity { get; set; }
         public decimal ReturnedPrice { get; set; }
+        public decimal ReturnedMoney { get; set; }
 
 
     }

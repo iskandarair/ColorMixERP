@@ -15,7 +15,7 @@ namespace ColorMixERP.Server.Entities
         public int Id { get; set; }
 
         [Column(Name="SaleId")]
-        public int SaleId { get; set; }
+        public int? SaleId { get; set; }
         private EntityRef<Sale> _Sale;
         [Association(Storage = "_Sale", ThisKey = "SaleId")]
         public Sale Sale
@@ -23,7 +23,16 @@ namespace ColorMixERP.Server.Entities
             get { return _Sale.Entity; }
             set { _Sale.Entity = value; }
         }
-
+        
+        [Column(Name = "ProductId")]
+        public int ProductId { get; set; }
+        private EntityRef<Product> _Product;
+        [Association(Storage = "_Product", ThisKey = "ProductId")]
+        public Product Product
+        {
+            get { return _Product.Entity; }
+            set { _Product.Entity = value; }
+        }
         [Column(Name = "ReturnDate")]
         public DateTime ReturnDate { get; set; }
 
@@ -38,6 +47,8 @@ namespace ColorMixERP.Server.Entities
 
         [Column(Name = "ReturnedPrice")]
         public decimal ReturnedPrice { get; set; }
+        [Column(Name = "ReturnedMoney")]
+        public decimal ReturnedMoney { get; set; }
 
         // =================================================
 

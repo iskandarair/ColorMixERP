@@ -28,28 +28,32 @@ namespace ColorMixERP.Server.BL
 
         public void Add(ReturnedSaleDTO dto, int userId)
         {
+            if (dto.SaleId == 0)
+            {
+                dto.SaleId = null;
+            }
             new ProductStockBL().UpdateProductStock(dto, userId);
             new ReturnedSaleDalFacade().Add(dto);
 
             var lostInMoney = dto.ReturnedPrice * dto.Quantity;
-            var sale = new SaleDalFacade().GetSale(dto.SaleId);
-            sale.Quantity -= dto.Quantity;
-            sale.SalesPrice -= lostInMoney;
-            new SaleDalFacade().Update(sale);
+           //var sale = new SaleDalFacade().GetSale(dto.SaleId);
+           //sale.Quantity -= dto.Quantity;
+           //sale.SalesPrice -= lostInMoney;
+           //new SaleDalFacade().Update(sale);
 
-            var order = new OrderDalFacade().GetClientOrder(sale.OrderId);
-            order.OverallPrice -= lostInMoney;
-            order.PaymentByCash -= lostInMoney;
-            new OrderDalFacade().Update(order);
+           //var order = new OrderDalFacade().GetClientOrder(sale.OrderId);
+           //order.OverallPrice -= lostInMoney;
+           //order.PaymentByCash -= lostInMoney;
+           //new OrderDalFacade().Update(order);
         }
 
 
         public void Update(ReturnedSaleDTO dto, int userId)
         {
-            var sale = new SaleDalFacade().GetSale(dto.SaleId);
+            //var sale = new SaleDalFacade().GetSale(dto.SaleId);
             var workPlaceId = new UserDalFacade().GetAccountUser(userId).WorkPlace.Id.Value;
             var diff = dto.Quantity - dto.DefectedQuantity; // quantity - deffectedQuantity !!!(So quantity is general for both)
-            var productInStockFrom = new ProductStockDalFacade().GetProductStockByPlaceAndProduct(workPlaceId, sale.ProductId);
+            var productInStockFrom = new ProductStockDalFacade().GetProductStockByPlaceAndProduct(workPlaceId, dto.ProductId);
             productInStockFrom.Quantity += diff;
 
             new ProductStockDalFacade().Update(productInStockFrom);
@@ -62,15 +66,15 @@ namespace ColorMixERP.Server.BL
             var lostInMoneyInUpdate = dto.ReturnedPrice * dto.Quantity;
             var lostInMoney = lostInMoneyInInsert - lostInMoneyInUpdate;
             var quantity = existingReturnSale.Quantity - dto.Quantity;
-            var sale2 = new SaleDalFacade().GetSale(dto.SaleId);
-            sale2.SalesPrice -= lostInMoney;
-            sale2.Quantity -= quantity;
-            new SaleDalFacade().Update(sale2);
+            //var sale2 = new SaleDalFacade().GetSale(dto.SaleId);
+            //sale2.SalesPrice -= lostInMoney;
+            //sale2.Quantity -= quantity;
+            //new SaleDalFacade().Update(sale2);
 
-            var order = new OrderDalFacade().GetClientOrder(sale.OrderId);
-            order.OverallPrice -= lostInMoney;
-            order.PaymentByCash -= lostInMoney;
-            new OrderDalFacade().Update(order);
+           //var order = new OrderDalFacade().GetClientOrder(sale.OrderId);
+           //order.OverallPrice -= lostInMoney;
+           //order.PaymentByCash -= lostInMoney;
+           //new OrderDalFacade().Update(order);
         }
 
         public void Delete(int id)

@@ -32,6 +32,10 @@ namespace ColorMixERP.Server.BL
 
         public void Add(OrderDTO order)
         {
+            if (order.ClientId == 0)
+            {
+                order.ClientId = null;
+            }
             new ProductStockBL().UpdateProductStocks(order);
             new OrderDalFacade().Add(order);
             //
