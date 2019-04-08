@@ -166,7 +166,7 @@ namespace ColorMixERP.Server.DAL
         public List<InnerMovementDTO> GetInnerMovementDtoByGroup(int groupId, DateTime craetedDate)
         {
             var q = from c in db.InnerMovements
-                where c.GroupId == groupId && c.CreatedDate.Value >= craetedDate && c.CreatedDate.Value <= craetedDate
+                where c.GroupId == groupId && c.CreatedDate.Value >= craetedDate.AddDays(-1) && c.CreatedDate.Value <= craetedDate.AddDays(1)
                     select new InnerMovementDTO()
                 {
                     Id = c.Id,
