@@ -163,17 +163,20 @@ CONSTRAINT OrderId FOREIGN KEY (OrderId) REFERENCES ClientOrder(Id)
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'ReturnedSale')
 CREATE TABLE ReturnedSale (
 Id int IDENTITY(1,1),
-SaleId int NOT NULL,
+SaleId int,
+ProductId int NOT NULL, 
 ReturnDate Datetime default CURRENT_TIMESTAMP,
 Cause nvarchar(255),
 DefectedQuantity decimal(19,2) NOT NULL,
 Quantity decimal(19,2) NOT NULL,
 ReturnedPrice decimal(19,2) NOT NULL,
+ReturnedMoney decimal(19,2) NOT NULL,
 IsDeleted bit NOT NULL DEFAULT(0),
 DeletedDate datetime default getDAte(),
 UpdatedDate datetime default getDAte(),
 PRIMARY KEY (Id),
-CONSTRAINT SaleId FOREIGN KEY (SaleId) REFERENCES Sale(Id),
+CONSTRAINT ReturnedSaleSaleId FOREIGN KEY (SaleId) REFERENCES Sale(Id),
+CONSTRAINT ReturnedSaleProductId FOREIGN KEY (ProductId) REFERENCES Product(Id),
 );
 
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'InnerMovement')

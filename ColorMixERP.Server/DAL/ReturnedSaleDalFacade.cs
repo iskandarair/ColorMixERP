@@ -27,12 +27,15 @@ namespace ColorMixERP.Server.DAL
                 select new ReturnedSaleDTO()
                 {
                     Id = c.Id,
-                    SaleId = c.Sale.Id,
+                    SaleId = c.SaleId,
+                    ProductId = c.ProductId,
+                    ProductName = c.Product.Name,
                     Cause = c.Cause,
                     DefectedQuantity = c.DefectedQuantity,
                     Quantity = c.Quantity,
                     ReturnDate = c.ReturnDate,
-                    ReturnedPrice = c.ReturnedPrice
+                    ReturnedPrice = c.ReturnedPrice,
+                    ReturnedMoney = c.ReturnedMoney
                 };
 
             pagesCount = (int)Math.Ceiling((double)(from p in query select p).Count()/cmd.PageSize);
@@ -48,11 +51,14 @@ namespace ColorMixERP.Server.DAL
                     {
                         Id = c.Id,
                         SaleId = c.Sale.Id,
+                        ProductId = c.ProductId,
+                        ProductName = c.Product.Name,
                         Cause = c.Cause,
                         DefectedQuantity = c.DefectedQuantity,
                         Quantity = c.Quantity,
                         ReturnDate = c.ReturnDate,
-                        ReturnedPrice = c.ReturnedPrice
+                        ReturnedPrice = c.ReturnedPrice,
+                        ReturnedMoney = c.ReturnedMoney
                     };
             return query.ToList();
         }
@@ -64,28 +70,32 @@ namespace ColorMixERP.Server.DAL
                         select new ReturnedSaleDTO()
                 {
                     Id = c.Id,
-                    SaleId = c.Sale.Id,
+                    SaleId = c.SaleId,
+                    ProductId = c.ProductId,
+                    ProductName = c.Product.Name,
                     Cause = c.Cause,
                     DefectedQuantity = c.DefectedQuantity,
                     Quantity = c.Quantity,
                     ReturnDate = c.ReturnDate,
-                    ReturnedPrice = c.ReturnedPrice
-                };
+                    ReturnedPrice = c.ReturnedPrice,
+                    ReturnedMoney = c.ReturnedMoney
+                 };
             return query.FirstOrDefault();
         }
-
-
+        
         public void Add(ReturnedSaleDTO c)
         {
             var element = new ReturnedSale()
             {
                 Id = c.Id,
                 SaleId = c.SaleId,
+                ProductId = c.ProductId,
                 Cause = c.Cause,
                 DefectedQuantity = c.DefectedQuantity,
                 Quantity = c.Quantity,
                 ReturnDate = c.ReturnDate,
-                ReturnedPrice = c.ReturnedPrice
+                ReturnedPrice = c.ReturnedPrice,
+                ReturnedMoney = c.ReturnedMoney
             };
             db.ReturnedSales.InsertOnSubmit(element);
             db.SubmitChanges();
@@ -99,6 +109,7 @@ namespace ColorMixERP.Server.DAL
             element.Quantity = dto.Quantity;
             element.ReturnDate = dto.ReturnDate;
             element.ReturnedPrice = dto.ReturnedPrice;
+            element.ReturnedMoney = dto.ReturnedMoney;
             element.UpdatedDate = DateTime.Now;
             db.SubmitChanges();
         }
