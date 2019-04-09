@@ -56,17 +56,17 @@ namespace ColorMixERP.Server.DAL
 
             if (cmd.MoveDate != null)
             {
-                query = from p in query where p.MoveDate.Date >= cmd.MoveDate.Value.Date &&
-                                              p.MoveDate.Date <= cmd.MoveDate.Value.Date
-                    select p;
+                query = from p in query where p.MoveDate.Date >= cmd.MoveDate.Value.Date.ToSqlDate() &&
+                                              p.MoveDate.Date <= cmd.MoveDate.Value.Date.ToSqlDate()
+                        select p;
             }
 
             if (cmd.FromDate != null && cmd.ToDate != null)
             {
                 query = from p in query
-                    where p.MoveDate >= cmd.FromDate.Value.Date &&
-                          p.MoveDate <= cmd.ToDate.Value.Date
-                    select p;
+                    where p.MoveDate >= cmd.FromDate.Value.Date.ToSqlDate() &&
+                          p.MoveDate <= cmd.ToDate.Value.Date.ToSqlDate()
+                        select p;
             }
             
 
@@ -146,17 +146,17 @@ namespace ColorMixERP.Server.DAL
             if (cmd.MoveDate != null)
             {
                 query = from p in query
-                    where p.MoveDate.Date >= cmd.MoveDate.Value.Date &&
-                          p.MoveDate.Date <= cmd.MoveDate.Value.Date
-                    select p;
+                    where p.MoveDate.Date >= cmd.MoveDate.Value.Date.ToSqlDate() &&
+                          p.MoveDate.Date <= cmd.MoveDate.Value.Date.ToSqlDate()
+                        select p;
             }
 
             if (cmd.FromDate != null && cmd.ToDate != null)
             {
                 query = from p in query
-                    where p.MoveDate >= cmd.FromDate.Value.Date &&
-                          p.MoveDate <= cmd.ToDate.Value.Date
-                    select p;
+                    where p.MoveDate >= cmd.FromDate.Value.Date.ToSqlDate() &&
+                          p.MoveDate <= cmd.ToDate.Value.Date.ToSqlDate()
+                        select p;
             }
             
             pagesCount = (int)Math.Ceiling((double)(from p in query select p).Count() / cmd.PageSize);

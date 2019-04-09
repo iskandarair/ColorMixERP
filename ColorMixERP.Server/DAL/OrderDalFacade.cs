@@ -86,15 +86,15 @@ namespace ColorMixERP.Server.DAL
 
             if (cmd.OrderDate != null)
             {
-                query = from p in query where p.OrderDate.Date >= cmd.OrderDate.Value.Date
-                                            && p.OrderDate.Date <= cmd.OrderDate.Value.Date
+                query = from p in query where p.OrderDate.Date >= cmd.OrderDate.Value.Date.ToSqlDate()
+                                            && p.OrderDate.Date <= cmd.OrderDate.Value.Date.ToSqlDate()
                         select p;
             }
 
             if (cmd.FromDate != null && cmd.ToDate != null)
             {
-                query = from p in query where p.OrderDate.Date >= cmd.FromDate.Value.Date &&
-                                              p.OrderDate.Date <= cmd.ToDate.Value.Date
+                query = from p in query where p.OrderDate.Date >= cmd.FromDate.Value.Date.ToSqlDate() &&
+                                              p.OrderDate.Date <= cmd.ToDate.Value.Date.ToSqlDate()
                         select p;
             }
 
@@ -194,16 +194,16 @@ namespace ColorMixERP.Server.DAL
             if (cmd.OrderDate != null)
             {
                 query = from p in query
-                        where p.OrderDate.Date >= cmd.OrderDate.Value.Date
-                            && p.OrderDate.Date <= cmd.OrderDate.Value.Date
+                        where p.OrderDate.Date >= cmd.OrderDate.Value.Date.ToSqlDate()
+                            && p.OrderDate.Date <= cmd.OrderDate.Value.Date.ToSqlDate()
                         select p;
             }
 
             if (cmd.FromDate != null && cmd.ToDate != null)
             {
                 query = from p in query
-                        where p.OrderDate.Date >= cmd.FromDate.Value.Date &&
-                              p.OrderDate.Date <= cmd.ToDate.Value.Date
+                        where p.OrderDate.Date >= cmd.FromDate.Value.Date.ToSqlDate() &&
+                              p.OrderDate.Date <= cmd.ToDate.Value.Date.ToSqlDate()
                         select p;
             }
 
