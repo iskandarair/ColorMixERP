@@ -17,6 +17,7 @@ namespace ColorMixERP.Server.Config
 
         public LinqContext(string conn) : base(conn)
         {
+
         }
 
         public Table<AccountUser> AccountUsers;
