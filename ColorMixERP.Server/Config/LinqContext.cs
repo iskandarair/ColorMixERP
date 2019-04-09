@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Linq;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,6 @@ namespace ColorMixERP.Server.Config
 
         public LinqContext(string conn) : base(conn)
         {
-
         }
 
         public Table<AccountUser> AccountUsers;

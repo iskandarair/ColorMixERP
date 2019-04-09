@@ -88,17 +88,17 @@ namespace ColorMixERP.Server.DAL
 
             if (command.Date != null)
             {
-                query = from p in query where p.CreatedDate.Date >= command.Date.Value.Date
-                        && p.CreatedDate.Date <= command.Date.Value.Date
+                query = from p in query where p.CreatedDate.Date >= command.Date.Value.Date.ToSqlDate()
+                        && p.CreatedDate.Date <= command.Date.Value.Date.ToSqlDate()
                         select p;
             }
 
             if (command.FromDate != null && command.ToDate != null)
             {
                 query = from p in query
-                    where p.CreatedDate.Date >= command.FromDate.Value.Date &&
-                          p.CreatedDate.Date <= command.ToDate.Value.Date
-                    select p;
+                    where p.CreatedDate.Date >= command.FromDate.Value.Date.ToSqlDate() &&
+                          p.CreatedDate.Date <= command.ToDate.Value.Date.ToSqlDate()
+                        select p;
             }
 
             pagesCount = (int)Math.Ceiling((double)(from p in query select p).Count() / command.PageSize);
