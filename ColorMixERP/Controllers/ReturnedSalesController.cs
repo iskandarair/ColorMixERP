@@ -39,22 +39,22 @@ namespace ColorMixERP.Controllers
             }
         }
 
-        [Authorize]
-        [HttpGet]
-        [Route("api/ReturnedSales/{id}")]
-        public HttpResponseMessage Get(int id)
-        {
-            try
-            {
-                var data = new ReturnedSaleBL().GetReturnedSale(id);
-                return Request.CreateResponse(HttpStatusCode.OK, data);
-            }
-            catch (Exception ex)
-            {
-                LogManager.Instance.Error(ex);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError);
-            }
-        }
+    //[Authorize]
+    //[HttpGet]
+    //[Route("api/ReturnedSales/{id}")]
+    //public HttpResponseMessage Get(int id)
+    //{
+    //    try
+    //    {
+    //        var data = new ReturnedSaleBL().GetReturnedSale(id);
+    //        return Request.CreateResponse(HttpStatusCode.OK, data);
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        LogManager.Instance.Error(ex);
+    //        return Request.CreateResponse(HttpStatusCode.InternalServerError);
+    //    }
+    //}
 
         [Authorize]
         [HttpPost]
