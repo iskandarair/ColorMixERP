@@ -38,7 +38,7 @@ namespace ColorMixERP.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
-
+         
     //[Authorize]
     //[HttpGet]
     //[Route("api/ReturnedSales/{id}")]
