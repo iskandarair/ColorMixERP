@@ -71,10 +71,10 @@ namespace ColorMixERP.Server.DAL
 
         public void Delete(int id)
         {
-            var isSunatWorkplaces = (from c in db.AccountUsers where c.isSunnat == true select c.WorkPlaceId).ToList();
+            var isSunnatWorkplaces = (from c in db.AccountUsers where c.isSunnat == true select c.WorkPlaceId).ToList();
             var element = (from c in db.WorkPlaces where c.Id == id select c).FirstOrDefault();
             var isNotContained = true;
-            foreach (var workplaceId in isSunatWorkplaces)
+            foreach (var workplaceId in isSunnatWorkplaces)
             {
                 if (element.Id == workplaceId)
                 {

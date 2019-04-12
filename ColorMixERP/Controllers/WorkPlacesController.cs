@@ -92,7 +92,7 @@ namespace ColorMixERP.Controllers
 
         [Authorize]
         [HttpDelete]
-        [Route("api/WorkPlaces/")]
+        [Route("api/WorkPlaces/{id}")]
         public HttpResponseMessage DeleteeWorkPlace(int id)
         {
             try
