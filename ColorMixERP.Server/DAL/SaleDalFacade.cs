@@ -73,7 +73,9 @@ namespace ColorMixERP.Server.DAL
         }
         public List<SaleDTO> GetOrderSale(int orderId)
         {
-            var query = from c in db.Sales where c.OrderId == orderId select new SaleDTO()
+            var query = from c in db.Sales
+                where c.OrderId == orderId && c.IsDeleted == false
+                select new SaleDTO()
                 {
                     Id = c.Id,
                     ProductId = c.Product.Id,
@@ -82,8 +84,9 @@ namespace ColorMixERP.Server.DAL
                     ProductPrice = c.ProductPrice,
                     SalesPrice = c.SalesPrice,
                     CurrencyRate = c.CurrencyRate == null ? 0 : c.CurrencyRate,
-                    OrderId = c.OrderId
-                        };
+                    OrderId = c.OrderId,
+                    IsDeleted = c.IsDeleted
+                };
             return query.ToList();
         }
 

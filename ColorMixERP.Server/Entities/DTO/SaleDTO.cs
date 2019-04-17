@@ -16,5 +16,6 @@ namespace ColorMixERP.Server.Entities.DTO
         public decimal SalesPrice { get; set; }
         public decimal? CurrencyRate { get; set; }
         public int OrderId { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
