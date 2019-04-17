@@ -88,16 +88,16 @@ namespace ColorMixERP.Server.DAL
 
             if (command.Date != null)
             {
-                query = from p in query where p.CreatedDate.Date >= command.Date.Value.Date.ToSqlDate()
-                        && p.CreatedDate.Date <= command.Date.Value.Date.ToSqlDate()
+                query = from p in query where p.CreatedDate.Date >= command.Date.Value.Date
+                        && p.CreatedDate.Date <= command.Date.Value.Date
                         select p;
             }
 
             if (command.FromDate != null && command.ToDate != null)
             {
                 query = from p in query
-                    where p.CreatedDate.Date >= command.FromDate.Value.Date.ToSqlDate() &&
-                          p.CreatedDate.Date <= command.ToDate.Value.Date.ToSqlDate()
+                    where p.CreatedDate.Date >= command.FromDate.Value.Date &&
+                          p.CreatedDate.Date <= command.ToDate.Value.Date
                         select p;
             }
 

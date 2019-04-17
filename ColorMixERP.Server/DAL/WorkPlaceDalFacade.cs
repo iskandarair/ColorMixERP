@@ -64,7 +64,7 @@ namespace ColorMixERP.Server.DAL
         {
             var workplaceToUpdate = (from c in db.WorkPlaces where c.Id == workPlace.Id select c).FirstOrDefault();
             workplaceToUpdate.Location = workPlace.Location;
-            workplaceToUpdate.Name = workplaceToUpdate.Name;
+            workplaceToUpdate.Name = workPlace.Name;
             workplaceToUpdate.UpdatedDate = DateTime.Now;
             db.SubmitChanges();
         }

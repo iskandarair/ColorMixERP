@@ -52,16 +52,16 @@ namespace ColorMixERP.Server.DAL
 
             if (cmd.UpdatedDate != null)
             {
-                query = from c in query where c.UpdatedDate.Date >= cmd.UpdatedDate.Value.Date.ToSqlDate() &&
-                                              c.UpdatedDate.Date <= cmd.UpdatedDate.Value.Date.ToSqlDate()
+                query = from c in query where c.UpdatedDate.Date >= cmd.UpdatedDate.Value.Date &&
+                                              c.UpdatedDate.Date <= cmd.UpdatedDate.Value.Date
                         select c;
             }
 
             if (cmd.FromUpdatedDate != null && cmd.ToUpdatedDate != null)
             {
                 query = from p in query
-                    where p.UpdatedDate.Date >= cmd.FromUpdatedDate.Value.Date.ToSqlDate() &&
-                          p.UpdatedDate.Date <= cmd.ToUpdatedDate.Value.Date.ToSqlDate()
+                    where p.UpdatedDate.Date >= cmd.FromUpdatedDate.Value.Date &&
+                          p.UpdatedDate.Date <= cmd.ToUpdatedDate.Value.Date
                         select p;
             }
 

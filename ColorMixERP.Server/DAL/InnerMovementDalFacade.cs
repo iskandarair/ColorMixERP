@@ -56,16 +56,16 @@ namespace ColorMixERP.Server.DAL
 
             if (cmd.MoveDate != null)
             {
-                query = from p in query where p.MoveDate.Date >= cmd.MoveDate.Value.Date.ToSqlDate() &&
-                                              p.MoveDate.Date <= cmd.MoveDate.Value.Date.ToSqlDate()
+                query = from p in query where p.MoveDate.Date >= cmd.MoveDate.Value.Date &&
+                                              p.MoveDate.Date <= cmd.MoveDate.Value.Date
                         select p;
             }
 
             if (cmd.FromDate != null && cmd.ToDate != null)
             {
                 query = from p in query
-                    where p.MoveDate >= cmd.FromDate.Value.Date.ToSqlDate() &&
-                          p.MoveDate <= cmd.ToDate.Value.Date.ToSqlDate()
+                    where p.MoveDate >= cmd.FromDate.Value.Date &&
+                          p.MoveDate <= cmd.ToDate.Value.Date
                         select p;
             }
             
@@ -146,16 +146,16 @@ namespace ColorMixERP.Server.DAL
             if (cmd.MoveDate != null)
             {
                 query = from p in query
-                    where p.MoveDate.Date >= cmd.MoveDate.Value.Date.ToSqlDate() &&
-                          p.MoveDate.Date <= cmd.MoveDate.Value.Date.ToSqlDate()
+                    where p.MoveDate.Date >= cmd.MoveDate.Value.Date &&
+                          p.MoveDate.Date <= cmd.MoveDate.Value.Date
                         select p;
             }
 
             if (cmd.FromDate != null && cmd.ToDate != null)
             {
                 query = from p in query
-                    where p.MoveDate >= cmd.FromDate.Value.Date.ToSqlDate() &&
-                          p.MoveDate <= cmd.ToDate.Value.Date.ToSqlDate()
+                    where p.MoveDate >= cmd.FromDate.Value.Date &&
+                          p.MoveDate <= cmd.ToDate.Value.Date
                         select p;
             }
             
@@ -166,7 +166,7 @@ namespace ColorMixERP.Server.DAL
         public List<InnerMovementDTO> GetInnerMovementDtoByGroup(int groupId, DateTime craetedDate)
         {
             var q = from c in db.InnerMovements
-                where c.GroupId == groupId && c.CreatedDate.Value >= craetedDate.AddDays(-1).ToSqlDate() && c.CreatedDate.Value <= craetedDate.AddDays(1).ToSqlDate()
+                where c.GroupId == groupId && c.CreatedDate.Value >= craetedDate.AddDays(-1) && c.CreatedDate.Value <= craetedDate.AddDays(1)
                     select new InnerMovementDTO()
                 {
                     Id = c.Id,
