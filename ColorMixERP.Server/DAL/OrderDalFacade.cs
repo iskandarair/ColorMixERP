@@ -222,6 +222,10 @@ namespace ColorMixERP.Server.DAL
 
             };
             var result2 = aggregation.FirstOrDefault();
+            if (result2 == null)
+            {
+                return null;
+            }
             result2.ClientOrders = GetClientOrders(cmd, workplaceId, isAdmin, ref pagesCount);
 
             return result2;
