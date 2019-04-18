@@ -12,9 +12,12 @@ namespace ColorMixERP.Server.BL
 {
     public class ExpenseBL
     {
-        public List<ExpenseDTO> GetExpenses(PaginationDTO cmd, ref int pagesCount)
+        public List<ExpenseDTO> GetExpenses(PaginationDTO cmd, int userId,  ref int pagesCount)
         {
-            return new ExpenseDalFacade().GetExpenses(cmd, ref pagesCount);
+            var userData = new UserBL().GetAccountUser(userId);
+            var workplaceId = userData.WorkPlace.Id;
+            var isSuperUser = userData.PositionRole == 1 || userData.isSunnat;
+            return new ExpenseDalFacade().GetExpenses(cmd, workplaceId.Value, isSuperUser, ref pagesCount);
         }
 
         public List<ExpenseDTO> GetUserExpenses(int userId)

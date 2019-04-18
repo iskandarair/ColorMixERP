@@ -20,19 +20,38 @@ namespace ColorMixERP.Server.DAL
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
 
-        public List<ExpenseDTO> GetExpenses(PaginationDTO cmd, ref int pagesCount)
+        public List<ExpenseDTO> GetExpenses(PaginationDTO cmd,int workplaceId, bool isSuperUser, ref int pagesCount)
         {
-            var query = from c in db.Expenses
-                        join user in db.AccountUsers on c.UserId equals  user.Id
-                where c.IsDeleted == false select new ExpenseDTO()
+            IQueryable<ExpenseDTO> query;
+            if (isSuperUser)
             {
-                Id = c.Id,
-                Cost =  c.Cost,
-                ExpenseCause = c.ExpenseCause,
-                ExpenseDate = c.ExpenseDate,
-                UserId = c.UserId,
-                UserName = user.Name + " " + user.Surname
-            };
+                 query = from c in db.Expenses
+                    join user in db.AccountUsers on c.UserId equals user.Id
+                    select new ExpenseDTO()
+                    {
+                        Id = c.Id,
+                        Cost = c.Cost,
+                        ExpenseCause = c.ExpenseCause,
+                        ExpenseDate = c.ExpenseDate,
+                        UserId = c.UserId,
+                        UserName = user.Name + " " + user.Surname
+                    };
+            }
+            else
+            {
+                   query = from c in db.Expenses
+                    join user in db.AccountUsers on c.UserId equals user.Id
+                    where c.IsDeleted == false && user.WorkPlaceId == workplaceId
+                    select new ExpenseDTO()
+                    {
+                        Id = c.Id,
+                        Cost = c.Cost,
+                        ExpenseCause = c.ExpenseCause,
+                        ExpenseDate = c.ExpenseDate,
+                        UserId = c.UserId,
+                        UserName = user.Name + " " + user.Surname
+                    };
+            }
 
             pagesCount = (int)Math.Ceiling((double)(from p in query select p).Count() / cmd.PageSize);
             query = query.Page(cmd.PageSize, cmd.Page);

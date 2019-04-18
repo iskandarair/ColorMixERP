@@ -12,6 +12,8 @@ using ColorMixERP.Server.Entities.Pagination;
 using ColorMixERP.Models;
 using Newtonsoft.Json;
 using ColorMixERP.Server.Entities.DTO;
+using System.Security.Claims;
+using ColorMixERP.Helpers;
 
 namespace ColorMixERP.Controllers
 {
@@ -24,9 +26,10 @@ namespace ColorMixERP.Controllers
         {
             try
             {
+                var userId = AuthHelper.GetUserIdFromClaims(User.Identity as ClaimsIdentity);
                 var cmd = JsonConvert.DeserializeObject<PaginationDTO>(query);
                 int pagesCount = 0;
-                var data = new ExpenseBL().GetExpenses(cmd, ref pagesCount);
+                var data = new ExpenseBL().GetExpenses(cmd, userId,  ref pagesCount);
                 var result = Request.CreateResponse(HttpStatusCode.OK, data);
                 result.Headers.Add(Consts.PAGES_COUNT, pagesCount.ToString());
                 return result;
