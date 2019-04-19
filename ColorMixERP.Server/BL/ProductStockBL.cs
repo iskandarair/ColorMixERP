@@ -234,7 +234,6 @@ namespace ColorMixERP.Server.BL
                 new ProductStockDalFacade().Update(productInStockAdd);
             }
         }
-
         //
         private static void AddProductStock(InnerMovementDTO dto)
         {

@@ -230,11 +230,12 @@ namespace ColorMixERP.Server.DAL
             db.SubmitChanges();
         }
 
-        public static int GetRandomGroupId()
+        public int GetRandomGroupId()
         {
-            Random rnd = new Random();
-            int myRandomNo = rnd.Next(10000000, 99999999);
-            return myRandomNo;
+            var query = (from c in db.InnerMovements select c.GroupId).Max();
+           // Random rnd = new Random();
+            //int myRandomNo = rnd.Next(10000000, 99999999);
+            return (query.Value +1);
         }
     }
 }
