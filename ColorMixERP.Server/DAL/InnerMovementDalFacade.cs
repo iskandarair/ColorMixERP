@@ -199,6 +199,7 @@ namespace ColorMixERP.Server.DAL
         }
         public void Add(List<InnerMovementDTO> dtos)
         {
+            var groupId = GetRandomGroupId();
             var result = new  List<InnerMovement>();
             foreach (var dto in dtos)
             {
@@ -206,7 +207,7 @@ namespace ColorMixERP.Server.DAL
                     dto.ToWorkPlaceId)
                 {
                     CreatedDate = DateTime.Now.Date,
-                    GroupId = GetRandomGroupId(),
+                    GroupId = groupId,
                     TotalPrice = dto.TotalPrice,
                 });
             }
@@ -232,9 +233,11 @@ namespace ColorMixERP.Server.DAL
 
         public int GetRandomGroupId()
         {
-            var query = (from c in db.InnerMovements select c.GroupId).Max();
-           // Random rnd = new Random();
-            //int myRandomNo = rnd.Next(10000000, 99999999);
+            var query = (from c in db.InnerMovements  select c.GroupId).Max();
+            if (query == null)
+            {
+                return 1; // Initial when database is empty
+            }
             return (query.Value +1);
         }
     }
