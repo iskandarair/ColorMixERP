@@ -17,5 +17,6 @@ namespace ColorMixERP.Server.Entities.DTO
         public decimal CurrencyRate { get; set; }
         public decimal Quantity { get; set; }
         public string MeasurementUnit { get; set; }
+        public string ProductCode { get; set; }
     }
 }

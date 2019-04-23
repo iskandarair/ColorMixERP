@@ -93,6 +93,7 @@ namespace ColorMixERP.Server.DAL
                     ProductPrice = p.Product.Price,
                     ProductCurrencId = p.Product.Currency,
                     MeasurementUnit = p.Product.MeasurementUnit,
+                    ProductCode = p.Product.Code
                 };
 
             pagesCount = (int) Math.Ceiling((double) (from p in query select p).Count() / cmd.PageSize);
