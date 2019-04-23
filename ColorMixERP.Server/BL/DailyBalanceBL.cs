@@ -11,9 +11,12 @@ namespace ColorMixERP.Server.BL
 {
     public class DailyBalanceBL
     {
-        public List<DailyBalanceDTO> GetDailyBalances(DailyBalanceCommand cmd, ref int pagesCount)
+        public List<DailyBalanceDTO> GetDailyBalances(DailyBalanceCommand cmd,int userId, ref int pagesCount)
         {
-            return new DailyBalanceDalFacade().GetDailyBalancesStats(cmd, ref pagesCount);
+            var userData = new UserBL().GetAccountUser(userId);
+            bool isAdmin = userData.PositionRole == 1;
+
+            return new DailyBalanceDalFacade().GetDailyBalancesStats(cmd, userData.WorkPlace.Id.Value, isAdmin, ref pagesCount);
         }
         public DailyBalanceDTO GetDailyBalance(int id)
         {

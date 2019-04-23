@@ -10,6 +10,8 @@ using ColorMixERP.Server.Entities.DTO;
 using Newtonsoft.Json;
 using ColorMixERP.Models;
 using ColorMixERP.Server.Entities.Pagination;
+using ColorMixERP.Helpers;
+using System.Security.Claims;
 
 namespace ColorMixERP.Controllers
 {
@@ -24,7 +26,8 @@ namespace ColorMixERP.Controllers
             {
                 var cmd = JsonConvert.DeserializeObject<DailyBalanceCommand>(query);
                 int pagesCount = 0;
-                var data = new DailyBalanceBL().GetDailyBalances(cmd, ref pagesCount);
+                var userId = AuthHelper.GetUserIdFromClaims(User.Identity as ClaimsIdentity);
+                var data = new DailyBalanceBL().GetDailyBalances(cmd, userId, ref pagesCount);
                 var result = Request.CreateResponse(HttpStatusCode.OK, data);
                 result.Headers.Add(Consts.PAGES_COUNT, pagesCount.ToString());
                 return result;

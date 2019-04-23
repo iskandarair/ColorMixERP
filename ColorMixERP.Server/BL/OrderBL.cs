@@ -43,7 +43,8 @@ namespace ColorMixERP.Server.BL
             var creditorDebtor = new DebtorCreditorDTO()
             {
                 ClientId = order.ClientId,
-                Amount =  -1 * order.PaymentByTransfer
+                ///!!! very Important initially it was only paymentByTransfer, by illogical request all payment types are addded to count debt
+                Amount =  -1 * (order.PaymentByTransfer + order.PaymentByCard + order.PaymentByCash)
             };
             new DebtorCreditorsBL().UpdateDebtorCreditorPart(creditorDebtor);
         }
