@@ -288,7 +288,15 @@ namespace ColorMixERP.Server.DAL
             db.SubmitChanges();
             foreach (var sale in order.Sales)
             {
-                new SaleBL().Update(sale, order.SalerId);
+                if (sale.Id == 0)
+                {
+                    sale.OrderId = order.Id;
+                    new SaleBL().Add(sale);
+                }
+                else
+                {
+                    new SaleBL().Update(sale, order.SalerId);
+                }
             }
         }
 
