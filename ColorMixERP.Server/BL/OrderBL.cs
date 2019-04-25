@@ -39,7 +39,8 @@ namespace ColorMixERP.Server.BL
             new ProductStockBL().UpdateProductStocks(order);
             new OrderDalFacade().Add(order);
             //
-            var client = new ClientDalFacade().GetClient(order.ClientId);
+            if (order.ClientId == null || order.ClientId == 0) return;
+
             // in order to calculate client debt, we substract all the paid money from the order's overall price
             var debtAmount = -1 * (order.OverallPrice - (order.PaymentByTransfer + order.PaymentByCard + order.PaymentByCash));
             if(debtAmount == 0) return;
