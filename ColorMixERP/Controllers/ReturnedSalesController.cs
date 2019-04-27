@@ -24,9 +24,10 @@ namespace ColorMixERP.Controllers
         {
             try
             {
+                var userId = AuthHelper.GetUserIdFromClaims(User.Identity as ClaimsIdentity);
                 var cmd = JsonConvert.DeserializeObject<PaginationDTO>(query);
                 int pagesCount = 0;
-                var data = new ReturnedSaleBL().GetReturnedSales(cmd, ref pagesCount);
+                var data = new ReturnedSaleBL().GetReturnedSales(cmd, userId, ref pagesCount);
                 var result = Request.CreateResponse(HttpStatusCode.OK, data);
                 result.Headers.Add(Consts.PAGES_COUNT, pagesCount.ToString());
                 return result;
@@ -104,7 +105,8 @@ namespace ColorMixERP.Controllers
         {
             try
             {
-                new ReturnedSaleBL().Delete(id);
+                var userId = AuthHelper.GetUserIdFromClaims(User.Identity as ClaimsIdentity);
+                new ReturnedSaleBL().Delete(id, userId);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)

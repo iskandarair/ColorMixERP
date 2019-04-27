@@ -20,69 +20,69 @@ namespace ColorMixERP.Server.DAL
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
 
-        public List<ReturnedSaleDTO> GetReturnedSales(PaginationDTO cmd, ref int pagesCount)
+        public List<ReturnedSaleDTO> GetReturnedSales(PaginationDTO cmd, int workplaceId, bool isAdmin, ref int pagesCount)
         {
-            var query = from c in db.ReturnedSales
-                where c.IsDeleted == false
-                select new ReturnedSaleDTO()
-                {
-                    Id = c.Id,
-                    SaleId = c.SaleId,
-                    ProductId = c.ProductId,
-                    ProductName = c.Product.Name,
-                    Cause = c.Cause,
-                    DefectedQuantity = c.DefectedQuantity,
-                    Quantity = c.Quantity,
-                    ReturnDate = c.ReturnDate,
-                    ReturnedPrice = c.ReturnedPrice,
-                    ReturnedMoney = c.ReturnedMoney
-                };
+            IQueryable<ReturnedSaleDTO> query = from c in db.ReturnedSales
+                                                where c.IsDeleted == false
+                                                select new ReturnedSaleDTO()
+                                                {
+                                                    Id = c.Id,
+                                                    SaleId = c.SaleId,
+                                                    ProductId = c.ProductId,
+                                                    ProductName = c.Product.Name,
+                                                    Cause = c.Cause,
+                                                    DefectedQuantity = c.DefectedQuantity,
+                                                    Quantity = c.Quantity,
+                                                    ReturnDate = c.ReturnDate,
+                                                    ReturnedPrice = c.ReturnedPrice,
+                                                    ReturnedMoney = c.ReturnedMoney
+                                                }; ;
 
-            pagesCount = (int)Math.Ceiling((double)(from p in query select p).Count()/cmd.PageSize);
+            pagesCount = (int)Math.Ceiling((double)(from p in query select p).Count() / cmd.PageSize);
             query = query.Page(cmd.PageSize, cmd.Page);
             return query.ToList();
         }
 
         public List<ReturnedSaleDTO> GetOrderReturnSale(int orderId)
         {
-                var query = from c in db.ReturnedSales
-                    where c.IsDeleted == false &&  c.Sale.OrderId == orderId
-                    select new ReturnedSaleDTO()
-                    {
-                        Id = c.Id,
-                        SaleId = c.Sale.Id,
-                        ProductId = c.ProductId,
-                        ProductName = c.Product.Name,
-                        Cause = c.Cause,
-                        DefectedQuantity = c.DefectedQuantity,
-                        Quantity = c.Quantity,
-                        ReturnDate = c.ReturnDate,
-                        ReturnedPrice = c.ReturnedPrice,
-                        ReturnedMoney = c.ReturnedMoney
-                    };
+            var query = from c in db.ReturnedSales
+                        where c.IsDeleted == false && c.Sale.OrderId == orderId
+                        select new ReturnedSaleDTO()
+                        {
+                            Id = c.Id,
+                            SaleId = c.Sale.Id,
+                            ProductId = c.ProductId,
+                            ProductName = c.Product.Name,
+                            Cause = c.Cause,
+                            DefectedQuantity = c.DefectedQuantity,
+                            Quantity = c.Quantity,
+                            ReturnDate = c.ReturnDate,
+                            ReturnedPrice = c.ReturnedPrice,
+                            ReturnedMoney = c.ReturnedMoney
+                        };
             return query.ToList();
         }
 
         public ReturnedSaleDTO GetReturnedSale(int id)
         {
             var query = from c in db.ReturnedSales
-                where c.IsDeleted == false && c.Id == id
+                        where c.IsDeleted == false && c.Id == id
                         select new ReturnedSaleDTO()
-                {
-                    Id = c.Id,
-                    SaleId = c.SaleId,
-                    ProductId = c.ProductId,
-                    ProductName = c.Product.Name,
-                    Cause = c.Cause,
-                    DefectedQuantity = c.DefectedQuantity,
-                    Quantity = c.Quantity,
-                    ReturnDate = c.ReturnDate,
-                    ReturnedPrice = c.ReturnedPrice,
-                    ReturnedMoney = c.ReturnedMoney
-                 };
+                        {
+                            Id = c.Id,
+                            SaleId = c.SaleId,
+                            ProductId = c.ProductId,
+                            ProductName = c.Product.Name,
+                            Cause = c.Cause,
+                            DefectedQuantity = c.DefectedQuantity,
+                            Quantity = c.Quantity,
+                            ReturnDate = c.ReturnDate,
+                            ReturnedPrice = c.ReturnedPrice,
+                            ReturnedMoney = c.ReturnedMoney
+                        };
             return query.FirstOrDefault();
         }
-        
+
         public void Add(ReturnedSaleDTO c)
         {
             var element = new ReturnedSale()

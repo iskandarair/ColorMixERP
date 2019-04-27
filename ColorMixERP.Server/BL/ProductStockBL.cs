@@ -226,11 +226,11 @@ namespace ColorMixERP.Server.BL
                 new ProductStockDalFacade().GetProductStockByPlaceAndProduct(workplaceId, dto.ProductId);
             if (productInStockAdd == null)
             {
-                AddProductStock(workplaceId,dto.ProductId,dto.Quantity);
+                AddProductStock(workplaceId,dto.ProductId,dto.Quantity-dto.DefectedQuantity);
             }
             else
             {
-                productInStockAdd.Quantity += dto.Quantity;
+                productInStockAdd.Quantity += dto.Quantity - dto.DefectedQuantity;
                 new ProductStockDalFacade().Update(productInStockAdd);
             }
         }

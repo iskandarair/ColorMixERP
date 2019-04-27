@@ -11,9 +11,12 @@ namespace ColorMixERP.Server.BL
 {
     public class ReturnedSaleBL
     {
-        public List<ReturnedSaleDTO> GetReturnedSales(PaginationDTO cmd, ref int pagesCount)
+        public List<ReturnedSaleDTO> GetReturnedSales(PaginationDTO cmd, int userId, ref int pagesCount)
         {
-            return new ReturnedSaleDalFacade().GetReturnedSales(cmd, ref pagesCount);
+            
+            var workPlaceId = new UserDalFacade().GetAccountUser(userId).WorkPlace.Id.Value;
+            var isAdmin = new UserBL().GetAccountUser(userId)?.PositionRole == 1;
+            return new ReturnedSaleDalFacade().GetReturnedSales(cmd, workPlaceId, isAdmin, ref pagesCount);
         }
 
         public List<ReturnedSaleDTO> GetOrderReturnedSale(int orderId)
@@ -52,7 +55,10 @@ namespace ColorMixERP.Server.BL
         {
             //var sale = new SaleDalFacade().GetSale(dto.SaleId);
             var workPlaceId = new UserDalFacade().GetAccountUser(userId).WorkPlace.Id.Value;
-            var diff = dto.Quantity - dto.DefectedQuantity; // quantity - deffectedQuantity !!!(So quantity is general for both)
+            var existingReturnedSale = GetReturnedSale(dto.Id);
+            var dasd = existingReturnedSale.Quantity - existingReturnedSale.DefectedQuantity;
+            var diff = (dto.Quantity - dto.DefectedQuantity) - dasd; // quantity - deffectedQuantity !!!(So quantity is general for both)
+
             var productInStockFrom = new ProductStockDalFacade().GetProductStockByPlaceAndProduct(workPlaceId, dto.ProductId);
             productInStockFrom.Quantity += diff;
 
@@ -77,8 +83,16 @@ namespace ColorMixERP.Server.BL
            //new OrderDalFacade().Update(order);
         }
 
-        public void Delete(int id)
+        public void Delete(int id, int userId)
         {
+            var workPlaceId = new UserDalFacade().GetAccountUser(userId).WorkPlace.Id.Value;
+            var existing = GetReturnedSale(id);
+            var existingDiff = existing.Quantity - existing.DefectedQuantity;
+            var productInStockFrom = new ProductStockDalFacade().GetProductStockByPlaceAndProduct(workPlaceId, existing.ProductId);
+            productInStockFrom.Quantity -= existingDiff;
+
+            new ProductStockDalFacade().Update(productInStockFrom);
+
             new ReturnedSaleDalFacade().Delete(id);
         }
     }
