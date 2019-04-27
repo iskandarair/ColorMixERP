@@ -56,15 +56,18 @@ namespace ColorMixERP.Server.BL
 
         public void Update(OrderDTO order)
         {
-            new OrderDalFacade().Update(order);
             var orderExisting = new OrderDalFacade().GetClientOrder(order.Id);
-            var amount = orderExisting.PaymentByTransfer - order.PaymentByTransfer;
+            new OrderDalFacade().Update(order);
+            var amount = (orderExisting.OverallPrice - (orderExisting.PaymentByTransfer + orderExisting.PaymentByCard + orderExisting.PaymentByCash))
+                            - (order.OverallPrice - (order.PaymentByTransfer + order.PaymentByCard + order.PaymentByCash));
             var sales = new SaleBL().GetOrderSale(order.Id);
             sales.RemoveAll(x => order.Sales.Exists(y => y.Id == x.Id));
             foreach (var deletedSale in sales)
             {
                 new SaleBL().Delete(deletedSale.Id);
             }
+
+            if (order.ClientId == null || order.ClientId == 0) return;
             var debtorCreditor = new DebtorCreditorDTO()
             {
                 ClientId = order.ClientId,
