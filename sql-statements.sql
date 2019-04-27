@@ -23,7 +23,7 @@ Primary Key (Id)
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'AccountUser')
 CREATE TABLE AccountUser (
 Id int IDENTITY(1,1),
-Name nvarchar(255) NOT NULL,
+Name nvarchar(255) NOT NULL UNIQUE,
 Surname nvarchar(255),
 PositionRole int NOT NULL,
 PhoneNumber nvarchar(255),

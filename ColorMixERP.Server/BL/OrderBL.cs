@@ -39,26 +39,35 @@ namespace ColorMixERP.Server.BL
             new ProductStockBL().UpdateProductStocks(order);
             new OrderDalFacade().Add(order);
             //
-            var client = new ClientDalFacade().GetClient(order.ClientId);
+            if (order.ClientId == null || order.ClientId == 0) return;
+
+            // in order to calculate client debt, we substract all the paid money from the order's overall price
+            var debtAmount = -1 * (order.OverallPrice - (order.PaymentByTransfer + order.PaymentByCard + order.PaymentByCash));
+            if(debtAmount == 0) return;
+
             var creditorDebtor = new DebtorCreditorDTO()
             {
                 ClientId = order.ClientId,
-                Amount =  -1 * order.PaymentByTransfer
+                ///!!! very Important initially it was only paymentByTransfer, by illogical request all payment types are addded to count debt
+                Amount =  debtAmount
             };
             new DebtorCreditorsBL().UpdateDebtorCreditorPart(creditorDebtor);
         }
 
         public void Update(OrderDTO order)
         {
-            new OrderDalFacade().Update(order);
             var orderExisting = new OrderDalFacade().GetClientOrder(order.Id);
-            var amount = orderExisting.PaymentByTransfer - order.PaymentByTransfer;
+            new OrderDalFacade().Update(order);
+            var amount = (orderExisting.OverallPrice - (orderExisting.PaymentByTransfer + orderExisting.PaymentByCard + orderExisting.PaymentByCash))
+                            - (order.OverallPrice - (order.PaymentByTransfer + order.PaymentByCard + order.PaymentByCash));
             var sales = new SaleBL().GetOrderSale(order.Id);
             sales.RemoveAll(x => order.Sales.Exists(y => y.Id == x.Id));
             foreach (var deletedSale in sales)
             {
                 new SaleBL().Delete(deletedSale.Id);
             }
+
+            if (order.ClientId == null || order.ClientId == 0) return;
             var debtorCreditor = new DebtorCreditorDTO()
             {
                 ClientId = order.ClientId,

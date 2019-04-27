@@ -34,18 +34,57 @@ namespace ColorMixERP.Server.DAL
             return query.ToList();
         }
 
-        public List<DailyBalanceDTO> GetDailyBalancesStats(DailyBalanceCommand cmd, ref int pagesCount)
+        public List<DailyBalanceDTO> GetDailyBalancesStats(DailyBalanceCommand cmd,int workplaceId, bool isAdmin, ref int pagesCount)
         {
-            var query = from c in db.DailyBalances
-                group c by new {c.Product, c.BalanceDate.Date} into grp
-                let sumQuantity = grp.Sum(x => x.Quantity)
-                select new DailyBalanceDTO()
+            IQueryable<DailyBalanceDTO> query;
+
+            if (isAdmin)
+            {
+                if (cmd.TargetWorkPlace.Value > 0)
                 {
-                    ProductId = grp.Key.Product.Id,
-                    Product =  ProductMapper(grp.Key.Product),
-                    BalanceDate = grp.Key.Date,
-                    Quantity = sumQuantity
-                };
+                    query = from c in db.DailyBalances
+                        where c.WorkPlaceId == cmd.TargetWorkPlace
+                        group c by new { c.Product, c.BalanceDate.Date }
+                        into grp
+                        let sumQuantity = grp.Sum(x => x.Quantity)
+                        select new DailyBalanceDTO()
+                        {
+                            ProductId = grp.Key.Product.Id,
+                            Product = ProductMapper(grp.Key.Product),
+                            BalanceDate = grp.Key.Date,
+                            Quantity = sumQuantity
+                        };
+                }
+                else
+                {
+                    query = from c in db.DailyBalances
+                        group c by new {c.Product, c.BalanceDate.Date}
+                        into grp
+                        let sumQuantity = grp.Sum(x => x.Quantity)
+                        select new DailyBalanceDTO()
+                        {
+                            ProductId = grp.Key.Product.Id,
+                            Product = ProductMapper(grp.Key.Product),
+                            BalanceDate = grp.Key.Date,
+                            Quantity = sumQuantity
+                        };
+                }
+            }
+            else
+            {
+                query = from c in db.DailyBalances
+                    where c.WorkPlaceId == workplaceId
+                    group c by new { c.Product, c.BalanceDate.Date }
+                    into grp
+                    let sumQuantity = grp.Sum(x => x.Quantity)
+                    select new DailyBalanceDTO()
+                    {
+                        ProductId = grp.Key.Product.Id,
+                        Product = ProductMapper(grp.Key.Product),
+                        BalanceDate = grp.Key.Date,
+                        Quantity = sumQuantity
+                    };
+            }
 
             if (cmd.Date != null)
             {
@@ -58,8 +97,8 @@ namespace ColorMixERP.Server.DAL
             if (cmd.FromDate != null && cmd.ToDate != null)
             {
                 query = from p in query
-                    where p.BalanceDate.Date >= cmd.FromDate.Value.Date &&
-                          p.BalanceDate.Date <= cmd.ToDate.Value.Date
+                    where p.BalanceDate.Date == cmd.FromDate.Value.Date ||
+                          p.BalanceDate.Date == cmd.ToDate.Value.Date
                         select p;
             }
             pagesCount = (int)Math.Ceiling((double)(from p in query select p).Count() / cmd.PageSize);
