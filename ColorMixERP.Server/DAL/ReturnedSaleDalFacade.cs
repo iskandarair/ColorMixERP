@@ -23,20 +23,23 @@ namespace ColorMixERP.Server.DAL
         public List<ReturnedSaleDTO> GetReturnedSales(PaginationDTO cmd, int workplaceId, bool isAdmin, ref int pagesCount)
         {
             IQueryable<ReturnedSaleDTO> query = from c in db.ReturnedSales
-                                                where c.IsDeleted == false
-                                                select new ReturnedSaleDTO()
-                                                {
-                                                    Id = c.Id,
-                                                    SaleId = c.SaleId,
-                                                    ProductId = c.ProductId,
-                                                    ProductName = c.Product.Name,
-                                                    Cause = c.Cause,
-                                                    DefectedQuantity = c.DefectedQuantity,
-                                                    Quantity = c.Quantity,
-                                                    ReturnDate = c.ReturnDate,
-                                                    ReturnedPrice = c.ReturnedPrice,
-                                                    ReturnedMoney = c.ReturnedMoney
-                                                }; ;
+                join sale in db.Sales on c.SaleId equals sale.Id
+                join order in db.ClientOrders on sale.OrderId equals order.Id
+                join user in db.AccountUsers on order.SalerId equals user.Id
+                where c.IsDeleted == false && user.WorkPlaceId == workplaceId
+                select new ReturnedSaleDTO()
+                {
+                    Id = c.Id,
+                    SaleId = c.SaleId,
+                    ProductId = c.ProductId,
+                    ProductName = c.Product.Name,
+                    Cause = c.Cause,
+                    DefectedQuantity = c.DefectedQuantity,
+                    Quantity = c.Quantity,
+                    ReturnDate = c.ReturnDate,
+                    ReturnedPrice = c.ReturnedPrice,
+                    ReturnedMoney = c.ReturnedMoney
+                };
 
             pagesCount = (int)Math.Ceiling((double)(from p in query select p).Count() / cmd.PageSize);
             query = query.Page(cmd.PageSize, cmd.Page);

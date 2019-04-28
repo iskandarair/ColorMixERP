@@ -13,7 +13,6 @@ namespace ColorMixERP.Server.BL
     {
         public List<ReturnedSaleDTO> GetReturnedSales(PaginationDTO cmd, int userId, ref int pagesCount)
         {
-            
             var workPlaceId = new UserDalFacade().GetAccountUser(userId).WorkPlace.Id.Value;
             var isAdmin = new UserBL().GetAccountUser(userId)?.PositionRole == 1;
             return new ReturnedSaleDalFacade().GetReturnedSales(cmd, workPlaceId, isAdmin, ref pagesCount);

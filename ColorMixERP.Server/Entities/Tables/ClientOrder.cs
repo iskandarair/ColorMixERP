@@ -35,7 +35,7 @@ namespace ColorMixERP.Server.Entities
         public string TransactinoId { get; set; }
 
         [Column(Name = "Saler")]
-        private int SalerId { get; set; }
+        public int SalerId { get; set; }
         private EntitySet<Sale> _Sales;
         [Association(Storage = "_Sales", OtherKey = "OrderId")]
         public EntitySet<Sale> Sales
