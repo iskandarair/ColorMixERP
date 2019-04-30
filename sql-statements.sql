@@ -171,12 +171,14 @@ DefectedQuantity decimal(19,2) NOT NULL,
 Quantity decimal(19,2) NOT NULL,
 ReturnedPrice decimal(19,2) NOT NULL,
 ReturnedMoney decimal(19,2) NOT NULL,
+WorkplaceId int NOt NULL,
 IsDeleted bit NOT NULL DEFAULT(0),
 DeletedDate datetime default getDAte(),
 UpdatedDate datetime default getDAte(),
 PRIMARY KEY (Id),
 CONSTRAINT ReturnedSaleSaleId FOREIGN KEY (SaleId) REFERENCES Sale(Id),
 CONSTRAINT ReturnedSaleProductId FOREIGN KEY (ProductId) REFERENCES Product(Id),
+CONSTRAINT ReturnedSaleWorkplaceId FOREIGN KEY (WorkplaceId) REFERENCES Workplace(Id),
 );
 
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'InnerMovement')

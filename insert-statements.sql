@@ -22,8 +22,8 @@ SELECT * FROM Sale
 INSERT INTO Sale (ProductId,ProductName,Quantity,ProductPrice,SalesPrice,OrderId) VALUES (1,'Oscar',10,20.00,200.00,1);
 INSERT INTO Sale (ProductId,ProductName,Quantity,ProductPrice,SalesPrice,OrderId) VALUES (2,'Hayyat-kistichka',15,10000.00,150000.00,1);
 INSERT INTO Sale (ProductId,ProductName,Quantity,ProductPrice,SalesPrice,OrderId) VALUES (1,'Oscar',10,20.00,200.00,2);
-INSERT INTO ReturnedSale (SaleId,ReturnDate,DefectedQuantity,Quantity,ReturnedPrice) VALUES(2,GETDATE(),5,5,100.00);
-INSERT INTO ReturnedSale (SaleId,ReturnDate,DefectedQuantity,Quantity,ReturnedPrice) VALUES(1,GETDATE(),5,5,50000.00);
+INSERT INTO ReturnedSale (SaleId,ReturnDate,DefectedQuantity,Quantity,ReturnedPrice, WorkplaceId,ProductId,ReturnedMoney) VALUES(3,GETDATE(),5,5,100.00,1,3,1000);
+INSERT INTO ReturnedSale (SaleId,ReturnDate,DefectedQuantity,Quantity,ReturnedPrice, WorkplaceId,ProductId,ReturnedMoney) VALUES(4,GETDATE(),5,5,50000.00,1,2, 3000);
 INSERT INTO InnerMovement (MoveDate,ProductId,Quantity,FromWorkPlaceId,ToWorkPlaceId) VALUES (GETDATE(),2,5,1,2);
 INSERT INTO InnerMovement (MoveDate,ProductId,Quantity,FromWorkPlaceId,ToWorkPlaceId) VALUES (GETDATE(),1,7,2,1);
 INSERT INTO DebtCover (CoverDate,PaymentByCash,PaymentByCard,PaymentByTransfer,OrderId) VALUES (GETDATE(),50,0,0,1);

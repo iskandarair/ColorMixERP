@@ -23,10 +23,7 @@ namespace ColorMixERP.Server.DAL
         public List<ReturnedSaleDTO> GetReturnedSales(PaginationDTO cmd, int workplaceId, bool isAdmin, ref int pagesCount)
         {
             IQueryable<ReturnedSaleDTO> query = from c in db.ReturnedSales
-                join sale in db.Sales on c.SaleId equals sale.Id
-                join order in db.ClientOrders on sale.OrderId equals order.Id
-                join user in db.AccountUsers on order.SalerId equals user.Id
-                where c.IsDeleted == false && user.WorkPlaceId == workplaceId
+                where c.IsDeleted == false && c.WorkplaceId == workplaceId
                 select new ReturnedSaleDTO()
                 {
                     Id = c.Id,
@@ -86,7 +83,7 @@ namespace ColorMixERP.Server.DAL
             return query.FirstOrDefault();
         }
 
-        public void Add(ReturnedSaleDTO c)
+        public void Add(ReturnedSaleDTO c, int workPlaceId)
         {
             var element = new ReturnedSale()
             {
@@ -98,7 +95,8 @@ namespace ColorMixERP.Server.DAL
                 Quantity = c.Quantity,
                 ReturnDate = c.ReturnDate,
                 ReturnedPrice = c.ReturnedPrice,
-                ReturnedMoney = c.ReturnedMoney
+                ReturnedMoney = c.ReturnedMoney,
+                WorkplaceId = workPlaceId,
             };
             db.ReturnedSales.InsertOnSubmit(element);
             db.SubmitChanges();

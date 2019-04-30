@@ -30,12 +30,13 @@ namespace ColorMixERP.Server.BL
 
         public void Add(ReturnedSaleDTO dto, int userId)
         {
+            var workPlaceId = new UserDalFacade().GetAccountUser(userId).WorkPlace.Id.Value;
             if (dto.SaleId == 0)
             {
                 dto.SaleId = null;
             }
             new ProductStockBL().UpdateProductStock(dto, userId);
-            new ReturnedSaleDalFacade().Add(dto);
+            new ReturnedSaleDalFacade().Add(dto, workPlaceId);
 
             var lostInMoney = dto.ReturnedPrice * dto.Quantity;
            //var sale = new SaleDalFacade().GetSale(dto.SaleId);

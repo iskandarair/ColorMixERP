@@ -50,6 +50,8 @@ namespace ColorMixERP.Server.Entities
         [Column(Name = "ReturnedMoney")]
         public decimal ReturnedMoney { get; set; }
 
+        [Column(Name = "WorkplaceId")]
+        public int WorkplaceId { get; set; }
         // =================================================
 
         [Column(Name = "IsDeleted")]

@@ -19,6 +19,5 @@ namespace ColorMixERP.Server.Entities.DTO
         public decimal ReturnedPrice { get; set; }
         public decimal ReturnedMoney { get; set; }
 
-
     }
 }
