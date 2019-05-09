@@ -262,7 +262,7 @@ ProductId int not null,
 BalanceDate datetime default getDate(),
 Quantity decimal(19,2) NOT NULL default 0,
  WorkPlaceId int not null,
-CONSTRAINT WorkPlaceIdDailyBalance FOREIGN KEY (WorkPlaceId) REFERENCES WorkPlace(Id),
+CONSTRAINT WorkPlaceId FOREIGN KEY (WorkPlaceId) REFERENCES WorkPlace(Id),
 CONSTRAINT ProductIdRef FOREIGN KEY (ProductId) REFERENCES Product(Id)
 );
 
@@ -283,5 +283,7 @@ Accountant nvarchar(255) NOT NULL,
 IsDeleted bit NOT NULL DEFAULT(0),
 DeletedDate datetime default getDAte(),
 UpdatedDate datetime default getDAte(),
+WorkPlaceId int not null,
+CONSTRAINT WorkPlaceIdCompanyInfo FOREIGN KEY (WorkPlaceId) REFERENCES WorkPlace(Id),
 PRIMARY KEY (Id),
 );

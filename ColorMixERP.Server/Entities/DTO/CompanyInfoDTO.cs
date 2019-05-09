@@ -9,7 +9,6 @@ namespace ColorMixERP.Server.Entities.DTO
     public class CompanyInfoDTO
     {
         public int? Id { get; set; }
-        public string Name { get; set; }
         public string LegalName { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
@@ -19,6 +18,7 @@ namespace ColorMixERP.Server.Entities.DTO
         public string MFO { get; set; }
         public string INN { get; set; }
         public string OKONX { get; set; }
+        public int WorkPlaceId { get; set; }
         
         public string Director { get; set; }
         public string Accountant { get; set; }

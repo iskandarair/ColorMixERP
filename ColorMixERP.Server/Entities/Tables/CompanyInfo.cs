@@ -30,6 +30,8 @@ namespace ColorMixERP.Server.Entities.Tables
         public string INN { get; set; }
         [Column(Name = "OKONX")]
         public string OKONX { get; set; }
+        [Column(Name = "WorkPlaceId")]
+        public int WorkPlaceId { get; set; }
 
         [Column(Name = "Director")]
         public string Director { get; set; }

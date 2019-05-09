@@ -37,7 +37,8 @@ namespace ColorMixERP.Server.DAL
                     MFO = c.MFO,
                     PaymentAccount = c.PaymentAccount,
                     Phone = c.Phone,
-                    OKONX = c.OKONX
+                    OKONX = c.OKONX,
+                    WorkPlaceId = c.WorkPlaceId,
                 };
 
 
@@ -63,7 +64,8 @@ namespace ColorMixERP.Server.DAL
                     MFO = c.MFO,
                     PaymentAccount = c.PaymentAccount,
                     Phone = c.Phone,
-                    OKONX = c.OKONX
+                    OKONX = c.OKONX,
+                    WorkPlaceId = c.WorkPlaceId,
                 };
 
             return query.FirstOrDefault();
@@ -84,7 +86,8 @@ namespace ColorMixERP.Server.DAL
                 MFO = c.MFO,
                 PaymentAccount = c.PaymentAccount,
                 Phone = c.Phone,
-                OKONX = c.OKONX
+                OKONX = c.OKONX,
+                WorkPlaceId = c.WorkPlaceId
             };
             db.CompanyInfos.InsertOnSubmit(compInfo);
             db.SubmitChanges();
@@ -106,6 +109,8 @@ namespace ColorMixERP.Server.DAL
             compInfo.Phone = c.Phone;
             compInfo.OKONX = c.OKONX;
             compInfo.UpdatedDate = DateTime.Now;
+            compInfo.WorkPlaceId = c.WorkPlaceId;
+
             db.SubmitChanges();
         }
 
