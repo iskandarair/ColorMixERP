@@ -30,7 +30,6 @@ namespace ColorMixERP.Server.BL
         public void Add(ProductStockDTO stock, int userId)
         {
             var workPlaceId = new UserDalFacade().GetAccountUser(userId).WorkPlace.Id;
-            var incomeProducts = new List<IncomeProductDTO>();
 
             var income = CreateLogIncome(userId, stock.ProductId, stock.Quantity, workPlaceId);
             new IncomeDalFacade().AddIncome(income);

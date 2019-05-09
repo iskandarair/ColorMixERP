@@ -78,6 +78,11 @@ namespace ColorMixERP.Server.BL
 
         public void Delete(int id)
         {
+            var sales = new SaleDalFacade().GetOrderSale(id);
+            foreach (var sale in sales)
+            {
+                new SaleBL().Delete(sale.Id);
+            }
             new OrderDalFacade().Delete(id);
         }
     }

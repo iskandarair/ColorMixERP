@@ -60,6 +60,20 @@ namespace ColorMixERP.Server.BL
 
         public void Delete(int id)
         {
+            var sale = new SaleDalFacade().GetSale(id);
+            var order = new OrderBL().GetClientOrder(sale.OrderId);
+            var saler = new UserBL().GetAccountUser(order.SalerId);
+            if (saler.WorkPlace.Id != null)
+            {
+                var productStock = new ProductStockDTO()
+                {
+                    WorkPlaceId = saler.WorkPlace.Id.Value,
+                    ProductId = sale.ProductId,
+                    Quantity = sale.Quantity
+                };
+                new ProductStockBL().Add(productStock, order.SalerId);
+            }
+
             new SaleDalFacade().Delete(id);
         }
     }
