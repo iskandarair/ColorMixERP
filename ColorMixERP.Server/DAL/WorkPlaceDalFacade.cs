@@ -29,7 +29,18 @@ namespace ColorMixERP.Server.DAL
                 Id =  c.Id,
                 Name = c.Name,
                 Location = c.Location,
-                ProductStocks = new ProductStockDalFacade().GetWorkPlaceProductStocks(c.Id ?? 0)
+                Accountant = c.Accountant,
+                Address = c.Address,
+                BankDetails = c.BankDetails,
+                City = c.City,
+                Director = c.Director,
+                INN = c.INN,
+                LegalName = c.LegalName,
+                MFO = c.MFO,
+                PaymentAccount = c.PaymentAccount,
+                Phone = c.Phone,
+                OKONX = c.OKONX,
+                    ProductStocks = new ProductStockDalFacade().GetWorkPlaceProductStocks(c.Id ?? 0)
             };
             pagesCount = (int) Math.Ceiling((double)(from c in query select c).Count() / cmd.PageSize); 
             query = query.Page(cmd.PageSize, cmd.Page);
@@ -43,17 +54,40 @@ namespace ColorMixERP.Server.DAL
                 Id = c.Id,
                 Name = c.Name,
                 Location = c.Location,
+                Accountant = c.Accountant,
+                Address = c.Address,
+                BankDetails = c.BankDetails,
+                City = c.City,
+                Director = c.Director,
+                INN = c.INN,
+                LegalName = c.LegalName,
+                MFO = c.MFO,
+                PaymentAccount = c.PaymentAccount,
+                Phone = c.Phone,
+                OKONX = c.OKONX,
                 ProductStocks = new ProductStockDalFacade().GetWorkPlaceProductStocks(c.Id ?? 0)
             };
             return result.FirstOrDefault();
         }
 
-        public void Add(WorkPlaceDTO workPlace)
+        public void Add(WorkPlaceDTO c)
         {
             var element = new WorkPlace()
             {
-                Name = workPlace.Name,
-                Location = workPlace.Location
+                Name = c.Name,
+                Location = c.Location,
+                Accountant = c.Accountant,
+                Address = c.Address,
+                BankDetails = c.BankDetails,
+                City = c.City,
+                Director = c.Director,
+                INN = c.INN,
+                LegalName = c.LegalName,
+                Id = c.Id,
+                MFO = c.MFO,
+                PaymentAccount = c.PaymentAccount,
+                Phone = c.Phone,
+                OKONX = c.OKONX
             };
             element.ProductStock = new EntitySet<ProductStock>();
             db.WorkPlaces.InsertOnSubmit(element);
@@ -65,6 +99,17 @@ namespace ColorMixERP.Server.DAL
             var workplaceToUpdate = (from c in db.WorkPlaces where c.Id == workPlace.Id select c).FirstOrDefault();
             workplaceToUpdate.Location = workPlace.Location;
             workplaceToUpdate.Name = workPlace.Name;
+            workplaceToUpdate.Accountant = workPlace.Accountant;
+            workplaceToUpdate.Address = workPlace.Address;
+            workplaceToUpdate.BankDetails = workPlace.BankDetails;
+            workplaceToUpdate.City = workPlace.City;
+            workplaceToUpdate.Director = workPlace.Director;
+            workplaceToUpdate.INN = workPlace.INN;
+            workplaceToUpdate.LegalName = workPlace.LegalName;
+            workplaceToUpdate.Id = workPlace.Id;
+            workplaceToUpdate.MFO = workPlace.MFO;
+            workplaceToUpdate.PaymentAccount = workPlace.PaymentAccount;
+            workplaceToUpdate.Phone = workPlace.Phone;
             workplaceToUpdate.UpdatedDate = DateTime.Now;
             db.SubmitChanges();
         }

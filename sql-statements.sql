@@ -17,8 +17,33 @@ Location nvarchar(255) NOT NULL,
 IsDeleted bit NOT NULL DEFAULT(0),
 DeletedDate datetime default getDAte(),
 UpdatedDate datetime default getDAte(),
+-- ADDED AS A COPY COLUMNS OF CompanyInfo 
+LegalName nvarchar(255) ,
+Address nvarchar(255) ,
+Phone nvarchar(255) ,
+PaymentAccount nvarchar(255) ,
+BankDetails nvarchar(255) ,
+City nvarchar(255) ,
+MFO nvarchar(255) ,
+INN nvarchar(255) ,
+OKONX nvarchar(255) ,
+Director nvarchar(255) ,
+Accountant nvarchar(255) ,
 Primary Key (Id)
 );
+/*
+ALTER TABLE Workplace ADD  LegalName nvarchar(255);
+ALTER TABLE Workplace ADD  Address nvarchar(255);
+ALTER TABLE Workplace ADD  Phone nvarchar(255);
+ALTER TABLE Workplace ADD  PaymentAccount nvarchar(255);
+ALTER TABLE Workplace ADD  BankDetails nvarchar(255);
+ALTER TABLE Workplace ADD  City nvarchar(255);
+ALTER TABLE Workplace ADD  MFO nvarchar(255);
+ALTER TABLE Workplace ADD  INN nvarchar(255);
+ALTER TABLE Workplace ADD  OKONX nvarchar(255);
+ALTER TABLE Workplace ADD  Director nvarchar(255);
+ALTER TABLE Workplace ADD  Accountant nvarchar(255);
+ */
 
 IF NOT EXISTS  (  SELECT [name]  FROM sys.tables WHERE [name] = 'AccountUser')
 CREATE TABLE AccountUser (
@@ -283,7 +308,5 @@ Accountant nvarchar(255) NOT NULL,
 IsDeleted bit NOT NULL DEFAULT(0),
 DeletedDate datetime default getDAte(),
 UpdatedDate datetime default getDAte(),
-WorkPlaceId int not null,
-CONSTRAINT WorkPlaceIdCompanyInfo FOREIGN KEY (WorkPlaceId) REFERENCES WorkPlace(Id),
 PRIMARY KEY (Id),
 );

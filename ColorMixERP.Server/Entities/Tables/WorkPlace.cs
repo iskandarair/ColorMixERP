@@ -38,5 +38,29 @@ namespace ColorMixERP.Server.Entities
 
         [Column(Name = "UpdatedDate")]
         public DateTime? UpdatedDate { get; set; }
+        // COMPANY INFO COLUMNS - ADDED BY REQUEST OF FRONT-END
+        [Column(Name = "LegalName")]
+        public string LegalName { get; set; }
+        [Column(Name = "Address")]
+        public string Address { get; set; }
+        [Column(Name = "Phone")]
+        public string Phone { get; set; }
+        [Column(Name = "PaymentAccount")]
+        public string PaymentAccount { get; set; }
+        [Column(Name = "BankDetails")]
+        public string BankDetails { get; set; }
+        [Column(Name = "City")]
+        public string City { get; set; }
+        [Column(Name = "MFO")]
+        public string MFO { get; set; }
+        [Column(Name = "INN")]
+        public string INN { get; set; }
+        [Column(Name = "OKONX")]
+        public string OKONX { get; set; }
+
+        [Column(Name = "Director")]
+        public string Director { get; set; }
+        [Column(Name = "Accountant")]
+        public string Accountant { get; set; }
     }
 }

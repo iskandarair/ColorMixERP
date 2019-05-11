@@ -18,7 +18,6 @@ namespace ColorMixERP.Server.Entities.DTO
         public string MFO { get; set; }
         public string INN { get; set; }
         public string OKONX { get; set; }
-        public int WorkPlaceId { get; set; }
         
         public string Director { get; set; }
         public string Accountant { get; set; }
