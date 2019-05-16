@@ -15,9 +15,10 @@ namespace ColorMixERP.Server.Entities.DTO
         public decimal Quantity { get; set; }
         public int WorkPlaceId { get; set; }
         public WorkPlaceDTO WorkPlace { get; set; }
+        public string Measurement { get; set; }
         public decimal TotalPrice
         {
-            get { return Product.Price * Quantity;}
+            get { return Product.Price * Quantity; }
         }
     }
 }

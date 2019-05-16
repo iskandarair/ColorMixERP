@@ -21,20 +21,20 @@ namespace ColorMixERP.Server.DAL
         public List<DailyBalanceDTO> GetDailyBalances()
         {
             var query = from c in db.DailyBalances
-                select new DailyBalanceDTO()
-                {
-                    Id = c.Id,
-                    ProductId = c.ProductId,
-                    Product = ProductMapper(c.Product),// new ProductDalFacade().GetProduct(c.Id),
-                    BalanceDate = c.BalanceDate,
-                    Quantity = c.Quantity,
-                    WorkPlaceId = c.WorkPlaceId,
-                    WorkPlace = new WorkPlaceDalFacade().GetWorkPlace(c.WorkPlaceId),
-                };
+                        select new DailyBalanceDTO()
+                        {
+                            Id = c.Id,
+                            ProductId = c.ProductId,
+                            Product = ProductMapper(c.Product),// new ProductDalFacade().GetProduct(c.Id),
+                            BalanceDate = c.BalanceDate,
+                            Quantity = c.Quantity,
+                            WorkPlaceId = c.WorkPlaceId,
+                            WorkPlace = new WorkPlaceDalFacade().GetWorkPlace(c.WorkPlaceId),
+                        };
             return query.ToList();
         }
 
-        public List<DailyBalanceDTO> GetDailyBalancesStats(DailyBalanceCommand cmd,int workplaceId, bool isAdmin, ref int pagesCount)
+        public List<DailyBalanceDTO> GetDailyBalancesStats(DailyBalanceCommand cmd, int workplaceId, bool isAdmin, ref int pagesCount)
         {
             IQueryable<DailyBalanceDTO> query;
 
@@ -43,62 +43,65 @@ namespace ColorMixERP.Server.DAL
                 if (cmd.TargetWorkPlace.Value > 0)
                 {
                     query = from c in db.DailyBalances
-                        where c.WorkPlaceId == cmd.TargetWorkPlace
-                        group c by new { c.Product, c.BalanceDate.Date }
+                            where c.WorkPlaceId == cmd.TargetWorkPlace
+                            group c by new { c.Product, c.BalanceDate.Date }
                         into grp
-                        let sumQuantity = grp.Sum(x => x.Quantity)
-                        select new DailyBalanceDTO()
-                        {
-                            ProductId = grp.Key.Product.Id,
-                            Product = ProductMapper(grp.Key.Product),
-                            BalanceDate = grp.Key.Date,
-                            Quantity = sumQuantity
-                        };
+                            let sumQuantity = grp.Sum(x => x.Quantity)
+                            select new DailyBalanceDTO()
+                            {
+                                ProductId = grp.Key.Product.Id,
+                                Product = ProductMapper(grp.Key.Product),
+                                BalanceDate = grp.Key.Date,
+                                Quantity = sumQuantity,
+                                Measurement = grp.Key.Product.MeasurementUnit
+                            };
                 }
                 else
                 {
                     query = from c in db.DailyBalances
-                        group c by new {c.Product, c.BalanceDate.Date}
+                            group c by new { c.Product, c.BalanceDate.Date }
                         into grp
-                        let sumQuantity = grp.Sum(x => x.Quantity)
-                        select new DailyBalanceDTO()
-                        {
-                            ProductId = grp.Key.Product.Id,
-                            Product = ProductMapper(grp.Key.Product),
-                            BalanceDate = grp.Key.Date,
-                            Quantity = sumQuantity
-                        };
+                            let sumQuantity = grp.Sum(x => x.Quantity)
+                            select new DailyBalanceDTO()
+                            {
+                                ProductId = grp.Key.Product.Id,
+                                Product = ProductMapper(grp.Key.Product),
+                                BalanceDate = grp.Key.Date,
+                                Quantity = sumQuantity,
+                                Measurement = grp.Key.Product.MeasurementUnit
+                            };
                 }
             }
             else
             {
                 query = from c in db.DailyBalances
-                    where c.WorkPlaceId == workplaceId
-                    group c by new { c.Product, c.BalanceDate.Date }
+                        where c.WorkPlaceId == workplaceId
+                        group c by new { c.Product, c.BalanceDate.Date }
                     into grp
-                    let sumQuantity = grp.Sum(x => x.Quantity)
-                    select new DailyBalanceDTO()
-                    {
-                        ProductId = grp.Key.Product.Id,
-                        Product = ProductMapper(grp.Key.Product),
-                        BalanceDate = grp.Key.Date,
-                        Quantity = sumQuantity
-                    };
+                        let sumQuantity = grp.Sum(x => x.Quantity)
+                        select new DailyBalanceDTO()
+                        {
+                            ProductId = grp.Key.Product.Id,
+                            Product = ProductMapper(grp.Key.Product),
+                            BalanceDate = grp.Key.Date,
+                            Quantity = sumQuantity,
+                            Measurement = grp.Key.Product.MeasurementUnit
+                        };
             }
 
             if (cmd.Date != null)
             {
                 query = from c in query
-                    where c.BalanceDate >= cmd.Date.Value.Date
-                          && c.BalanceDate <= cmd.Date.Value.Date
+                        where c.BalanceDate >= cmd.Date.Value.Date
+                              && c.BalanceDate <= cmd.Date.Value.Date
                         select c;
             }
 
             if (cmd.FromDate != null && cmd.ToDate != null)
             {
                 query = from p in query
-                    where p.BalanceDate.Date == cmd.FromDate.Value.Date ||
-                          p.BalanceDate.Date == cmd.ToDate.Value.Date
+                        where p.BalanceDate.Date == cmd.FromDate.Value.Date ||
+                              p.BalanceDate.Date == cmd.ToDate.Value.Date
                         select p;
             }
             pagesCount = (int)Math.Ceiling((double)(from p in query select p).Count() / cmd.PageSize);
@@ -109,17 +112,17 @@ namespace ColorMixERP.Server.DAL
         public DailyBalanceDTO GetDailyBalance(int id)
         {
             var query = from c in db.DailyBalances
-                where c.Id == id
-                select new DailyBalanceDTO()
-                {
-                    Id = c.Id,
-                    ProductId = c.ProductId,
-                    Product = ProductMapper(c.Product),
-                    BalanceDate = c.BalanceDate,
-                    Quantity = c.Quantity,
-                    WorkPlaceId = c.WorkPlaceId,
-                    WorkPlace = new WorkPlaceDalFacade().GetWorkPlace(c.WorkPlaceId),
-                };
+                        where c.Id == id
+                        select new DailyBalanceDTO()
+                        {
+                            Id = c.Id,
+                            ProductId = c.ProductId,
+                            Product = ProductMapper(c.Product),
+                            BalanceDate = c.BalanceDate,
+                            Quantity = c.Quantity,
+                            WorkPlaceId = c.WorkPlaceId,
+                            WorkPlace = new WorkPlaceDalFacade().GetWorkPlace(c.WorkPlaceId),
+                        };
             return query.FirstOrDefault();
         }
 

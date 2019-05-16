@@ -22,51 +22,54 @@ namespace ColorMixERP.Server.DAL
         }
 
         public List<WorkPlaceDTO> GetWorkPlaces(PaginationDTO cmd, ref int pagesCount)
-        { 
-            var query = from c in db.WorkPlaces where c.IsDeleted == false
-                select new WorkPlaceDTO()
-            {
-                Id =  c.Id,
-                Name = c.Name,
-                Location = c.Location,
-                Accountant = c.Accountant,
-                Address = c.Address,
-                BankDetails = c.BankDetails,
-                City = c.City,
-                Director = c.Director,
-                INN = c.INN,
-                LegalName = c.LegalName,
-                MFO = c.MFO,
-                PaymentAccount = c.PaymentAccount,
-                Phone = c.Phone,
-                OKONX = c.OKONX,
-                    ProductStocks = new ProductStockDalFacade().GetWorkPlaceProductStocks(c.Id ?? 0)
-            };
-            pagesCount = (int) Math.Ceiling((double)(from c in query select c).Count() / cmd.PageSize); 
+        {
+            var query = from c in db.WorkPlaces
+                        where c.IsDeleted == false
+                        select new WorkPlaceDTO()
+                        {
+                            Id = c.Id,
+                            Name = c.Name,
+                            Location = c.Location,
+                            Accountant = c.Accountant,
+                            Address = c.Address,
+                            BankDetails = c.BankDetails,
+                            City = c.City,
+                            Director = c.Director,
+                            INN = c.INN,
+                            LegalName = c.LegalName,
+                            MFO = c.MFO,
+                            PaymentAccount = c.PaymentAccount,
+                            Phone = c.Phone,
+                            OKONX = c.OKONX,
+                            ProductStocks = new ProductStockDalFacade().GetWorkPlaceProductStocks(c.Id ?? 0)
+                        };
+            pagesCount = (int)Math.Ceiling((double)(from c in query select c).Count() / cmd.PageSize);
             query = query.Page(cmd.PageSize, cmd.Page);
-            return  query.ToList();
+            return query.ToList();
         }
 
         public WorkPlaceDTO GetWorkPlace(int? id)
-        { 
-            var result = from c in db.WorkPlaces where c.Id == id select new WorkPlaceDTO()
-            {
-                Id = c.Id,
-                Name = c.Name,
-                Location = c.Location,
-                Accountant = c.Accountant,
-                Address = c.Address,
-                BankDetails = c.BankDetails,
-                City = c.City,
-                Director = c.Director,
-                INN = c.INN,
-                LegalName = c.LegalName,
-                MFO = c.MFO,
-                PaymentAccount = c.PaymentAccount,
-                Phone = c.Phone,
-                OKONX = c.OKONX,
-                ProductStocks = new ProductStockDalFacade().GetWorkPlaceProductStocks(c.Id ?? 0)
-            };
+        {
+            var result = from c in db.WorkPlaces
+                         where c.Id == id
+                         select new WorkPlaceDTO()
+                         {
+                             Id = c.Id,
+                             Name = c.Name,
+                             Location = c.Location,
+                             Accountant = c.Accountant,
+                             Address = c.Address,
+                             BankDetails = c.BankDetails,
+                             City = c.City,
+                             Director = c.Director,
+                             INN = c.INN,
+                             LegalName = c.LegalName,
+                             MFO = c.MFO,
+                             PaymentAccount = c.PaymentAccount,
+                             Phone = c.Phone,
+                             OKONX = c.OKONX,
+                             ProductStocks = new ProductStockDalFacade().GetWorkPlaceProductStocks(c.Id ?? 0)
+                         };
             return result.FirstOrDefault();
         }
 
@@ -108,6 +111,7 @@ namespace ColorMixERP.Server.DAL
             workplaceToUpdate.LegalName = workPlace.LegalName;
             workplaceToUpdate.Id = workPlace.Id;
             workplaceToUpdate.MFO = workPlace.MFO;
+            workplaceToUpdate.OKONX = workPlace.OKONX;
             workplaceToUpdate.PaymentAccount = workPlace.PaymentAccount;
             workplaceToUpdate.Phone = workPlace.Phone;
             workplaceToUpdate.UpdatedDate = DateTime.Now;
