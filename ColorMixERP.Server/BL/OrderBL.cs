@@ -56,6 +56,8 @@ namespace ColorMixERP.Server.BL
 
         public void Update(OrderDTO order)
         {
+            //16.  Klientni qarzi bor edi uni order kirib qarzni togirladi lekin klient listda qarz bor deb korsatyapti klientni double click qilsa ichiga kirgandan qarzi yoq korsatyapti
+            // WAS FIXED IN PREVIOUS COMMIT BUT CLIENT RECIEVED EARLIER VERSION WITH BUG. FIXED DOUBLE TESTED
             var orderExisting = new OrderDalFacade().GetClientOrder(order.Id);
             new OrderDalFacade().Update(order);
             var amount = (orderExisting.OverallPrice - (orderExisting.PaymentByTransfer + orderExisting.PaymentByCard + orderExisting.PaymentByCash))
