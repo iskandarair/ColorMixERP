@@ -44,7 +44,8 @@ namespace ColorMixERP.Server.DAL
                         PaymentByCash = c.PaymentByCash,
                         IsDebt = c.IsDebt,
                         WorkPlaceName = c.Saler.WorkPlace.Name,
-                        WorkPlaceLocation = c.Saler.WorkPlace.Location
+                        WorkPlaceLocation = c.Saler.WorkPlace.Location,
+                        WorkPlaceId = c.Saler.WorkPlaceId
                     };
             }
             else
@@ -70,10 +71,15 @@ namespace ColorMixERP.Server.DAL
                         PaymentByCash = c.PaymentByCash,
                         IsDebt = c.IsDebt,
                         WorkPlaceName = c.Saler.WorkPlace.Name,
-                        WorkPlaceLocation = c.Saler.WorkPlace.Location
+                        WorkPlaceLocation = c.Saler.WorkPlace.Location,
+                        WorkPlaceId = c.Saler.WorkPlaceId
                     };
             }
 
+            if (cmd.FilterWorkPlaceId > 0)
+            {
+                query = from p in query where p.WorkPlaceId == cmd.FilterWorkPlaceId select p;
+            }
             if (cmd.SalerId > 0)
             {
                 query = from p in query where p.SalerId == cmd.SalerId select p;

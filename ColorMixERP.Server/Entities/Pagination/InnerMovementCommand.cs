@@ -9,6 +9,7 @@ namespace ColorMixERP.Server.Entities.Pagination
     public class InnerMovementCommand : PaginationDTO
     {
         public int ProductId { get; set; }
+        public int FilterWorkPlaceId { get; set; }
         public int FromPlaceId { get; set; }
         public int ToPlaceId { get; set; }
         public DateTime? MoveDate { get; set; }

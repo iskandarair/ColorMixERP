@@ -9,7 +9,7 @@ namespace ColorMixERP.Server.Entities.Pagination
     public class IncomeCommand : PaginationDTO
     {
         public int UserId { get; set; }
-        public int FromWorkplace { get; set; }
+        public int FilterWorkPlaceId { get; set; }
         public int ToWorkplace { get; set; }
         public DateTime? Date { get; set; }
         public DateTime? FromDate { get; set; }

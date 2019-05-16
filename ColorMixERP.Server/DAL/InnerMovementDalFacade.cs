@@ -44,15 +44,11 @@ namespace ColorMixERP.Server.DAL
                     TotalPrice = totalPrice,
                     GroupId = grp.Key.GroupId
                 };
+            if (cmd.FilterWorkPlaceId > 0)
+            {
+                query = from p in query where p.FromWorkPlaceId == cmd.FilterWorkPlaceId select p;
+            }
             
-            if (cmd.FromPlaceId > 0)
-            {
-                query = from p in query where p.FromWorkPlaceId ==cmd.FromPlaceId select p;
-            }
-            if (cmd.ToPlaceId > 0)
-            {
-                query = from p in query where p.ToWorkPlaceId == cmd.ToPlaceId select p;
-            }
 
             if (cmd.MoveDate != null)
             {

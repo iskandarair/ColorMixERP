@@ -13,7 +13,7 @@ namespace ColorMixERP.Server.Entities.Pagination
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
         public int ClientId { get; set; }
-        public int WorkPlaceId { get; set; }
+        public int FilterWorkPlaceId { get; set; }
 
         public bool? SortByOrderDate { get; set; }
         public bool? SortBySalerId { get; set; }

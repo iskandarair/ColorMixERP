@@ -61,9 +61,9 @@ namespace ColorMixERP.Server.DAL
                 query = from c in query where c.City.Contains(cmd.City) select c;
             }
             //WorkPlaceId
-            if (cmd.WorkPlaceId > 0)
+            if (cmd.FilterWorkPlaceId > 0)
             {
-                query = from c in query where c.WorkPlaceId == cmd.WorkPlaceId.Value select c;
+                query = from c in query where c.WorkPlaceId == cmd.FilterWorkPlaceId select c;
             }
             //S O R T I N G
             if (cmd.SortByName != null)

@@ -22,18 +22,41 @@ namespace ColorMixERP.Server.DAL
 
         public List<ProductArrivalDTO> GetProductArrivals(IncomeCommand command, ref int pagesCount)
         {
-            var query = from c in db.IncomeProducts
-                group c by new {c.Product, c.CreatedDate.Value.Date } into grp
-                let  SumQuantity = grp.Sum(x => x.Quantity)
-                orderby grp.Key.Date
-                select new ProductArrivalDTO()
-                {
-                    ProductCode = grp.Key.Product.Code,
-                    ProductName = grp.Key.Product.Name,
-                    Date = grp.Key.Date,
-                    Quantity = SumQuantity,
-                    SupplierName = grp.Key.Product.Supplier.Name
-                };
+            IQueryable<ProductArrivalDTO> query;
+            if (command.FilterWorkPlaceId > 0)
+            {
+                query = from c in db.IncomeProducts
+                    join income in db.Incomes on c.IncomeId equals income.Id
+                    where income.FromWorkPlaceId == command.FilterWorkPlaceId
+                    group c by new {c.Product, c.CreatedDate.Value.Date}
+                    into grp
+                    let SumQuantity = grp.Sum(x => x.Quantity)
+                    orderby grp.Key.Date
+                    select new ProductArrivalDTO()
+                    {
+                        ProductCode = grp.Key.Product.Code,
+                        ProductName = grp.Key.Product.Name,
+                        Date = grp.Key.Date,
+                        Quantity = SumQuantity,
+                        SupplierName = grp.Key.Product.Supplier.Name
+                    };
+            }
+            else
+            {
+                query = from c in db.IncomeProducts
+                    group c by new { c.Product, c.CreatedDate.Value.Date }
+                    into grp
+                    let SumQuantity = grp.Sum(x => x.Quantity)
+                    orderby grp.Key.Date
+                    select new ProductArrivalDTO()
+                    {
+                        ProductCode = grp.Key.Product.Code,
+                        ProductName = grp.Key.Product.Name,
+                        Date = grp.Key.Date,
+                        Quantity = SumQuantity,
+                        SupplierName = grp.Key.Product.Supplier.Name
+                    };
+            }
 
             if (command.Date != null)
             {
@@ -76,15 +99,11 @@ namespace ColorMixERP.Server.DAL
                 query = from c in query where c.UserId == command.UserId select c;
             }
 
-            if (command.FromWorkplace > 0)
-            {
-                query = from c in query where c.FromWorkplaceId == command.FromWorkplace select c;
-            }
-
-            if (command.ToWorkplace > 0)
-            {
-                query = from c in query where c.ToWorkplaceId == command.ToWorkplace select c;
-            }
+            //if (command.FilterWorkPlaceId > 0)
+            //{
+            //    query = from c in query where c.FromWorkplaceId == command.FilterWorkPlaceId select c;
+            //}
+            
 
             if (command.Date != null)
             {
