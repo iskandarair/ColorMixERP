@@ -52,7 +52,8 @@ namespace ColorMixERP.Server.DAL
                             ProductId = grp.Key.Product.Id,
                             Product = ProductMapper(grp.Key.Product),
                             BalanceDate = grp.Key.Date,
-                            Quantity = sumQuantity
+                            Quantity = sumQuantity,
+                            Measurement = grp.Key.Product.MeasurementUnit
                         };
                 }
                 else
@@ -66,7 +67,8 @@ namespace ColorMixERP.Server.DAL
                             ProductId = grp.Key.Product.Id,
                             Product = ProductMapper(grp.Key.Product),
                             BalanceDate = grp.Key.Date,
-                            Quantity = sumQuantity
+                            Quantity = sumQuantity,
+                            Measurement = grp.Key.Product.MeasurementUnit
                         };
                 }
             }
@@ -82,7 +84,8 @@ namespace ColorMixERP.Server.DAL
                         ProductId = grp.Key.Product.Id,
                         Product = ProductMapper(grp.Key.Product),
                         BalanceDate = grp.Key.Date,
-                        Quantity = sumQuantity
+                        Quantity = sumQuantity,
+                        Measurement = grp.Key.Product.MeasurementUnit
                     };
             }
 

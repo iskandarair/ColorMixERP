@@ -108,6 +108,7 @@ namespace ColorMixERP.Server.DAL
             workplaceToUpdate.LegalName = workPlace.LegalName;
             workplaceToUpdate.Id = workPlace.Id;
             workplaceToUpdate.MFO = workPlace.MFO;
+            workplaceToUpdate.OKONX = workPlace.OKONX;
             workplaceToUpdate.PaymentAccount = workPlace.PaymentAccount;
             workplaceToUpdate.Phone = workPlace.Phone;
             workplaceToUpdate.UpdatedDate = DateTime.Now;
