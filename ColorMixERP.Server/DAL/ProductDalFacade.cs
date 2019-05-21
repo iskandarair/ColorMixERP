@@ -160,6 +160,8 @@ namespace ColorMixERP.Server.DAL
 
             foreach (var dto in productsDtos)
             {
+                dto.Category.Name = dto.Category.Name.Trim();
+                dto.Supplier.Name = dto.Supplier.Name.Trim();
                 dto.Category.Id = new CategoryDalFacade().GetOrCreateCategoryId(dto.Category);
                 dto.Supplier.Id = new SupplierDalFacade().GetOrCreateSupplierId(dto.Supplier);
 
