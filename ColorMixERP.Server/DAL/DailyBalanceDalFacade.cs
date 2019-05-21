@@ -104,6 +104,14 @@ namespace ColorMixERP.Server.DAL
                           p.BalanceDate.Date == cmd.ToDate.Value.Date
                         select p;
             }
+
+            if (cmd.FromDate == null && cmd.ToDate == null && cmd.Date == null)
+            {
+                query = from p in query
+                    where p.BalanceDate.Date == DateTime.Now.AddDays(-10).Date ||
+                          p.BalanceDate.Date == DateTime.Now.Date
+                    select p;
+            }
             pagesCount = (int)Math.Ceiling((double)(from p in query select p).Count() / cmd.PageSize);
             query = query.Page(cmd.PageSize, cmd.Page);
             return query.ToList();
