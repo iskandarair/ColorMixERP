@@ -40,7 +40,7 @@ namespace ColorMixERP.Server.DAL
 
             if (isAdmin)
             {
-                if (cmd.TargetWorkPlace.Value > 0)
+                if (cmd.TargetWorkPlace.HasValue)
                 {
                     query = from c in db.DailyBalances
                         where c.WorkPlaceId == cmd.TargetWorkPlace
@@ -160,15 +160,21 @@ namespace ColorMixERP.Server.DAL
         public void Update(DailyBalanceDTO dto)
         {
             var balance = (from c in db.DailyBalances where c.Id == dto.Id select c).FirstOrDefault();
-            balance.Quantity = dto.Quantity;
-            db.SubmitChanges();
+            if (balance != null)
+            {
+                balance.Quantity = dto.Quantity;
+                db.SubmitChanges();
+            }
         }
 
         public void Delete(int id)
         {
             var balance = (from c in db.DailyBalances where c.Id == id select c).FirstOrDefault();
-            db.DailyBalances.DeleteOnSubmit(balance);
-            db.SubmitChanges();
+            if (balance != null)
+            {
+                db.DailyBalances.DeleteOnSubmit(balance);
+                db.SubmitChanges();
+            }
         }
 
 
