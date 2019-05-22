@@ -114,6 +114,30 @@ namespace ColorMixERP.Server.DAL
             return query.FirstOrDefault();
         }
 
+        public decimal CalcDebtorCreditor(int cleintId)
+        {
+
+            var aggregation = from c in db.ClientOrders where c.Client.Id == cleintId
+                group c by 1 into grp
+                let totalOverallPrice = grp.Sum(x => x.OverallPrice)
+                let totalPaymentByTransfer = grp.Sum(x => x.PaymentByTransfer)
+                let totalPaymentByCard = grp.Sum(x => x.PaymentByCard)
+                let totalPaymentByCash = grp.Sum(x => x.PaymentByCash)
+                select new ClientOrderStatisticalDTO()
+                {
+                    TotalOverallPrice = totalOverallPrice,
+                    TotalPaymentCard = totalPaymentByCard,
+                    TotalPaymentCash = totalPaymentByCash,
+                    TotalPaymentTransfer = totalPaymentByTransfer
+                };
+           var orders = aggregation.FirstOrDefault();
+            if (orders == null)
+                return 0;
+            // I F   N O T   N U L L 
+            return orders.TotalOverallPrice -
+                   (orders.TotalPaymentCard + orders.TotalPaymentCash + orders.TotalPaymentTransfer);
+
+        }
         public void Add(ClientDTO client)
         {
             var element = new Client()

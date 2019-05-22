@@ -40,7 +40,7 @@ namespace ColorMixERP.Server.DAL
 
             if (isAdmin)
             {
-                if (cmd.TargetWorkPlace.HasValue)
+                if (cmd.TargetWorkPlace.HasValue && cmd.TargetWorkPlace > 0)
                 {
                     query = from c in db.DailyBalances
                         where c.WorkPlaceId == cmd.TargetWorkPlace
