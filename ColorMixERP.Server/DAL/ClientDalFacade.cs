@@ -36,7 +36,7 @@ namespace ColorMixERP.Server.DAL
                     INN = c.INN,
                     OKONX = c.OKONX,
                     NickName = c.NickName,
-                    DebtorCreditor = c.DebtorCreditor,
+                    DebtorCreditor = CalcDebtorCreditor(c.Id),
                     WorkPlaceId = c.WorkPlaceId,
                     WorkPlaceName = c.WorkPlace.Name,
                 };
@@ -107,18 +107,20 @@ namespace ColorMixERP.Server.DAL
                 INN = c.INN,
                 OKONX = c.OKONX,
                 NickName = c.NickName,
-                DebtorCreditor = c.DebtorCreditor,
+                DebtorCreditor = CalcDebtorCreditor(c.Id),
                 WorkPlaceId = c.WorkPlaceId,
                 WorkPlaceName = c.WorkPlace.Name,
             };
             return query.FirstOrDefault();
         }
 
-        public decimal CalcDebtorCreditor(int cleintId)
+        public decimal CalcDebtorCreditor(int? clientId)
         {
+            if (clientId == null)
+                return 0;
 
-            var aggregation = from c in db.ClientOrders where c.Client.Id == cleintId
-                group c by 1 into grp
+            var aggregation = from c in db.ClientOrders where c.Client.Id == clientId
+                              group c by 1 into grp
                 let totalOverallPrice = grp.Sum(x => x.OverallPrice)
                 let totalPaymentByTransfer = grp.Sum(x => x.PaymentByTransfer)
                 let totalPaymentByCard = grp.Sum(x => x.PaymentByCard)
@@ -134,8 +136,8 @@ namespace ColorMixERP.Server.DAL
             if (orders == null)
                 return 0;
             // I F   N O T   N U L L 
-            return orders.TotalOverallPrice -
-                   (orders.TotalPaymentCard + orders.TotalPaymentCash + orders.TotalPaymentTransfer);
+            return 
+                   (orders.TotalPaymentCard + orders.TotalPaymentCash + orders.TotalPaymentTransfer) - orders.TotalOverallPrice;
 
         }
         public void Add(ClientDTO client)
