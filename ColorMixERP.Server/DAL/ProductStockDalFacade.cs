@@ -94,7 +94,8 @@ namespace ColorMixERP.Server.DAL
                     ProductCurrencId = p.Product.Currency,
                     MeasurementUnit = p.Product.MeasurementUnit,
                     ProductCode = p.Product.Code,
-                    Category = p.Product.Category
+                    Category = p.Product.Category,
+                    BoxedNumber = p.Product.BoxedNumber
                 };
 
             pagesCount = (int) Math.Ceiling((double) (from p in query select p).Count() / cmd.PageSize);
@@ -115,6 +116,7 @@ namespace ColorMixERP.Server.DAL
                     ProductPrice = p.Product.Price,
                     ProductCurrencId = p.Product.Currency,
                     MeasurementUnit = p.Product.MeasurementUnit,
+                    BoxedNumber = p.Product.BoxedNumber
                 };
             return query.FirstOrDefault();
         }
@@ -130,7 +132,8 @@ namespace ColorMixERP.Server.DAL
                     ProductName = p.Product.Name,
                     Quantity = p.Quantity,
                     ProductPrice = p.Product.Price,
-                    ProductCurrencId = p.Product.Currency
+                    ProductCurrencId = p.Product.Currency,
+                    BoxedNumber = p.Product.BoxedNumber
                 };
             if (!isAddIncoming && query.FirstOrDefault() == null)
             {
@@ -186,7 +189,8 @@ namespace ColorMixERP.Server.DAL
                     Id = stock.Id,
                     ProductId = stock.Product.Id,
                     ProductName = stock.Product.Name,
-                    Quantity =  stock.Quantity
+                    Quantity =  stock.Quantity,
+                    BoxedNumber = stock.Product.BoxedNumber
                 });
             }
             return result;
