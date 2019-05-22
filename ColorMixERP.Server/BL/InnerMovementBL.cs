@@ -93,14 +93,18 @@ namespace ColorMixERP.Server.BL
             var inMovement = new InnerMovementDalFacade().GetInnerMovement(dto.Id.Value);
             var diff = dto.Quantity - inMovement.Quantity; // should-Be - was
             var productInStockFrom = new ProductStockDalFacade().GetProductStockByPlaceAndProduct(dto.FromWorkPlaceId, dto.ProductId);
-            if (productInStockFrom.Quantity > diff)
+
+            var productInStockTo = new ProductStockDalFacade().GetProductStockByPlaceAndProduct(dto.ToWorkPlaceId, dto.ProductId);
+            if (diff != 0 && productInStockFrom.Quantity > diff && (productInStockTo.Quantity + diff) >=0)
             {
                 productInStockFrom.Quantity -= diff;// dto.Quantity - inMovement.Quantity;
                 new ProductStockDalFacade().Update(productInStockFrom);
-
-                var productInStockTo = new ProductStockDalFacade().GetProductStockByPlaceAndProduct(dto.ToWorkPlaceId, dto.ProductId);
+                
                 productInStockTo.Quantity += diff;
                 new ProductStockDalFacade().Update(productInStockTo);
+            }
+            else if (diff == 0)
+            {
             }
             else
             {
@@ -134,14 +138,18 @@ namespace ColorMixERP.Server.BL
                 var inMovement = new InnerMovementDalFacade().GetInnerMovement(dto.Id.Value);
                 var diff = dto.Quantity - inMovement.Quantity; // should-Be - was
                 var productInStockFrom = new ProductStockDalFacade().GetProductStockByPlaceAndProduct(dto.FromWorkPlaceId, dto.ProductId);
-                if (productInStockFrom.Quantity > diff)
+
+                var productInStockTo = new ProductStockDalFacade().GetProductStockByPlaceAndProduct(dto.ToWorkPlaceId, dto.ProductId);
+                if (diff != 0 && productInStockFrom.Quantity > diff && (productInStockTo.Quantity + diff) >= 0 )
                 {
                     productInStockFrom.Quantity -= diff;// dto.Quantity - inMovement.Quantity;
                     new ProductStockDalFacade().Update(productInStockFrom);
-
-                    var productInStockTo = new ProductStockDalFacade().GetProductStockByPlaceAndProduct(dto.ToWorkPlaceId, dto.ProductId);
+                    
                     productInStockTo.Quantity += diff;
                     new ProductStockDalFacade().Update(productInStockTo);
+                }
+                else if (diff == 0)
+                {
                 }
                 else
                 {
