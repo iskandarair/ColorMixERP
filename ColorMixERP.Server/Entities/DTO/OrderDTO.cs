@@ -25,5 +25,6 @@ namespace ColorMixERP.Server.Entities.DTO
         public decimal PaymentByCard { get; set; }
         public decimal PaymentByTransfer { get; set; }
         public bool IsDebt { get; set; }
+        
     }
 }

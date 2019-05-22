@@ -114,7 +114,8 @@ namespace ColorMixERP.Server.DAL
                 ProductPrice = c.Product.Price,
                 TotalPrice = c.TotalPrice,
                 CreatedDate = c.CreatedDate,
-                GroupId = c.GroupId
+                GroupId = c.GroupId,
+                CurrencyCode = c.Product.Currency
             };
             return q.FirstOrDefault();
         }
@@ -136,7 +137,8 @@ namespace ColorMixERP.Server.DAL
                     ProductPrice = c.Product.Price,
                     TotalPrice = c.TotalPrice,
                     CreatedDate = c.CreatedDate,
-                    GroupId = c.GroupId
+                    GroupId = c.GroupId,
+                    CurrencyCode = c.Product.Currency
                 };
             
             if (cmd.MoveDate != null)
@@ -177,7 +179,8 @@ namespace ColorMixERP.Server.DAL
                     ProductPrice = c.Product.Price,
                     TotalPrice = c.TotalPrice,
                     CreatedDate = c.CreatedDate,
-                    GroupId = c.GroupId
+                    GroupId = c.GroupId,
+                    CurrencyCode = c.Product.Currency
                 };
             return q.ToList();
         }

@@ -22,5 +22,6 @@ namespace ColorMixERP.Server.Entities.DTO
         public decimal TotalPrice { get; set; }
         public int? GroupId { get; set; }
         public DateTime? CreatedDate { get; set; }
+        public int CurrencyCode { get; set; }
     }
 }
