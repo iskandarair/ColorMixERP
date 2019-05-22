@@ -48,7 +48,11 @@ namespace ColorMixERP.Server.DAL
             {
                 query = from p in query where p.FromWorkPlaceId == cmd.FilterWorkPlaceId select p;
             }
-            
+
+            if (cmd.FromPlaceId > 0 && cmd.ToPlaceId > 0)
+            {
+                query = from p in query where p.FromWorkPlaceId == cmd.FromPlaceId && p.ToWorkPlaceId == cmd.ToPlaceId select p;
+            }
 
             if (cmd.MoveDate != null)
             {

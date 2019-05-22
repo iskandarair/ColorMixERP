@@ -310,3 +310,35 @@ DeletedDate datetime default getDAte(),
 UpdatedDate datetime default getDAte(),
 PRIMARY KEY (Id),
 );
+
+/*
+ A L T E R   S T A T E M E N T S     F   R   O   M     7 t h   A P R I L 
+ 
+ ALTER TABLE ReturnedSale Add ReturnedMoney decimal(19,2) NOT NULL;
+Alter Table ReturnedSale Add ProductId int NOT NULL;
+Alter Table ReturnedSale Add CONSTRAINT ReturnedSaleProductId FOREIGN KEY (ProductId) REFERENCES Product(Id);
+
+— accountUser table
+
+Alter table accountUser add constraint uniqueAccountUserName Unique(Name)
+
+
+——- ReturnedSale
+ALTER TABLE ReturnedSale Add WorkplaceId int NOt NULL,
+ALTER TABLE ReturnedSale CONSTRAINT ReturnedSaleWorkplaceId FOREIGN KEY (WorkplaceId) REFERENCES Workplace(Id)
+
+
+— workplace table
+ALTER TABLE Workplace ADD  LegalName nvarchar(255);
+ALTER TABLE Workplace ADD  Address nvarchar(255);
+ALTER TABLE Workplace ADD  Phone nvarchar(255);
+ALTER TABLE Workplace ADD  PaymentAccount nvarchar(255);
+ALTER TABLE Workplace ADD  BankDetails nvarchar(255);
+ALTER TABLE Workplace ADD  City nvarchar(255);
+ALTER TABLE Workplace ADD  MFO nvarchar(255);
+ALTER TABLE Workplace ADD  INN nvarchar(255);
+ALTER TABLE Workplace ADD  OKONX nvarchar(255);
+ALTER TABLE Workplace ADD  Director nvarchar(255);
+ALTER TABLE Workplace ADD  Accountant nvarchar(255);
+
+ */
