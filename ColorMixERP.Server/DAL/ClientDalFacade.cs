@@ -119,7 +119,7 @@ namespace ColorMixERP.Server.DAL
             if (clientId == null)
                 return 0;
 
-            var aggregation = from c in db.ClientOrders where c.Client.Id == clientId
+            var aggregation = from c in db.ClientOrders where c.IsDeleted == false  && c.Client.Id == clientId 
                               group c by 1 into grp
                 let totalOverallPrice = grp.Sum(x => x.OverallPrice)
                 let totalPaymentByTransfer = grp.Sum(x => x.PaymentByTransfer)
