@@ -51,6 +51,10 @@ namespace ColorMixERP.Server.BL
                 productInStockFrom.Quantity -= diff;// dto.Quantity - inMovement.Quantity;
                 new ProductStockDalFacade().Update(productInStockFrom);
             }
+            else if (diff == 0)
+            {
+                //do nothing
+            }
             else
             {
                 throw new ArgumentOutOfRangeException($"Not Enough Product ({saleOld.ProductId}-{saleOld.ProductName}) in ProductStock to complete transaction.");
