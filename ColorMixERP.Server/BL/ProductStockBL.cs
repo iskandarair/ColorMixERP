@@ -219,10 +219,9 @@ namespace ColorMixERP.Server.BL
         public void UpdateProductStock(ReturnedSaleDTO dto, int userId)
         {
             var workplaceId = new UserDalFacade().GetAccountUser(userId).WorkPlace.Id.Value;
-            //var dto.ProductId = new SaleDalFacade().GetSale(dto.SaleId).ProductId;
 
             var productInStockAdd =
-                new ProductStockDalFacade().GetProductStockByPlaceAndProduct(workplaceId, dto.ProductId);
+                new ProductStockDalFacade().GetProductStockByPlaceAndProduct(workplaceId, dto.ProductId, true);
             if (productInStockAdd == null)
             {
                 AddProductStock(workplaceId,dto.ProductId,dto.Quantity-dto.DefectedQuantity);
