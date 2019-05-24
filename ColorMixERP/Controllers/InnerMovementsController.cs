@@ -26,7 +26,8 @@ namespace ColorMixERP.Controllers
             {
                 var cmd = JsonConvert.DeserializeObject<InnerMovementCommand>(query);
                 int pagesCount = 0;
-                var data = new InnerMovementBL().GetInnerMovementDtos(cmd, ref pagesCount);
+                var userId = AuthHelper.GetUserIdFromClaims(User.Identity as ClaimsIdentity);
+                var data = new InnerMovementBL().GetInnerMovementDtos(cmd, userId, ref pagesCount);
                 var result = Request.CreateResponse(HttpStatusCode.OK, data);
                 result.Headers.Add(Consts.PAGES_COUNT, pagesCount.ToString());
                 return result;

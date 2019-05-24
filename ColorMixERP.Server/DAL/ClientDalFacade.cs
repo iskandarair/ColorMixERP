@@ -19,10 +19,10 @@ namespace ColorMixERP.Server.DAL
             db = new LinqContext(LinqContext.DB_CONNECTION);
         }
 
-        public List<ClientDTO> GetClients(ClientCommand cmd, ref int pagesCount)
+        public List<ClientDTO> GetClients(ClientCommand cmd, int workplaceId, ref int pagesCount)
         {
             var query = from c in db.Clients
-                where c.IsDeleted == false
+                where c.IsDeleted == false 
                 select new ClientDTO()
                 {
                     Id = c.Id,
@@ -40,12 +40,14 @@ namespace ColorMixERP.Server.DAL
                     WorkPlaceId = c.WorkPlaceId,
                     WorkPlaceName = c.WorkPlace.Name,
                 };
+            // // ONLY CLIENTS OF WORKPLACE 
+            query = from c in query where c.WorkPlaceId == workplaceId select c;
 
             if (!string.IsNullOrEmpty(cmd.Name))
             {
                 query = from c in query where c.Name.Contains(cmd.Name) select c;
             }
-
+            
             if (!string.IsNullOrEmpty(cmd.NickName))
             {
                 query = from c in query where c.NickName.Contains(cmd.NickName) select c;

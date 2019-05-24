@@ -12,7 +12,7 @@ namespace ColorMixERP.Server.BL
 {
     public class ClientBL
     {
-        public List<ClientDTO> GetClients(ClientCommand cmd, ref int pagesCount)
+        public List<ClientDTO> GetClients(ClientCommand cmd, int userId, ref int pagesCount)
         {
             if (string.IsNullOrEmpty(cmd.Name))
             {
@@ -31,7 +31,9 @@ namespace ColorMixERP.Server.BL
                 cmd.City = string.Empty;
             }
 
-            return new ClientDalFacade().GetClients(cmd, ref pagesCount);
+            var userData = new UserBL().GetAccountUser(userId);
+            var workPlace = userData.WorkPlace.Id.Value;
+            return new ClientDalFacade().GetClients(cmd, workPlace, ref pagesCount);
         }
 
         public ClientDTO GetClient(int? id)

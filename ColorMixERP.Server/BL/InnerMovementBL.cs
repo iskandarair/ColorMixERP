@@ -21,9 +21,12 @@ namespace ColorMixERP.Server.BL
         {
             return new InnerMovementDalFacade().GetInnerMovementDtoByGroup(groupId, createdDate);
         }
-        public List<InnerMovementGroupDTO> GetInnerMovementDtos(InnerMovementCommand cmd, ref int pagesCount)
+        public List<InnerMovementGroupDTO> GetInnerMovementDtos(InnerMovementCommand cmd,int userId, ref int pagesCount)
         {
-            return new InnerMovementDalFacade().GetInnerMovementDtos(cmd, ref  pagesCount);
+
+            var userData = new UserBL().GetAccountUser(userId);
+            var workPlaceId = userData.WorkPlace.Id.Value;
+            return new InnerMovementDalFacade().GetInnerMovementDtos(cmd, workPlaceId, ref  pagesCount);
         }
         public InnerMovement GetInnerMovement(int id)
         {
