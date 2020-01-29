@@ -29,7 +29,7 @@ namespace ColorMixERP.Server.DAL
         public List<InnerMovementGroupDTO> GetInnerMovementDtos(InnerMovementCommand cmd,int workPlaceId, ref int pagesCount)
         {
             var query = from c in db.InnerMovements
-                where c.FromWorkPlace.Id == workPlaceId
+                where c.FromWorkPlace.Id == workPlaceId || c.ToWorkPlace.Id == workPlaceId
                 group c by new { c.GroupId, c.CreatedDate, c.MoveDate.Date, c.FromWorkPlace, c.ToWorkPlace} into grp
                 let productCount = grp.Select(x => x.Product.Id).Count()
                 let totalPrice = grp.Sum(x => x.TotalPrice)
